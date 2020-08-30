@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "931172837579",
+    "firebase_url": "https://dopameme-861ea.firebaseio.com",
+    "project_id": "dopameme-861ea",
+    "storage_bucket": "dopameme-861ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931172837579:android:ed6ed948bbbabcec8f534e",
+        "android_client_info": {
+          "package_name": "in.meme.dopameme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "931172837579-vm32vcmmrjusesbeo7bq2r8kv4os9vrm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.meme.dopameme",
+            "certificate_hash": "5965eca86e69e11d4be705e7607f2bec2f934fb3"
+          }
+        },
+        {
+          "client_id": "931172837579-kv81vq5mocoj953hq5ri7ugj34n9h3aj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk65W2M_Tlz-xdXGH_b4VntgiguWgwGD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "931172837579-kv81vq5mocoj953hq5ri7ugj34n9h3aj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
