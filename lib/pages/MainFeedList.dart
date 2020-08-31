@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:dopamemes/model/UserLoginData.dart';
 import 'package:dopamemes/providers/AccountsProvider.dart';
-import 'package:dopamemes/providers/AppwriteClientProvider.dart';
-import 'package:dopamemes/providers/PostRespViewProvider.dart';
+import 'package:dopamemes/providers/Conts.dart';
+import 'package:dopamemes/providers/PostViewProvider.dart';
 import 'package:dopamemes/pages/NewPostBottomSheet.dart';
 import 'package:dopamemes/widgets/PostsList.dart';
 import 'package:provider/provider.dart';
@@ -56,12 +57,11 @@ class _MainFeedListState extends State<MainFeedList> {
               child: PostsList(),
             ),
         drawer: Drawer(elevation: 8,
-        //   child: ListView.builder(itemBuilder: (BuildContext context, int index)
-        // {
-        //   return ListTile(leading: CachedNetworkImage(),
-        //   title: Text("t"),);
-        // })
-            child: Container()
+          child: ListView.builder(itemBuilder: (BuildContext context, int index)
+        {
+          return ListTile(leading: CachedNetworkImage(imageUrl:Provider.of<CategoriesProvider>(context).allCategories()[index].displayIcon,width: 50,height: 40,fit: BoxFit.scaleDown,),
+          title: Text(Provider.of<CategoriesProvider>(context).allCategories()[index].displayName),);
+        },itemCount: Provider.of<CategoriesProvider>(context).allCategories().length,)
 
           ,),);
       }
@@ -115,7 +115,8 @@ class _MainFeedListState extends State<MainFeedList> {
     if (!isReqSent) {
       isReqSent = true;
     //  Provider.of<AccountsProvider>(context).getCheckIfLoggedIn();
-      Provider.of<PostRespViewProvider>(context).getPostsReq();
+      Provider.of<PostProvider>(context).fetchPosts();
+      Provider.of<CategoriesProvider>(context).fetchCategories();
     }
   }
 

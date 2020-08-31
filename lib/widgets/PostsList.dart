@@ -1,32 +1,27 @@
-import 'package:dopamemes/providers/VideoCacheProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dopamemes/model/PostsCollectionResponse.dart';
-import 'package:dopamemes/providers/PostRespViewProvider.dart';
-import 'package:dopamemes/widgets/ImagePostWidget.dart';
-import 'package:dopamemes/widgets/PostsCard.dart';
-import 'package:dopamemes/widgets/VideoPostWidget.dart';
-import 'package:dopamemes/widgets/YtPostWidedget.dart';
 import 'package:provider/provider.dart';
-
+import 'package:dopamemes/exports/WidgetExports.dart';
+import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:dopamemes/exports/ProviderExports.dart';
 class PostsList extends StatelessWidget{
 
 
   @override
   Widget build(BuildContext context) {
     return  FutureBuilder(
-        future: Provider.of<PostRespViewProvider>(context,listen: false ).postsData,
+        future: Provider.of<PostProvider>(context).postsData,
         builder: (BuildContext buildContext,
-            AsyncSnapshot<List<Documents>> snapshot) {
+            AsyncSnapshot<List<Posts>> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
                 itemCount:snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if (snapshot.data[index].type == "youtube") {
+                  if (snapshot.data[index].postType == "youtube") {
                     return PostsCard( snapshot.data[index],YtPostWidget(snapshot.data[index]));
-                  } else if (snapshot.data[index].type == "image") {
+                  } else if (snapshot.data[index].postType == "image") {
                     return PostsCard( snapshot.data[index],ImagePostWidget(snapshot.data[index]));
-                  } else if (snapshot.data[index].type == "video") {
+                  } else if (snapshot.data[index].postType == "video") {
                     return PostsCard( snapshot.data[index],Consumer<VideoCacheProvider>(builder: (context,_,child){
                       return  VideoPostWidget(snapshot.data[index]);
                     },));

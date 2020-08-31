@@ -10,12 +10,12 @@ void main() {
     MultiProvider(
       child: MyApp(),
       providers: [
-        ChangeNotifierProvider<PostRespViewProvider>(
-            create: (_) => PostRespViewProvider()),
+        ChangeNotifierProvider<PostProvider>(
+            create: (_) => PostProvider()),
         ChangeNotifierProvider<AccountsProvider>(
             create: (_) => AccountsProvider()),
         ChangeNotifierProvider<VideoCacheProvider>(create: (_)=>VideoCacheProvider()),
-        ChangeNotifierProvider<CategoriesProvider>(create: (_)=>CategoriesProvider())
+        ChangeNotifierProvider<CategoriesProvider>(create: (_)=>CategoriesProvider()),
       ],
     ),
   );

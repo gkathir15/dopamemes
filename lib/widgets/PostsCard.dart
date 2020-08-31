@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
-import 'package:dopamemes/model/PostsCollectionResponse.dart';
+import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:timeago/timeago.dart' as timeAgo;
 
 class PostsCard extends StatefulWidget {
-  Documents _document;
+  Posts _document;
   Widget _widget;
 
   PostsCard(this._document, this._widget);
@@ -18,7 +18,7 @@ class PostsCard extends StatefulWidget {
 }
 
 class PostsCardState extends State<PostsCard> {
-  Documents _document;
+  Posts _document;
   Widget _widget;
 
   var cardRadius =
@@ -32,7 +32,7 @@ class PostsCardState extends State<PostsCard> {
       child: InkWell(
         child: Card(
           shadowColor: Theme.of(context).cardTheme.shadowColor,
-          elevation: 12,
+          elevation: 2,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
           child: Column(
@@ -51,7 +51,7 @@ class PostsCardState extends State<PostsCard> {
                 padding: const EdgeInsets.only(left: 8.0, top: 4.0),
                 child: Text(
                   timeAgo.format(
-                      DateTime.fromMillisecondsSinceEpoch(_document.timestamp)),
+                      DateTime.fromMillisecondsSinceEpoch(_document.createdAt~/1000)),
                   style: GoogleFonts.nunito(),
                   textScaleFactor: 0.8,
                 ),
@@ -74,7 +74,7 @@ class PostsCardState extends State<PostsCard> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 36),
-                              child: Text(_document.upvote.toString()),
+                              child: Text("1"),
                             ),
                           ],
                         ),
@@ -94,7 +94,7 @@ class PostsCardState extends State<PostsCard> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 36),
-                              child: Text(_document.upvote.toString()),
+                              child: Text("1"),
                             ),
                           ],
                         ),

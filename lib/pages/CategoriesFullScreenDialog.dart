@@ -1,6 +1,6 @@
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:dopamemes/exports/PagesExport.dart';
+import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,12 +16,12 @@ class CategoriesFullScreenDialog extends StatelessWidget
             alignment: Alignment.center,
             child: ListView.separated(itemBuilder: (BuildContext context, int index)
             {
-              return InkWell(child: Text(Provider.of<CategoriesProvider>(context,listen: false).getAllCategories()[index].name,textAlign: TextAlign.center,style: TextStyle(fontSize: 25,),),onTap: (){
+              return InkWell(child: Text(Provider.of<CategoriesProvider>(context,listen: false).allCategories()[index].displayName,textAlign: TextAlign.center,style: TextStyle(fontSize: 25,),),onTap: (){
                 Navigator.pop(context);
                 Provider.of<CategoriesProvider>(context).setNewPostSelected(index);
 
               },);
-            },itemCount:Provider.of<CategoriesProvider>(context).getAllCategories().length, separatorBuilder: (context, index) => Divider(
+            },itemCount:Provider.of<CategoriesProvider>(context).allCategories().length, separatorBuilder: (context, index) => Divider(
               color: Colors.black,
             ),),
           ),

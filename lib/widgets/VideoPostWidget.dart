@@ -1,18 +1,16 @@
 import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dopamemes/providers/VideoCacheProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dopamemes/model/PostsCollectionResponse.dart';
-import 'package:dopamemes/providers/AppwriteClientProvider.dart';
-import 'package:dopamemes/providers/VideoPlayerProvider.dart';
-
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
+import 'package:dopamemes/exports/WidgetExports.dart';
+import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:dopamemes/exports/ProviderExports.dart';
 
 class VideoPostWidget extends StatefulWidget
 {
-  Documents _documents;
+  Posts _documents;
 
   VideoPostWidget(this._documents);
 
@@ -28,7 +26,7 @@ class VideoPostWidget extends StatefulWidget
 }
 
 class VideoPostWidgetState extends State<VideoPostWidget>{
-  Documents _documents;
+  Posts _documents;
   VideoPostWidgetState(this._documents);
   VideoPlayerController _controller;
 

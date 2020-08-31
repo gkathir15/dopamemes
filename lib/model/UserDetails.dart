@@ -1,35 +1,43 @@
-class Categories {
+class UserDetails {
   String sId;
+  int age;
   double createdAt;
-  String displayIcon;
   String displayName;
-  bool isMature;
+  String email;
+  String imageUrl;
+  String uid;
   double updatedAt;
 
-  Categories(
+  UserDetails(
       {this.sId,
+        this.age,
         this.createdAt,
-        this.displayIcon,
         this.displayName,
-        this.isMature,
+        this.email,
+        this.imageUrl,
+        this.uid,
         this.updatedAt});
 
-  Categories.fromJson(Map<String, dynamic> json) {
+  UserDetails.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
+    age = json['age'];
     createdAt = json['created_at'];
-    displayIcon = json['display_icon'];
     displayName = json['display_name'];
-    isMature = json['is_mature'];
+    email = json['email'];
+    imageUrl = json['image_url'];
+    uid = json['uid'];
     updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
+    data['age'] = this.age;
     data['created_at'] = this.createdAt;
-    data['display_icon'] = this.displayIcon;
     data['display_name'] = this.displayName;
-    data['is_mature'] = this.isMature;
+    data['email'] = this.email;
+    data['image_url'] = this.imageUrl;
+    data['uid'] = this.uid;
     data['updated_at'] = this.updatedAt;
     return data;
   }

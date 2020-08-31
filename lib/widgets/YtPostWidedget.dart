@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dopamemes/model/PostsCollectionResponse.dart';
-import 'package:video_player/video_player.dart';
+import 'package:dopamemes/exports/WidgetExports.dart';
+import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YtPostWidget extends StatefulWidget
 {
-  Documents documents;
+  Posts documents;
 
   YtPostWidget(this.documents);
 
@@ -23,7 +24,7 @@ class YtPostWidget extends StatefulWidget
 }
 
 class YtPostWidgetState extends State<YtPostWidget>{
-  Documents documents;
+  Posts documents;
   YtPostWidgetState(this.documents);
   YoutubePlayerController controller;
 
@@ -39,7 +40,7 @@ class YtPostWidgetState extends State<YtPostWidget>{
 
   @override
   void initState() {
-    controller = YoutubePlayerController(initialVideoId: YoutubePlayer.convertUrlToId(documents.src),
+    controller = YoutubePlayerController(initialVideoId: YoutubePlayer.convertUrlToId(documents.fileUrl),
     flags: YoutubePlayerFlags(controlsVisibleAtStart: true,autoPlay: false,disableDragSeek: true));
     super.initState();
   }

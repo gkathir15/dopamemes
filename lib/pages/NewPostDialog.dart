@@ -63,7 +63,7 @@ class NewPostDialogState extends State<NewPostDialog> {
         InkWell(child: Row(
           children: [
             Text("Category"),
-            Row(children: [Text(Provider.of<CategoriesProvider>(context).newCategory.name),Icon(Icons.arrow_drop_down_circle)],),
+            Row(children: [Text(Provider.of<CategoriesProvider>(context).newCategory.displayName),Icon(Icons.arrow_drop_down_circle)],),
           ],
         ),onTap: (){
           Navigator.of(context).push(PageRouteBuilder(
