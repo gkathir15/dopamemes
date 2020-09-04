@@ -1,5 +1,7 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
@@ -22,6 +24,7 @@ class MainFeedList extends StatefulWidget {
 
 class _MainFeedListState extends State<MainFeedList> {
   bool isReqSent = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +52,7 @@ class _MainFeedListState extends State<MainFeedList> {
 
                 showModalBottomSheet<void>(context: context,builder: (BuildContext context) {
                   return NewPostBottomSheet();
-                },);
+                },isDismissible: true,isScrollControlled: true);
               },
               child: Icon(Icons.add),
             ),
@@ -117,6 +120,10 @@ class _MainFeedListState extends State<MainFeedList> {
     //  Provider.of<AccountsProvider>(context).getCheckIfLoggedIn();
       Provider.of<PostProvider>(context).fetchPosts();
       Provider.of<CategoriesProvider>(context).fetchCategories();
+      Admob.initialize("ca-app-pub-6011809596899441~9949339806"
+      );
+      Firebase.initializeApp();
+      //FirebaseAdMob.instance.initialize(appId: "ca-app-pub-6011809596899441~9949339806");
     }
   }
 

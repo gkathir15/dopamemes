@@ -25,7 +25,10 @@ class PostsList extends StatelessWidget{
                     return PostsCard( snapshot.data[index],Consumer<VideoCacheProvider>(builder: (context,_,child){
                       return  VideoPostWidget(snapshot.data[index]);
                     },));
-                  } else {
+                  }else if(snapshot.data[index].postType =="ad")
+                    {
+                      return AdMobBannerAd();
+                    }else {
                     return Container();
                   }
                 });

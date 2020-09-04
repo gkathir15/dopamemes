@@ -11,7 +11,7 @@ class CategoriesProvider with ChangeNotifier
 {
     List<Categories> categories = List();
     Categories mainCategory;
-    Categories newCategory;
+    Categories newPostUploadCategory;
 
 
 
@@ -26,12 +26,15 @@ class CategoriesProvider with ChangeNotifier
        print(categoriesResponse.data.catagories.length);
        categories.addAll(categoriesResponse.data.catagories);
        notifyListeners();
+
+       mainCategory = categories[0];
+       newPostUploadCategory = categories[0];
     }
 
 
     setNewPostSelected(int pos)
     {
-        newCategory = categories[pos];
+        newPostUploadCategory = categories[pos];
     }
 
     List<Categories> allCategories() => categories.toSet().toList();

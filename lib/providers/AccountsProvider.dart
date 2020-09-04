@@ -20,8 +20,18 @@ class AccountsProvider with ChangeNotifier {
  Future<UserLoginData> isLoggedResponse;
  bool isLoggedInChecked=false;
 
+ Future<UserCredential> googleUserCredd;
 
- //var userCred =  await signInWithGoogle();
+
+
+ void SignUp()
+ {
+  signInWithGoogle().then((value) {
+    print(value.additionalUserInfo.toString());
+    print(value.credential.toString());
+    print(value.user.toString());
+  });
+ }
 
 
 

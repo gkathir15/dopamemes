@@ -5,3 +5,5 @@ export 'package:dopamemes/providers/PostViewProvider.dart';
 export 'package:dopamemes/providers/VideoCacheProvider.dart';
 export 'package:dopamemes/providers/VideoPlayerProvider.dart';
 export 'package:dopamemes/providers/CategoriesProvider.dart';
+export 'package:dopamemes/providers/AdMobAdProvider.dart';
+export 'package:dopamemes/providers/NewPostProvider.dart';

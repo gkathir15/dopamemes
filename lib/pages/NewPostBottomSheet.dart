@@ -1,6 +1,7 @@
 import 'package:dopamemes/PostType.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:dopamemes/exports/PagesExport.dart';
 
@@ -16,6 +17,9 @@ class NewPostBottomSheet extends StatefulWidget{
 
 class NewPostBottomSheetState extends State<NewPostBottomSheet>
 {
+  TextEditingController dialogTextController;
+  FocusNode focusNode;
+  bool isYtClicked = false;
   @override
   Widget build(BuildContext context) {
 
@@ -71,7 +75,14 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
                 ),
               ),
               InkWell(
-                onTap: () => Navigator.pop(context),
+                onTap: (){
+                  Navigator.pop(context);
+                  Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) =>
+                          NewPostDialog(
+                              PostType.YOUTUBE)));
+                },
                 child: Card(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -123,12 +134,52 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
                   ),
                 ),
               ],),
-            )
+            ),
+          linkEditor(),
           ],
         ),
       ),
     );
 
+  }
+
+
+  Widget linkEditor()
+  {
+    if(isYtClicked) {
+      return Row(children: [
+        TextField(focusNode: focusNode, decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'link',
+        ), controller: dialogTextController,),
+        RaisedButton(onPressed: () {
+          Navigator.pop(context);
+          Navigator.of(context).push(PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, _, __) =>
+                  NewPostDialog.withPath(
+                      PostType.YOUTUBE, dialogTextController.text)));
+        },
+          child: Text("Next"),)
+      ],);
+    }else {
+     return Container();
+    }
+  }
+
+  @override
+  void initState() {
+
+    dialogTextController = TextEditingController();
+    focusNode = FocusNode();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    dialogTextController.dispose();
+    super.dispose();
   }
 
 }

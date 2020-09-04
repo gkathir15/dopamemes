@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:dart_numerics/dart_numerics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -21,7 +19,7 @@ class StaggeredMemeListState extends State<StaggeredMemeList>
   Widget build(BuildContext context) {
   return  StaggeredGridView.countBuilder(controller: scrollController,
     crossAxisCount: 4,
-    itemCount:int64MaxValue,
+    itemCount:double.maxFinite.round(),
     itemBuilder: (BuildContext context, int index) {
       return Image.asset("assets/bgListImg/image${(index%27)+1}.jpg");
     },

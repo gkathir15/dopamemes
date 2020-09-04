@@ -17,6 +17,7 @@ class PostProvider with ChangeNotifier {
     PostsResponse postsResponse = PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     _pData.addAll(postsResponse.data.posts);
+    _pData.add(Posts(postType: "ad"));
     postsData = allPostsFuture();
     notifyListeners();
   }
@@ -26,6 +27,10 @@ class PostProvider with ChangeNotifier {
   Future<List<Posts>> allPostsFuture() async {
     return _pData.toSet().toList();
   }
+
+
+
+  ///dummy profiel id 5f4bf11b4eece7b043c8cc29
 
 
 

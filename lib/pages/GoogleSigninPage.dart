@@ -1,7 +1,11 @@
+import 'package:dopamemes/exports/ProviderExports.dart';
+import 'package:dopamemes/model/UserLoginData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:provider/provider.dart';
 
 class GooleSigninPage extends StatelessWidget{
   @override
@@ -21,15 +25,25 @@ class GooleSigninPage extends StatelessWidget{
               child: Text("Fresh Dopamine to you brain"),
             ),
 
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 60, 8, 8),
-              child: SignInButton(
-                Buttons.Google,
-                text: "Continue with Google",
-                onPressed: () {
-
-                },
-              ),
+            FutureBuilder(
+              builder: (BuildContext context,AsyncSnapshot<UserLoginData> snapshot){
+               if(snapshot.hasData)
+                 {
+                   return Center();
+                 }
+               else{
+                return Padding(
+                   padding: const EdgeInsets.fromLTRB(8, 60, 8, 8),
+                   child: SignInButton(
+                     Buttons.Google,
+                     text: "Continue with Google",
+                     onPressed: () {
+                       Provider.of<AccountsProvider>(context,listen: false).SignUp();
+                     },
+                   ),
+                 );
+               }
+              },future: Provider.of<AccountsProvider>(context,listen: false).isLoggedResponse,
             )
           ],
         ),

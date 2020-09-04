@@ -16,6 +16,7 @@ void main() {
             create: (_) => AccountsProvider()),
         ChangeNotifierProvider<VideoCacheProvider>(create: (_)=>VideoCacheProvider()),
         ChangeNotifierProvider<CategoriesProvider>(create: (_)=>CategoriesProvider()),
+        ChangeNotifierProvider<NewPostProvider>(create: (_)=>NewPostProvider()),
       ],
     ),
   );

@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:931172837579:android:ed6ed948bbbabcec8f534e",
+        "mobilesdk_app_id": "1:931172837579:android:6cc5f22a12a9e0728f534e",
         "android_client_info": {
-          "package_name": "in.meme.dopameme"
+          "package_name": "in.meme.dopamemes"
         }
       },
       "oauth_client": [
         {
-          "client_id": "931172837579-vm32vcmmrjusesbeo7bq2r8kv4os9vrm.apps.googleusercontent.com",
+          "client_id": "931172837579-klem6rg9t2u418jgstbpk2gqglskoss1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "in.meme.dopameme",
+            "package_name": "in.meme.dopamemes",
             "certificate_hash": "5965eca86e69e11d4be705e7607f2bec2f934fb3"
           }
         },
