@@ -1,4 +1,4 @@
-class UserDetails {
+class DopeUser {
   String sId;
   int age;
   double createdAt;
@@ -8,7 +8,7 @@ class UserDetails {
   String uid;
   double updatedAt;
 
-  UserDetails(
+  DopeUser(
       {this.sId,
         this.age,
         this.createdAt,
@@ -18,7 +18,7 @@ class UserDetails {
         this.uid,
         this.updatedAt});
 
-  UserDetails.fromJson(Map<String, dynamic> json) {
+  DopeUser.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     age = json['age'];
     createdAt = json['created_at'];

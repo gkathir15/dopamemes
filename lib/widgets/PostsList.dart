@@ -22,9 +22,7 @@ class PostsList extends StatelessWidget{
                   } else if (snapshot.data[index].postType == "image") {
                     return PostsCard( snapshot.data[index],ImagePostWidget(snapshot.data[index]));
                   } else if (snapshot.data[index].postType == "video") {
-                    return PostsCard( snapshot.data[index],Consumer<VideoCacheProvider>(builder: (context,_,child){
-                      return  VideoPostWidget(snapshot.data[index]);
-                    },));
+                    return PostsCard( snapshot.data[index],VideoPostWidget(snapshot.data[index]));
                   }else if(snapshot.data[index].postType =="ad")
                     {
                       return AdMobBannerAd();

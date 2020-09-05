@@ -26,9 +26,9 @@ class Data {
   Data({this.catagories});
 
   Data.fromJson(Map<String, dynamic> json) {
-    if (json['catagories'] != null) {
+    if (json['categories'] != null) {
       catagories = new List<Categories>();
-      json['catagories'].forEach((v) {
+      json['categories'].forEach((v) {
         catagories.add(new Categories.fromJson(v));
       });
     }

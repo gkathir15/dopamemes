@@ -20,7 +20,7 @@ class CategoriesProvider with ChangeNotifier
 
     fetchCategories() async
     {
-        Response response = await  Dio().get(Consts.baseUrl+"api/v1/catagories");
+        Response response = await  Dio().get(Conts.baseUrl+"api/v1/categories");
         print(response.toString());
        CategoriesResponse categoriesResponse = CategoriesResponse.fromJson(json.decode(response.toString()));
        print(categoriesResponse.data.catagories.length);

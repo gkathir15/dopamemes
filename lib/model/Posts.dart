@@ -9,7 +9,7 @@ class Posts {
   String ownerId;
   String postType;
   double updatedAt;
-  UserDetails userDetails;
+  DopeUser userDetails;
 
   Posts(
       {this.sId,
@@ -36,7 +36,7 @@ class Posts {
     postType = json['post_type'];
     updatedAt = json['updated_at'];
     userDetails = json['userDetails'] != null
-        ? new UserDetails.fromJson(json['userDetails'])
+        ? new DopeUser.fromJson(json['userDetails'])
         : null;
   }
 

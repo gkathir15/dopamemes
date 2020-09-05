@@ -37,105 +37,105 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) =>
-                          NewPostDialog(PostType.IMAGE)));},
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(LineAwesomeIcons.image),
-                        Text("IMAGE")
-                      ],
+                InkWell(
+                  onTap: () async {
+                   // Navigator.pop(context);
+                    var file = await FilePicker.getFile(type: FileType.video,allowCompression: true);
+                    Navigator.of(context).push(PageRouteBuilder(
+                        opaque: false,
+                        pageBuilder: (BuildContext context, _, __) =>
+                            NewPostDialog.withPath(PostType.IMAGE,file.path)));},
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(LineAwesomeIcons.image),
+                          Text("IMAGE")
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: () async {
-                  Navigator.pop(context);
-                  var file = await FilePicker.getFile(type: FileType.video,allowCompression: true);
-                  print(file.path);
+                InkWell(
+                  onTap: () async {
+                    Navigator.pop(context);
+                    var file = await FilePicker.getFile(type: FileType.video,allowCompression: true);
+                    print(file.path);
                   },
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(LineAwesomeIcons.film),
-                        Text("VIDEO")
-                      ],
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(LineAwesomeIcons.film),
+                          Text("VIDEO")
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: (){
-                  Navigator.pop(context);
-                  Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) =>
-                          NewPostDialog(
-                              PostType.YOUTUBE)));
-                },
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(LineAwesomeIcons.youtube),
-                        Text("Youtube")
-                      ],
+                InkWell(
+                  onTap: (){
+                    Navigator.pop(context);
+                    Navigator.of(context).push(PageRouteBuilder(
+                        opaque: false,
+                        pageBuilder: (BuildContext context, _, __) =>
+                            NewPostDialog(
+                                PostType.YOUTUBE)));
+                  },
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(LineAwesomeIcons.youtube),
+                          Text("Youtube")
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
 
 
 
-            ],),
+              ],),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                InkWell(
-                  onTap: () => Navigator.pop(context),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(LineAwesomeIcons.link),
-                          Text("Link")
-                        ],
+                  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(LineAwesomeIcons.link),
+                            Text("Link")
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                InkWell(
-                  onTap: () => Navigator.pop(context),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(LineAwesomeIcons.file_text),
-                          Text("Text")
-                        ],
+                  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(LineAwesomeIcons.file_text),
+                            Text("Text")
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],),
+                ],),
             ),
-          linkEditor(),
           ],
         ),
       ),
@@ -144,28 +144,7 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
   }
 
 
-  Widget linkEditor()
-  {
-    if(isYtClicked) {
-      return Row(children: [
-        TextField(focusNode: focusNode, decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'link',
-        ), controller: dialogTextController,),
-        RaisedButton(onPressed: () {
-          Navigator.pop(context);
-          Navigator.of(context).push(PageRouteBuilder(
-              opaque: false,
-              pageBuilder: (BuildContext context, _, __) =>
-                  NewPostDialog.withPath(
-                      PostType.YOUTUBE, dialogTextController.text)));
-        },
-          child: Text("Next"),)
-      ],);
-    }else {
-     return Container();
-    }
-  }
+
 
   @override
   void initState() {
@@ -176,10 +155,20 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
     super.initState();
   }
 
+
+  @override
+  void reassemble() {
+
+  }
+
   @override
   void dispose() {
     dialogTextController.dispose();
     super.dispose();
   }
 
+  @override
+  void didChangeDependencies() {
+
+  }
 }

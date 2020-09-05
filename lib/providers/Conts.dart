@@ -1,5 +1,5 @@
 
-class Consts {
+class Conts {
   static String baseUrl = "https://dopamemes.live/";
 
 

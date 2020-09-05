@@ -1,11 +1,11 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
-import 'package:dopamemes/model/UserLoginData.dart';
 import 'package:dopamemes/providers/AccountsProvider.dart';
 import 'package:dopamemes/providers/Conts.dart';
 import 'package:dopamemes/providers/PostViewProvider.dart';
@@ -29,9 +29,9 @@ class _MainFeedListState extends State<MainFeedList> {
   @override
   Widget build(BuildContext context) {
 
-   return  FutureBuilder(future:Provider.of<AccountsProvider>(context).isLoggedResponse,builder: (BuildContext context,AsyncSnapshot<UserLoginData> snapshot){
+   return  FutureBuilder(future:Provider.of<PostProvider>(context).postsData,builder: (BuildContext context,AsyncSnapshot<List<Posts>> snapshot){
 
-      if(snapshot.connectionState==ConnectionState.none) {
+      if(snapshot.hasData) {
         return Scaffold(
             extendBodyBehindAppBar: true,
             appBar: AppBar(
@@ -120,6 +120,7 @@ class _MainFeedListState extends State<MainFeedList> {
     //  Provider.of<AccountsProvider>(context).getCheckIfLoggedIn();
       Provider.of<PostProvider>(context).fetchPosts();
       Provider.of<CategoriesProvider>(context).fetchCategories();
+      Provider.of<AccountsProvider>(context).loggedResponse();
       Admob.initialize("ca-app-pub-6011809596899441~9949339806"
       );
       Firebase.initializeApp();

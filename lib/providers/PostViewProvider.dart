@@ -12,7 +12,7 @@ class PostProvider with ChangeNotifier {
   List<Posts> _pData = List();
 
   fetchPosts() async {
-    Response response = await  Dio().get(Consts.baseUrl+"api/v1/posts");
+    Response response = await  Dio().get(Conts.baseUrl+"api/v1/posts");
     print(response.toString());
     PostsResponse postsResponse = PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
