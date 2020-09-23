@@ -12,9 +12,10 @@ class PostProvider with ChangeNotifier {
   List<Posts> _pData = List();
 
   fetchPosts() async {
-    Response response = await  Dio().get(Conts.baseUrl+"api/v1/posts");
+    Response response = await Dio().get(Conts.baseUrl + "api/v1/posts");
     print(response.toString());
-    PostsResponse postsResponse = PostsResponse.fromJson(json.decode(response.toString()));
+    PostsResponse postsResponse =
+        PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     _pData.addAll(postsResponse.data.posts);
     _pData.add(Posts(postType: "ad"));
@@ -25,16 +26,24 @@ class PostProvider with ChangeNotifier {
   List<Posts> allPosts() => _pData.toSet().toList();
 
   Future<List<Posts>> allPostsFuture() async {
-    return _pData.toSet().toList();
+    return _pData;
   }
 
-
+  paginatePosts(Posts lastPost) async {
+    print(lastPost.toJson().toString());
+    var url = Conts.baseUrl + "api/v1/posts?lastId=${lastPost.sId}";
+    print(url);
+    Response response = await Dio().get(url);
+    print(response.toString());
+    PostsResponse postsResponse =
+        PostsResponse.fromJson(json.decode(response.toString()));
+    print(postsResponse.data.posts.length);
+    _pData.addAll(postsResponse.data.posts);
+    _pData.add(Posts(postType: "ad"));
+    postsData = allPostsFuture();
+    notifyListeners();
+  }
 
   ///dummy profiel id 5f4bf11b4eece7b043c8cc29
-
-
-
-
-
 
 }
