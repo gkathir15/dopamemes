@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
@@ -47,6 +48,7 @@ class _MainFeedListState extends State<MainFeedList> {
               elevation: 0,
 
             ),
+            bottomNavigationBar: BottomAppBar(),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
 
@@ -56,8 +58,20 @@ class _MainFeedListState extends State<MainFeedList> {
               },
               child: Icon(Icons.add),
             ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             body: Container(
-              child: PostsList(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Builder(builder: (bContext){
+                    if(Provider.of<NewPostProvider>(bContext).status()==UploadStatus.UPLOADING)
+                    {
+                      return LinearProgressIndicator(minHeight: 10);
+                    }else return Container();
+                  },),
+                  Expanded(child: PostsList()),
+                ],
+              ),
             ),
         drawer: Drawer(elevation: 8,
           child: ListView.builder(itemBuilder: (BuildContext context, int index)

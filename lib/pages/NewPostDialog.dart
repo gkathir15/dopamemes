@@ -111,6 +111,13 @@ class NewPostDialogState extends State<NewPostDialog> {
   }
 
   youtubeUpload() {
+
+    // {
+    //   "caption": "Among us",
+    // "ownerId": "5f4bf11b4eece7b043c8cc29",
+    // "categoryId": "5f526da37eca858748fa1ca2",
+    // "youtubeUrl": "https://www.youtube.com/watch?v=CtmdUiv_sxs"
+    // }
     var map = Map<String, String>();
     map["caption"] = titleTextController.text;
     map["ownerId"] = "5f4bf11b4eece7b043c8cc29";

@@ -24,11 +24,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: "Meme",
-        theme: ThemeData(
-          primarySwatch: Colors.purple,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
+        title: "Dopamemes",
+        showPerformanceOverlay: false,
         darkTheme: ThemeData.dark(),
       routes: {'/': (context) => MainFeedList(),
                 "login":(context) => GooleSigninPage(),

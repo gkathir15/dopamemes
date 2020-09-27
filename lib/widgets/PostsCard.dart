@@ -56,30 +56,26 @@ class PostsCardState extends State<PostsCard> {
                 padding: const EdgeInsets.only(left: 8.0, top: 4.0),
                 child: Text(
                   timeAgo.format(
-                      DateTime.fromMillisecondsSinceEpoch(_document.createdAt~/1000)),
+                      DateTime.fromMillisecondsSinceEpoch((_document.createdAt*1000).toInt())),
                   style: GoogleFonts.nunito(),
-                  textScaleFactor: 0.8,
+                  textScaleFactor: 0.6,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
 
-                    InkWell(
-                      child: Card(
-                        elevation: 2,
-                        shape: cardRadius,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 8,left: 8,top: 2,bottom: 2),
-                          child: Icon(LineAwesomeIcons.send_o),
-                        ),
+                  InkWell(
+                    child: Card(
+                      shape: cardRadius,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8,left: 8,top: 2,bottom: 2),
+                        child: Icon(LineAwesomeIcons.send_o),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -54,6 +54,7 @@ class VideoPostWidgetState extends State<VideoPostWidget>{
 
     _controller.initialize().then((value) => {setState(() {
     _controller.play();
+    _controller.setLooping(true);
     _controller.setVolume(0.0);
     })});
     super.initState();
