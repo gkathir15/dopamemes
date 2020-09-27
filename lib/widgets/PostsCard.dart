@@ -26,7 +26,12 @@ class PostsCardState extends State<PostsCard> {
 
   PostsCardState(this._document, this._widget);
   @override
+
+
   Widget build(BuildContext context) {
+    if(_document.fileUrl==null)
+      _widget = Container();
+
     return Padding(
       padding: const EdgeInsets.only(left: 6, right: 6, top: 3),
       child: InkWell(
@@ -62,51 +67,14 @@ class PostsCardState extends State<PostsCard> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    InkWell(
-                      child: Card(
-                        elevation: 2,
-                        shape: cardRadius,
-                        child: Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(right: 4),
-                              child: Icon(LineAwesomeIcons.rocket),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 36),
-                              child: Text("1"),
-                            ),
-                          ],
-                        ),
-                      ),
-                      splashColor: Colors.orange,
-                      splashFactory: InkRipple.splashFactory,
-                    ),
-                    InkWell(
-                      child: Card(
-                        elevation: 2,
-                        shape: cardRadius,
-                        child: Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(right: 4),
-                              child: Icon(LineAwesomeIcons.comment),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 36),
-                              child: Text("1"),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+
                     InkWell(
                       child: Card(
                         elevation: 2,
                         shape: cardRadius,
                         child: Padding(
-                          padding: const EdgeInsets.only(right: 4),
-                          child: Icon(LineAwesomeIcons.bullhorn),
+                          padding: const EdgeInsets.only(right: 8,left: 8,top: 2,bottom: 2),
+                          child: Icon(LineAwesomeIcons.send_o),
                         ),
                       ),
                     ),

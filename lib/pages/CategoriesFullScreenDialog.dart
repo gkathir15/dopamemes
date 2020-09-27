@@ -18,7 +18,7 @@ class CategoriesFullScreenDialog extends StatelessWidget
             {
               return InkWell(child: Text(Provider.of<CategoriesProvider>(context,listen: false).allCategories()[index].displayName,textAlign: TextAlign.center,style: TextStyle(fontSize: 25,),),onTap: (){
                 Navigator.pop(context);
-                Provider.of<CategoriesProvider>(context).setNewPostSelected(index);
+                Provider.of<CategoriesProvider>(context,listen: false).setNewPostSelected(index);
 
               },);
             },itemCount:Provider.of<CategoriesProvider>(context).allCategories().length, separatorBuilder: (context, index) => Divider(

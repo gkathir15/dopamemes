@@ -45,7 +45,7 @@ class AccountsProvider with ChangeNotifier {
    var resp = UserSignupResponse.fromJson(json.decode(response.toString()));
 
    print(resp.data.user.toJson().toString());
-   saveUserExtras(resp.data.user.toJson().toString());
+   saveUserExtras(resp.data.user.sId,resp.data.user.email);
    // setSignUpState(SigningUpState.DONE);
    return resp.data.user;
   }
@@ -84,19 +84,42 @@ class AccountsProvider with ChangeNotifier {
   }
 
 
-  saveUserExtras(String userExtras) async {
+  saveUserExtras(String userId,String email) async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.setString("USER_EXTRAS", userExtras);
+    _prefs.setString("USER_EXTRAS_ID", userId);
+    _prefs.setString("USER_EXTRAS_EMAIL", userId);
   }
 
   Future<DopeUser> getUserExtras() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    return DopeUser.fromJson(json.decode(_prefs.getString("USER_EXTRAS")));
+    var email = _prefs.getString("USER_EXTRAS_ID");
+   var _id = _prefs.getString("USER_EXTRAS_EMAIL");
+
+   if(_id!=null&&email!=null)
+     {
+      Response response = await Dio()
+           .get(Conts.baseUrl + "api/v1/users/email/email");
+
+    print(response.toString());
+    var resp = UserSignupResponse.fromJson(json.decode(response.toString()));
+
+    print(resp.data.user.toJson().toString());
+    saveUserExtras(resp.data.user.sId,resp.data.user.email);
+    // setSignUpState(SigningUpState.DONE);
+    return resp.data.user;
+
+     }
+
   }
 
   Future<DopeUser> loggedResponse() {
     dopeuserResponse = getUserExtras();
   }
+
+
 }
+
+
+
 
 enum SigningUpState { NONE, LOADING, DONE }

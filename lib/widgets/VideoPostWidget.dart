@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
-import 'package:video_player/video_player.dart';
 
 class VideoPostWidget extends StatefulWidget
 {

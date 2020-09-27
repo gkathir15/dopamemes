@@ -19,7 +19,7 @@ class PostsList extends StatelessWidget {
                   if (index == snapshot.data.length-1) {
                     print(snapshot.data[index].sId);
                     Provider.of<PostProvider>(context, listen: false)
-                        .paginatePosts(snapshot.data[index-1]);
+                        .paginatePosts(snapshot.data.last);
                   }
                   if (snapshot.data[index].postType == "youtube") {
                     return PostsCard(snapshot.data[index],

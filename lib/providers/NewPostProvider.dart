@@ -17,10 +17,23 @@ class NewPostProvider with ChangeNotifier{
   }
 
 
-  uploadFile(FormData formData)
+  newYoutubePost(Map formData) {
+    uploadStatus = UploadStatus.UPLOADING;
+    var resp = Dio().post(
+        Conts.baseUrl + "api/v1/posts/youtube", data: formData).then((
+        value) => null).then((value) {
+      print(value);
+      uploadStatus = UploadStatus.DONE;
+    }).catchError((error) {
+      print(error);
+      uploadStatus = UploadStatus.FAILED;
+    });
+  }
+
+   newFilePostUpload(FormData formData)
   {
     uploadStatus = UploadStatus.UPLOADING;
-   var resp = Dio().post(Conts.baseUrl+"api/v1/posts/youtube",data: formData).then((value) => null).then((value){
+   var resp = Dio().post(Conts.baseUrl+"api/v1/posts",data: formData).then((value) => null).then((value){
       print(value);
       uploadStatus=UploadStatus.DONE;
     }).catchError((error){

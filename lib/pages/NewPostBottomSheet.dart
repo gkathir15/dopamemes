@@ -39,12 +39,18 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
               children: <Widget>[
                 InkWell(
                   onTap: () async {
-                   // Navigator.pop(context);
-                    var file = await FilePicker.getFile(type: FileType.video,allowCompression: true);
-                    Navigator.of(context).push(PageRouteBuilder(
-                        opaque: false,
-                        pageBuilder: (BuildContext context, _, __) =>
-                            NewPostDialog.withPath(PostType.IMAGE,file.path)));},
+                    var file = await FilePicker.getFile(
+                        type: FileType.image, allowCompression: true);
+                    if (file != null) {
+                      Navigator.of(context).push(PageRouteBuilder(
+                          opaque: false,
+                          pageBuilder: (BuildContext context, _, __) =>
+                              NewPostDialog.withPath(PostType.IMAGE,
+                                  file.path)));
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
                   child: Card(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -59,9 +65,20 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
                 ),
                 InkWell(
                   onTap: () async {
-                    Navigator.pop(context);
+
                     var file = await FilePicker.getFile(type: FileType.video,allowCompression: true);
                     print(file.path);
+
+                    if (file != null) {
+                      Navigator.of(context).push(PageRouteBuilder(
+                          opaque: false,
+                          pageBuilder: (BuildContext context, _, __) =>
+                              NewPostDialog.withPath(PostType.VIDEO,
+                                  file.path)));
+                    } else {
+                      Navigator.pop(context);
+                    }
+
                   },
                   child: Card(
                     child: Padding(

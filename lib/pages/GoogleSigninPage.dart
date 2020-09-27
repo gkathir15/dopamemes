@@ -65,7 +65,7 @@ class GooleSigninPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(4, 60, 4, 8),
+                padding: const EdgeInsets.fromLTRB(4, 50, 0, 8),
                 child: Center(
                     child: Text(
                   "Dopamemes",
@@ -77,7 +77,7 @@ class GooleSigninPage extends StatelessWidget {
                 child: Text("Fresh Dopamine to you brain"),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                padding: const EdgeInsets.all(9),
                 child: SignInButton(
                   Buttons.Google,
                   text: "Continue with Google",

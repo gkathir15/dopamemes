@@ -18,12 +18,12 @@ class PostProvider with ChangeNotifier {
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     _pData.addAll(postsResponse.data.posts);
-    _pData.add(Posts(postType: "ad"));
+   // _pData.add(Posts(postType: "ad"));
     postsData = allPostsFuture();
     notifyListeners();
   }
 
-  List<Posts> allPosts() => _pData.toSet().toList();
+  List<Posts> allPosts() => _pData;
 
   Future<List<Posts>> allPostsFuture() async {
     return _pData;
@@ -39,7 +39,7 @@ class PostProvider with ChangeNotifier {
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     _pData.addAll(postsResponse.data.posts);
-    _pData.add(Posts(postType: "ad"));
+   // _pData.add(Posts(postType: "ad"));
     postsData = allPostsFuture();
     notifyListeners();
   }
