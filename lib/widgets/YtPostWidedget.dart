@@ -21,59 +21,61 @@ class YtPostWidgetState extends State<YtPostWidget> {
   Posts documents;
   YtPostWidgetState(this.documents);
   YoutubePlayerController _controller;
-  bool _isClicked = false;
+  ValueNotifier<bool> _isClicked = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
-
-
-
-    return AnimatedSwitcher(
-      child: _isClicked?
-      AspectRatio(
-        aspectRatio: (16/9),
-        child: Stack(
-          children: [
-            Align(
-              child: CachedNetworkImage(
-                  imageUrl: Yt.YoutubePlayer.getThumbnail(
-                      videoId: Yt.YoutubePlayer.convertUrlToId(documents.fileUrl))),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: InkWell(
-                child: Icon(LineAwesomeIcons.play,size: 50,),
-                onTap: () {
-                  setState(() {
-                    _isClicked = true;
-                  });
-                },
-              ),
-            ),
-
-          ],
-        ),
-      ):YoutubePlayer( controller: _controller),
-      duration: Duration(milliseconds: 500),
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return ScaleTransition(child: child, scale: animation);
-      },
-    );
+    return ValueListenableBuilder(
+        builder: (_, bool value, Widget child) {
+          return value
+              ? AspectRatio(
+                  aspectRatio: (16 / 9),
+                  child: Stack(
+                    children: [
+                      Align(
+                        child: CachedNetworkImage(
+                            imageUrl: Yt.YoutubePlayer.getThumbnail(
+                                videoId: Yt.YoutubePlayer.convertUrlToId(
+                                    documents.fileUrl)),
+                            errorWidget: (_, __, ___) =>
+                                YoutubePlayer(controller: _controller)),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: InkWell(
+                          child: Icon(
+                            LineAwesomeIcons.play,
+                            size: 50,
+                          ),
+                          onTap: () {
+                            _isClicked.value = true;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : YoutubePlayer(controller: _controller);
+        },
+        valueListenable: _isClicked,
+        child: AspectRatio(
+          aspectRatio: (16 / 9),
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ));
   }
 
   @override
   void initState() {
     _controller = YoutubePlayerController(
-        initialVideoId:
-        YoutubePlayer.convertUrlToId(documents.fileUrl),
+        initialVideoId: YoutubePlayer.convertUrlToId(documents.fileUrl),
         flags: YoutubePlayerFlags(
             controlsVisibleAtStart: true,
             autoPlay: false,
             disableDragSeek: true));
     super.initState();
   }
-
-
 
   @override
   void dispose() {
