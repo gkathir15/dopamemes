@@ -58,6 +58,7 @@ dependencies:
 #use for playing YT in webView
   youtube_player_iframe: ^1.1.0
   admob_flutter: "^0.3.4"
+  visibility_detector: ^0.1.5
 
 
 

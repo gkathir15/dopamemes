@@ -36,7 +36,7 @@ class _MainFeedListState extends State<MainFeedList> {
         return Scaffold(
             extendBodyBehindAppBar: true,
             appBar: AppBar(
-              title: Text("Dopamemes"),
+              title: Text("Dopamemes",style: GoogleFonts.bangers(fontSize: 50),),
               actions: [
                 InkWell(child: CircleAvatar(child: Icon(LineAwesomeIcons.user),),onTap: (){
                   Navigator.pushNamed(context, 'login');
@@ -104,8 +104,7 @@ class _MainFeedListState extends State<MainFeedList> {
           child: Center(
             child: Text(
               "Dopamemes",
-              style: GoogleFonts.aclonica(),
-              textScaleFactor:1,
+              style: GoogleFonts.bangers(fontSize: 50),
             ),
           ),
 
