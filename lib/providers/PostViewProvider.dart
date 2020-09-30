@@ -10,6 +10,7 @@ import 'Conts.dart';
 class PostProvider with ChangeNotifier {
   Future<List<Posts>> postsData;
   List<Posts> _pData = List();
+  String lastId = "";
 
   fetchPosts() async {
     Response response = await Dio().get(Conts.baseUrl + "api/v1/posts");
@@ -18,7 +19,7 @@ class PostProvider with ChangeNotifier {
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     _pData.addAll(postsResponse.data.posts);
-   // _pData.add(Posts(postType: "ad"));
+    // _pData.add(Posts(postType: "ad"));
     postsData = allPostsFuture();
     notifyListeners();
   }
@@ -39,7 +40,7 @@ class PostProvider with ChangeNotifier {
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     _pData.addAll(postsResponse.data.posts);
-   // _pData.add(Posts(postType: "ad"));
+    // _pData.add(Posts(postType: "ad"));
     postsData = allPostsFuture();
     notifyListeners();
   }

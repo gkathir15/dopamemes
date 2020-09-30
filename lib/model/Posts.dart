@@ -1,61 +1,66 @@
 import 'package:dopamemes/exports/ModelExports.dart';
+
 class Posts {
   String sId;
   String caption;
-  Categories catagoryDetails;
-  String catagoryId;
+  CategoryDetails categoryDetails;
+  String categoryId;
   double createdAt;
   String fileUrl;
+  String isMature;
+  OwnerDetails ownerDetails;
   String ownerId;
   String postType;
   double updatedAt;
-  DopeUser userDetails;
 
   Posts(
       {this.sId,
-        this.caption,
-        this.catagoryDetails,
-        this.catagoryId,
-        this.createdAt,
-        this.fileUrl,
-        this.ownerId,
-        this.postType,
-        this.updatedAt,
-        this.userDetails});
+      this.caption,
+      this.categoryDetails,
+      this.categoryId,
+      this.createdAt,
+      this.fileUrl,
+      this.isMature,
+      this.ownerDetails,
+      this.ownerId,
+      this.postType,
+      this.updatedAt});
 
   Posts.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     caption = json['caption'];
-    catagoryDetails = json['catagoryDetails'] != null
-        ? new Categories.fromJson(json['catagoryDetails'])
+    categoryDetails = json['category_details'] != null
+        ? new CategoryDetails.fromJson(json['category_details'])
         : null;
-    catagoryId = json['catagory_id'];
+    categoryId = json['category_id'];
     createdAt = json['created_at'];
     fileUrl = json['file_url'];
+    isMature = json['is_mature'];
+    ownerDetails = json['owner_details'] != null
+        ? new OwnerDetails.fromJson(json['owner_details'])
+        : null;
     ownerId = json['owner_id'];
     postType = json['post_type'];
     updatedAt = json['updated_at'];
-    userDetails = json['userDetails'] != null
-        ? new DopeUser.fromJson(json['userDetails'])
-        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
     data['caption'] = this.caption;
-    if (this.catagoryDetails != null) {
-      data['catagoryDetails'] = this.catagoryDetails.toJson();
+    if (this.categoryDetails != null) {
+      data['category_details'] = this.categoryDetails.toJson();
     }
-    data['catagory_id'] = this.catagoryId;
+    data['category_id'] = this.categoryId;
     data['created_at'] = this.createdAt;
     data['file_url'] = this.fileUrl;
+    data['is_mature'] = this.isMature;
+    if (this.ownerDetails != null) {
+      data['owner_details'] = this.ownerDetails.toJson();
+    }
     data['owner_id'] = this.ownerId;
     data['post_type'] = this.postType;
     data['updated_at'] = this.updatedAt;
-    if (this.userDetails != null) {
-      data['userDetails'] = this.userDetails.toJson();
-    }
     return data;
   }
 }

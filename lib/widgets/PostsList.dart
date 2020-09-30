@@ -16,10 +16,16 @@ class PostsList extends StatelessWidget {
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if (index == snapshot.data.length-1) {
+                  if (index == snapshot.data.length - 1) {
                     print(snapshot.data[index].sId);
-                    Provider.of<PostProvider>(context, listen: false)
-                        .paginatePosts(snapshot.data.last);
+                    if (Provider.of<PostProvider>(context, listen: false)
+                            .lastId !=
+                        snapshot.data.last.sId) {
+                      Provider.of<PostProvider>(context, listen: false)
+                          .paginatePosts(snapshot.data.last);
+                    }
+                    Provider.of<PostProvider>(context, listen: false).lastId =
+                        snapshot.data.last.sId;
                   }
                   if (snapshot.data[index].postType == "youtube") {
                     return PostsCard(snapshot.data[index],

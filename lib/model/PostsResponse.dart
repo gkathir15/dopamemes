@@ -1,4 +1,5 @@
 import 'package:dopamemes/exports/ModelExports.dart';
+
 class PostsResponse {
   Data data;
   bool success;
@@ -42,9 +43,3 @@ class Data {
     return data;
   }
 }
-
-
-
-
-
-

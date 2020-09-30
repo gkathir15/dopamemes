@@ -36,18 +36,20 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
       },
       child: Stack(
         children: [
-          GestureDetector(
-            child: AspectRatio(
-                key: UniqueKey(),
-                aspectRatio: _controller.value.aspectRatio > 0.0
-                    ? _controller.value.aspectRatio
-                    : 1.8,
-                child: CachedVideoPlayer(_controller)),
-            onTap: () {
-              _controller.value.isPlaying
-                  ? _controller.pause()
-                  : _controller.play();
-            },
+          Align(
+            child: GestureDetector(
+              child: AspectRatio(
+                  key: UniqueKey(),
+                  aspectRatio: _controller.value.aspectRatio > 0.0
+                      ? _controller.value.aspectRatio
+                      : 1.8,
+                  child: CachedVideoPlayer(_controller)),
+              onTap: () {
+                _controller.value.isPlaying
+                    ? _controller.pause()
+                    : _controller.play();
+              },
+            ),
           ),
           Align(
             child: _PlayPauseOverlay(controller: _controller),

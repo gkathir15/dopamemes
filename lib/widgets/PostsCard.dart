@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,11 +27,8 @@ class PostsCardState extends State<PostsCard> {
 
   PostsCardState(this._document, this._widget);
   @override
-
-
   Widget build(BuildContext context) {
-    if(_document.fileUrl==null)
-      _widget = Container();
+    if (_document.fileUrl == null) _widget = Container();
 
     return Padding(
       padding: const EdgeInsets.only(left: 6, right: 6, top: 3),
@@ -43,6 +41,24 @@ class PostsCardState extends State<PostsCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Row(
+                children: [
+                  Card(
+                    child: SizedBox(
+                      width: 30,
+                      height: 30,
+                      child: CachedNetworkImage(
+                          imageUrl: _document.ownerDetails.imageUrl != null
+                              ? _document.ownerDetails.imageUrl
+                              : "https://via.placeholder.com/150"),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                  ),
+                  Text(_document.ownerDetails.displayName)
+                ],
+              ),
+              Text(_document.categoryDetails.displayName),
               _widget,
               Padding(
                 padding: const EdgeInsets.only(left: 8.0, top: 4.0),
@@ -55,8 +71,8 @@ class PostsCardState extends State<PostsCard> {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0, top: 4.0),
                 child: Text(
-                  timeAgo.format(
-                      DateTime.fromMillisecondsSinceEpoch((_document.createdAt*1000).toInt())),
+                  timeAgo.format(DateTime.fromMillisecondsSinceEpoch(
+                      (_document.createdAt * 1000).toInt())),
                   style: GoogleFonts.nunito(),
                   textScaleFactor: 0.6,
                 ),
@@ -65,12 +81,12 @@ class PostsCardState extends State<PostsCard> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-
                   InkWell(
                     child: Card(
                       shape: cardRadius,
                       child: Padding(
-                        padding: const EdgeInsets.only(right: 8,left: 8,top: 2,bottom: 2),
+                        padding: const EdgeInsets.only(
+                            right: 8, left: 8, top: 2, bottom: 2),
                         child: Icon(LineAwesomeIcons.send_o),
                       ),
                     ),

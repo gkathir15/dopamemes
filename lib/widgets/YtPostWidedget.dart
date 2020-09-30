@@ -27,7 +27,7 @@ class YtPostWidgetState extends State<YtPostWidget> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
         builder: (_, bool value, Widget child) {
-          return value
+          return !value
               ? AspectRatio(
                   aspectRatio: (16 / 9),
                   child: Stack(
