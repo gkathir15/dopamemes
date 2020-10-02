@@ -54,8 +54,19 @@ class _MainFeedListState extends State<MainFeedList> {
               centerTitle: true,
               elevation: 0,
             ),
-            bottomNavigationBar: BottomAppBar(),
+            bottomNavigationBar: BottomAppBar(
+              notchMargin: 4,
+              child: Row(
+                children: [
+                  IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+                  Spacer(),
+                  IconButton(icon: Icon(Icons.search), onPressed: () {}),
+                  IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
+                ],
+              ),
+            ),
             floatingActionButton: FloatingActionButton(
+              shape: ,
               onPressed: () {
                 showModalBottomSheet<void>(
                     context: context,

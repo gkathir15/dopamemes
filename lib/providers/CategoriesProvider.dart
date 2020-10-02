@@ -13,7 +13,7 @@ class CategoriesProvider with ChangeNotifier {
   NewPostProvider _newPostProv;
   PostProvider _postProvider;
 
-  CategoriesProvider(this._postProvider, this._newPostProv);
+  // CategoriesProvider(this._postProvider, this._newPostProv);
 
   fetchCategories() async {
     Response response = await Dio().get(Conts.baseUrl + "api/v1/categories");

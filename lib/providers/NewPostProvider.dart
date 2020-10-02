@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 class NewPostProvider with ChangeNotifier {
   PostProvider _postsProvider;
 
-  NewPostProvider(this._postsProvider);
+//  NewPostProvider(this._postsProvider);
 
   UploadStatus _uploadStatus = UploadStatus.NONE;
 
