@@ -31,13 +31,13 @@ class PostsCardState extends State<PostsCard> {
     if (_document.fileUrl == null) _widget = Container();
 
     return Padding(
-      padding: const EdgeInsets.only(left: 6, right: 6, top: 3),
+      padding: const EdgeInsets.only(left: 2, right: 2, top: 2),
       child: InkWell(
         child: Card(
           shadowColor: Theme.of(context).cardTheme.shadowColor,
           elevation: 2,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.0)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

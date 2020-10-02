@@ -1,5 +1,4 @@
 import 'package:admob_flutter/admob_flutter.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/exports/WidgetExports.dart';
@@ -103,18 +102,7 @@ class _MainFeedListState extends State<MainFeedList> {
             ),
           );
         } else {
-          return Scaffold(
-            body: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Center(
-                child: Text(
-                  "Dopamemes",
-                  style: GoogleFonts.bangers(fontSize: 50),
-                ),
-              ),
-            ),
-          );
+          return Splash();
         }
       },
     );

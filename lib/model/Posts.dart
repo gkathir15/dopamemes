@@ -35,7 +35,7 @@ class Posts {
     categoryId = json['category_id'];
     createdAt = json['created_at'];
     fileUrl = json['file_url'];
-    isMature = json['is_mature'];
+    isMature = json['is_mature'].toString();
     ownerDetails = json['owner_details'] != null
         ? new OwnerDetails.fromJson(json['owner_details'])
         : null;

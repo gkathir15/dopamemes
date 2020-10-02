@@ -6,3 +6,4 @@ export 'package:dopamemes/widgets/VideoPostWidget.dart';
 export 'package:dopamemes/widgets/YtPostWidedget.dart';
 export 'package:dopamemes/widgets/AdMobBannerAd.dart';
 export 'package:dopamemes/widgets/CategoriesList.dart';
+export 'package:dopamemes/widgets/Splash.dart';
