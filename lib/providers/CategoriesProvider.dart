@@ -7,11 +7,8 @@ import 'package:dopamemes/exports/ModelExports.dart';
 
 class CategoriesProvider with ChangeNotifier {
   List<Categories> categories = List();
-  Categories mainCategory;
+  Categories mainCategory = Categories(sId: "0", displayName: "All");
   Categories newPostUploadCategory;
-
-  NewPostProvider _newPostProv;
-  PostProvider _postProvider;
 
   // CategoriesProvider(this._postProvider, this._newPostProv);
 
@@ -24,7 +21,6 @@ class CategoriesProvider with ChangeNotifier {
     categories.addAll(categoriesResponse.data.catagories);
     notifyListeners();
 
-    mainCategory = categories[0];
     newPostUploadCategory = categories[0];
   }
 
@@ -33,4 +29,9 @@ class CategoriesProvider with ChangeNotifier {
   }
 
   List<Categories> allCategories() => categories.toSet().toList();
+
+  setMainCategory(Categories selectedCategory) {
+    mainCategory = selectedCategory;
+    notifyListeners();
+  }
 }

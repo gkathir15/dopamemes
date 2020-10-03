@@ -66,7 +66,6 @@ class _MainFeedListState extends State<MainFeedList> {
               ),
             ),
             floatingActionButton: FloatingActionButton(
-              shape: ,
               onPressed: () {
                 showModalBottomSheet<void>(
                     context: context,
@@ -87,10 +86,17 @@ class _MainFeedListState extends State<MainFeedList> {
                   Builder(
                     builder: (bContext) {
                       if (Provider.of<NewPostProvider>(bContext).status() ==
+                          UploadStatus.UPDATED) {
+                       Provider.of<PostProvider>(context,listen: false).addNewUploadedPost( Provider.of<NewPostProvider>(bContext,listen: false).pollQueue());
+                      }
+
+                      if (Provider.of<NewPostProvider>(bContext).status() ==
                           UploadStatus.UPLOADING) {
-                        return LinearProgressIndicator(minHeight: 10);
+                        return SafeArea(child: LinearProgressIndicator());
                       } else
-                        return Container();
+                        return Container(
+                          height: 0,
+                        );
                     },
                   ),
                   Expanded(child: PostsList()),

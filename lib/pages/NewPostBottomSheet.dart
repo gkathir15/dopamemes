@@ -5,35 +5,32 @@ import 'package:flutter/services.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:dopamemes/exports/PagesExport.dart';
 
-class NewPostBottomSheet extends StatefulWidget{
-
-
+class NewPostBottomSheet extends StatefulWidget {
   @override
   State createState() {
     return NewPostBottomSheetState();
   }
 }
 
-
-class NewPostBottomSheetState extends State<NewPostBottomSheet>
-{
+class NewPostBottomSheetState extends State<NewPostBottomSheet> {
   TextEditingController dialogTextController;
   FocusNode focusNode;
   bool isYtClicked = false;
   @override
   Widget build(BuildContext context) {
-
     return Container(
       child: Padding(
-        padding: const EdgeInsets.only(left: 8,right: 8,top: 12,bottom: 20),
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 12, bottom: 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 8,right: 8,top: 8,bottom: 24),
+              padding:
+                  const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 24),
               child: Text("Create a new Post with"),
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
@@ -45,8 +42,8 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
                       Navigator.of(context).push(PageRouteBuilder(
                           opaque: false,
                           pageBuilder: (BuildContext context, _, __) =>
-                              NewPostDialog.withPath(PostType.IMAGE,
-                                  file.path)));
+                              NewPostDialog.withPath(
+                                  PostType.IMAGE, file.path)));
                     } else {
                       Navigator.pop(context);
                     }
@@ -65,20 +62,21 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
                 ),
                 InkWell(
                   onTap: () async {
-
-                    var file = await FilePicker.getFile(type: FileType.video,allowCompression: true);
+                    var file = await FilePicker.getFile(
+                        type: FileType.video, allowCompression: true);
                     print(file.path);
 
                     if (file != null) {
+                      Navigator.pop(context);
                       Navigator.of(context).push(PageRouteBuilder(
                           opaque: false,
                           pageBuilder: (BuildContext context, _, __) =>
-                              NewPostDialog.withPath(PostType.VIDEO,
-                                  file.path)));
+                              NewPostDialog.withPath(
+                                  PostType.VIDEO, file.path)));
+                      
                     } else {
                       Navigator.pop(context);
                     }
-
                   },
                   child: Card(
                     child: Padding(
@@ -93,13 +91,12 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
                   ),
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     Navigator.pop(context);
                     Navigator.of(context).push(PageRouteBuilder(
                         opaque: false,
                         pageBuilder: (BuildContext context, _, __) =>
-                            NewPostDialog(
-                                PostType.YOUTUBE)));
+                            NewPostDialog(PostType.YOUTUBE)));
                   },
                   child: Card(
                     child: Padding(
@@ -113,13 +110,12 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
                     ),
                   ),
                 ),
-
-
-
-              ],),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -151,32 +147,25 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
                       ),
                     ),
                   ),
-                ],),
+                ],
+              ),
             ),
           ],
         ),
       ),
     );
-
   }
-
-
-
 
   @override
   void initState() {
-
     dialogTextController = TextEditingController();
     focusNode = FocusNode();
 
     super.initState();
   }
 
-
   @override
-  void reassemble() {
-
-  }
+  void reassemble() {}
 
   @override
   void dispose() {
@@ -185,7 +174,5 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet>
   }
 
   @override
-  void didChangeDependencies() {
-
-  }
+  void didChangeDependencies() {}
 }

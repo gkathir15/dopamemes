@@ -12,20 +12,27 @@ class CategoriesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          leading: ClipOval(
-            child: CachedNetworkImage(
-              imageUrl: Provider.of<CategoriesProvider>(context)
-                  .allCategories()[index]
-                  .displayIcon,
-              width: 50,
-              height: 50,
-              fit: BoxFit.contain,
+        return InkWell(
+          onTap: () {
+            Provider.of<CategoriesProvider>(context,listen: false).setMainCategory(
+                Provider.of<CategoriesProvider>(context,listen: false).allCategories()[index]);
+            Navigator.of(context).pop();
+          },
+          child: ListTile(
+            leading: ClipOval(
+              child: CachedNetworkImage(
+                imageUrl: Provider.of<CategoriesProvider>(context)
+                    .allCategories()[index]
+                    .displayIcon,
+                width: 50,
+                height: 50,
+                fit: BoxFit.contain,
+              ),
             ),
+            title: Text(Provider.of<CategoriesProvider>(context)
+                .allCategories()[index]
+                .displayName),
           ),
-          title: Text(Provider.of<CategoriesProvider>(context)
-              .allCategories()[index]
-              .displayName),
         );
       },
       itemCount:

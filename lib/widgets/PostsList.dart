@@ -13,10 +13,19 @@ class PostsList extends StatelessWidget {
         builder:
             (BuildContext buildContext, AsyncSnapshot<List<Posts>> snapshot) {
           if (snapshot.hasData) {
+            var localList = snapshot.data;
+            if (Provider.of<CategoriesProvider>(context).mainCategory.sId !=
+                "0") {
+              localList = snapshot.data
+                  .where((element) =>
+                      element.categoryDetails.sId ==
+                      Provider.of<CategoriesProvider>(context).mainCategory.sId)
+                  .toList();
+            }
             return ListView.builder(
-                itemCount: snapshot.data.length,
+                itemCount: localList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if (index == snapshot.data.length - 1) {
+                  if (index == localList.length - 1) {
                     print(snapshot.data[index].sId);
                     if (Provider.of<PostProvider>(context, listen: false)
                             .lastId !=
@@ -27,16 +36,16 @@ class PostsList extends StatelessWidget {
                     Provider.of<PostProvider>(context, listen: false).lastId =
                         snapshot.data.last.sId;
                   }
-                  if (snapshot.data[index].postType == "youtube") {
-                    return PostsCard(snapshot.data[index],
-                        YtPostWidget(snapshot.data[index]));
-                  } else if (snapshot.data[index].postType == "image") {
-                    return PostsCard(snapshot.data[index],
-                        ImagePostWidget(snapshot.data[index]));
-                  } else if (snapshot.data[index].postType == "video") {
-                    return PostsCard(snapshot.data[index],
-                        VideoPostWidget(snapshot.data[index]));
-                  } else if (snapshot.data[index].postType == "ad") {
+                  if (localList[index].postType == "youtube") {
+                    return PostsCard(
+                        localList[index], YtPostWidget(localList[index]));
+                  } else if (localList[index].postType == "image") {
+                    return PostsCard(
+                        localList[index], ImagePostWidget(localList[index]));
+                  } else if (localList[index].postType == "video") {
+                    return PostsCard(
+                        localList[index], VideoPostWidget(localList[index]));
+                  } else if (localList[index].postType == "ad") {
                     return AdMobBannerAd();
                   } else {
                     return Container();

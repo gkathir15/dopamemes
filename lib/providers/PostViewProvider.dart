@@ -47,4 +47,8 @@ class PostProvider with ChangeNotifier {
 
   ///dummy profiel id 5f4bf11b4eece7b043c8cc29
 
+  addNewUploadedPost(Posts posts) {
+    _pData.insert(0, posts);
+    postsData = allPostsFuture();
+  }
 }
