@@ -1,3 +1,4 @@
+import 'package:dopamemes/pages/VideoHorizontalScroller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:dopamemes/exports/PagesExport.dart';
@@ -52,11 +53,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Dopamemes",
-      showPerformanceOverlay: false,
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData(),
+      themeMode: ThemeMode.system,
+      theme: ThemeData(),
       routes: {
         '/': (context) => MainFeedList(),
         "login": (context) => GooleSigninPage(),
+        "fullVideo":(context)=>VideoHorizontalScroller()
       },
     );
   }

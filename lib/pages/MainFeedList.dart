@@ -29,7 +29,9 @@ class _MainFeedListState extends State<MainFeedList> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Provider.of<PostProvider>(context).postsData,
-      builder: (BuildContext context, AsyncSnapshot<List<Posts>> snapshot) {
+      builder:
+      
+       (BuildContext context, AsyncSnapshot<List<Posts>> snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
             extendBodyBehindAppBar: true,
@@ -57,17 +59,23 @@ class _MainFeedListState extends State<MainFeedList> {
             bottomNavigationBar: BottomAppBar(
               notchMargin: 4,
               child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  IconButton(icon: Icon(Icons.menu), onPressed: () {}),
-                  Spacer(),
+                  IconButton(icon: Icon(LineAwesomeIcons.film), onPressed: () {
+                     Navigator.pushNamed(context, 'fullVideo');
+                  }),
                   IconButton(icon: Icon(Icons.search), onPressed: () {}),
                   IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
+                   Spacer(),
                 ],
               ),
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 showModalBottomSheet<void>(
+              
+                  backgroundColor: Theme.of(context).bottomSheetTheme.backgroundColor,
                     context: context,
                     builder: (BuildContext context) {
                       return NewPostBottomSheet();
