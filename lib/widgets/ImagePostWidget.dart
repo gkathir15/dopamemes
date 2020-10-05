@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 
 class ImagePostWidget extends StatelessWidget{
-  Posts documents;
+ final  Posts documents;
   ImagePostWidget(this.documents);
 
 

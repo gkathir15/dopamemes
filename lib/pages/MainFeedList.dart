@@ -62,12 +62,12 @@ class _MainFeedListState extends State<MainFeedList> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  IconButton(icon: Icon(LineAwesomeIcons.film), onPressed: () {
+                  IconButton(icon: Icon(LineAwesomeIcons.film,), onPressed: () {
                      Navigator.pushNamed(context, 'fullVideo');
                   }),
                   IconButton(icon: Icon(Icons.search), onPressed: () {}),
                   IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
-                   Spacer(),
+                
                 ],
               ),
             ),
@@ -86,7 +86,7 @@ class _MainFeedListState extends State<MainFeedList> {
               child: Icon(Icons.add),
             ),
             floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
+                FloatingActionButtonLocation.endDocked,
             body: Container(
               child: Column(
                 mainAxisSize: MainAxisSize.min,

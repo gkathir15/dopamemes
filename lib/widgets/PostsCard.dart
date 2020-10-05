@@ -7,8 +7,8 @@ import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:timeago/timeago.dart' as timeAgo;
 
 class PostsCard extends StatefulWidget {
-  Posts _document;
-  Widget _widget;
+  final Posts _document;
+  final Widget _widget;
 
   PostsCard(this._document, this._widget);
 

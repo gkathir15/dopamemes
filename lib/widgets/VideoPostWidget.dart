@@ -24,7 +24,7 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
-      key: UniqueKey(),
+      key: ValueKey(_documents.sId),
       onVisibilityChanged: (visibilityInfo) {
         double visiblePercentage = visibilityInfo.visibleFraction * 100;
 

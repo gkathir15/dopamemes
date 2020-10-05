@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart' as Yt;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YtPostWidget extends StatefulWidget {
-  Posts documents;
+  final Posts documents;
 
   YtPostWidget(this.documents);
 
@@ -18,61 +18,50 @@ class YtPostWidget extends StatefulWidget {
 }
 
 class YtPostWidgetState extends State<YtPostWidget> {
-  Posts documents;
-  YtPostWidgetState(this.documents);
+  Posts _documents;
+  YtPostWidgetState(this._documents);
   YoutubePlayerController _controller;
-  ValueNotifier<bool> _isClicked = ValueNotifier(false);
+  // ValueNotifier<bool> _isClicked = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-        builder: (_, bool value, Widget child) {
-          return !value
-              ? AspectRatio(
-                  aspectRatio: (16 / 9),
-                  child: Stack(
-                    children: [
-                      Align(
-                        child: CachedNetworkImage(
-                            imageUrl: Yt.YoutubePlayer.getThumbnail(
-                                videoId: Yt.YoutubePlayer.convertUrlToId(
-                                    documents.fileUrl)),
-                            errorWidget: (_, __, ___) =>
-                                YoutubePlayer(controller: _controller)),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: InkWell(
-                          child: Icon(
-                            LineAwesomeIcons.play,
-                            size: 50,
-                          ),
-                          onTap: () {
-                            _isClicked.value = true;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : YoutubePlayer(controller: _controller);
-        },
-        valueListenable: _isClicked,
+    return VisibilityDetector(
+      key: ValueKey(_documents.sId),
+      onVisibilityChanged: (visibilityInfo) {
+        double visiblePercentage = visibilityInfo.visibleFraction * 100;
+
+        if (_controller.value.isPlaying) {
+          if (visiblePercentage < 90) _controller.pause();
+        } else {
+          if (visiblePercentage > 90) _controller.play();
+        }
+      },
+      child: Center(
         child: AspectRatio(
-          aspectRatio: (16 / 9),
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
-        ));
+          aspectRatio: 16/9,
+                child: YoutubePlayer(
+                  showVideoProgressIndicator: false,
+                  bottomActions: [Yt.PlayPauseButton()],
+              controller: _controller,
+              thumbnail: CachedNetworkImage(
+                  imageUrl: Yt.YoutubePlayer.getThumbnail(
+                      videoId:
+                          Yt.YoutubePlayer.convertUrlToId(_documents.fileUrl)))),
+        ),
+      ),
+    );
   }
 
   @override
   void initState() {
     _controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(documents.fileUrl),
+        initialVideoId: YoutubePlayer.convertUrlToId(_documents.fileUrl),
         flags: YoutubePlayerFlags(
-            controlsVisibleAtStart: true,
-            autoPlay: false,
+      
+            hideControls: true,
+            enableCaption: false,
+            controlsVisibleAtStart: false,
+            autoPlay: true,
             disableDragSeek: true));
     super.initState();
   }

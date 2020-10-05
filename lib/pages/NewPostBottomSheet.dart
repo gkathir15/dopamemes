@@ -21,142 +21,144 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet> {
   Widget build(BuildContext context) {
     return Container(
       decoration: new BoxDecoration(
-                        borderRadius: new BorderRadius.only(
-                            topLeft: const Radius.circular(10.0),
-                            topRight: const Radius.circular(10.0))),
-        child: Padding(
-    padding: const EdgeInsets.only(left: 8, right: 8, top: 12, bottom: 20),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 24),
-          child: Text("Create a new Post with"),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
+          borderRadius: new BorderRadius.only(
+              topLeft: const Radius.circular(10.0),
+              topRight: const Radius.circular(10.0))),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 12, bottom: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            InkWell(
-              onTap: () async {
-                var resp = await FilePicker.platform.pickFiles();
-                if (resp != null) {
-                  Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) =>
-                          NewPostDialog.withPath(
-                              PostType.IMAGE, resp.files.single.path)));
-                } else {
-                  Navigator.pop(context);
-                }
-              },
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(LineAwesomeIcons.file_image_o),
-                      Text("IMAGE",style: GoogleFonts.roboto())
-                    ],
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 24),
+              child: Text("Create a new Post with"),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                InkWell(
+                  onTap: () async {
+                    var resp = await FilePicker.platform.pickFiles();
+                    if (resp != null) {
+                      Navigator.of(context).push(PageRouteBuilder(
+                          opaque: false,
+                          pageBuilder: (BuildContext context, _, __) =>
+                              NewPostDialog.withPath(
+                                  PostType.IMAGE, resp.files.single.path)));
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(LineAwesomeIcons.file_image_o),
+                          Text("IMAGE", style: GoogleFonts.roboto())
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            InkWell(
-              onTap: () async {
-                var resp = await  FilePicker.platform.pickFiles();
-                print(resp.files.single.path);
+                InkWell(
+                  onTap: () async {
+                    var resp = await FilePicker.platform.pickFiles();
+                    print(resp.files.single.path);
 
-                if (resp != null) {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) =>
-                          NewPostDialog.withPath(
-                              PostType.VIDEO, resp.files.single.path)));
-                  
-                } else {
-                  Navigator.pop(context);
-                }
-              },
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(LineAwesomeIcons.file_video_o),
-                      Text("VIDEO",style: GoogleFonts.roboto(),)
-                    ],
+                    if (resp != null) {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(PageRouteBuilder(
+                          opaque: false,
+                          pageBuilder: (BuildContext context, _, __) =>
+                              NewPostDialog.withPath(
+                                  PostType.VIDEO, resp.files.single.path)));
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(LineAwesomeIcons.file_video_o),
+                          Text(
+                            "VIDEO",
+                            style: GoogleFonts.roboto(),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) =>
-                        NewPostDialog(PostType.YOUTUBE)));
-              },
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(LineAwesomeIcons.youtube),
-                      Text("YOUTUBE",style: GoogleFonts.roboto())
-                    ],
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.of(context).push(PageRouteBuilder(
+                        opaque: false,
+                        pageBuilder: (BuildContext context, _, __) =>
+                            NewPostDialog(PostType.YOUTUBE)));
+                  },
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(LineAwesomeIcons.youtube),
+                          Text("YOUTUBE", style: GoogleFonts.roboto())
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
+            // Padding(
+            //   padding: const EdgeInsets.all(16.0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     mainAxisSize: MainAxisSize.max,
+            //     children: [
+            //       InkWell(
+            //         onTap: () => Navigator.pop(context),
+            //         child: Card(
+            //           child: Padding(
+            //             padding: const EdgeInsets.all(8.0),
+            //             child: Row(
+            //               children: <Widget>[
+            //                 Icon(LineAwesomeIcons.link),
+            //                 Text("Link")
+            //               ],
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       InkWell(
+            //         onTap: () => Navigator.pop(context),
+            //         child: Card(
+            //           child: Padding(
+            //             padding: const EdgeInsets.all(8.0),
+            //             child: Row(
+            //               children: <Widget>[
+            //                 Icon(LineAwesomeIcons.file_text),
+            //                 Text("Text")
+            //               ],
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
-        // Padding(
-        //   padding: const EdgeInsets.all(16.0),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     mainAxisSize: MainAxisSize.max,
-        //     children: [
-        //       InkWell(
-        //         onTap: () => Navigator.pop(context),
-        //         child: Card(
-        //           child: Padding(
-        //             padding: const EdgeInsets.all(8.0),
-        //             child: Row(
-        //               children: <Widget>[
-        //                 Icon(LineAwesomeIcons.link),
-        //                 Text("Link")
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //       InkWell(
-        //         onTap: () => Navigator.pop(context),
-        //         child: Card(
-        //           child: Padding(
-        //             padding: const EdgeInsets.all(8.0),
-        //             child: Row(
-        //               children: <Widget>[
-        //                 Icon(LineAwesomeIcons.file_text),
-        //                 Text("Text")
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-      ],
-    ),
-        ),
-      );
+      ),
+    );
   }
 
   @override
@@ -177,5 +179,7 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet> {
   }
 
   @override
-  void didChangeDependencies() {}
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
 }

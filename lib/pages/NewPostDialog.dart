@@ -8,14 +8,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dopamemes/PostType.dart';
 import 'package:provider/provider.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
-import 'package:dopamemes/exports/PagesExport.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart' as Yt;
 
 class NewPostDialog extends StatefulWidget {
-  PostType postType;
-  String filePath;
+  final PostType postType;
+   String filePath;
 
   NewPostDialog(this.postType);
 

@@ -225,13 +225,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  flutter_neumorphic:
-    dependency: "direct main"
-    description:
-      name: flutter_neumorphic
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -277,6 +270,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  google_nav_bar:
+    dependency: "direct main"
+    description:
+      name: google_nav_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   google_sign_in:
     dependency: "direct main"
     description:
@@ -312,15 +312,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.4"
-  image_gallery:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "9b05527ac67aa7fe62c7aadd9217679935e6df7f"
-      url: "git://github.com/flutter-devs/image_gallery.git"
-    source: git
-    version: "1.2.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -655,13 +646,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.0.0+7"
-  youtube_player_iframe:
-    dependency: "direct main"
-    description:
-      name: youtube_player_iframe
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.0"
 sdks:
   dart: ">=2.10.0-110 <2.11.0"
   flutter: ">=1.20.0 <2.0.0"

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:dio_flutter_transformer/dio_flutter_transformer.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/model/PostsResponse.dart';
 import 'package:flutter/foundation.dart';

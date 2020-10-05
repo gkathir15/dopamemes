@@ -21,33 +21,33 @@ class AccountsProvider with ChangeNotifier {
   Future<UserCredential> googleUserCredd;
 
   Future<DopeUser> SignUporSignIN() async {
-   var value = await signInWithGoogle();
+    var value = await signInWithGoogle();
 
-   print(value.additionalUserInfo.toString());
-   print(value.credential.toString());
-   print(value.user.toString());
+    print(value.additionalUserInfo.toString());
+    print(value.credential.toString());
+    print(value.user.toString());
 
-   Response response;
-   if (value.additionalUserInfo.isNewUser) {
-     var data = UserDataRequest(
-         name: value.user.displayName,
-         imageUrl: value.user.photoURL,
-         email: value.user.email,
-         age: 0,
-         uid: value.user.uid)
-         .toJson();
-     response = await Dio().post(Conts.baseUrl + "api/v1/users", data: data);
-   } else {
-     response = await Dio()
-         .get(Conts.baseUrl + "api/v1/users/email/${value.user.email}");
-   }
-   print(response.toString());
-   var resp = UserSignupResponse.fromJson(json.decode(response.toString()));
+    Response response;
+    if (value.additionalUserInfo.isNewUser) {
+      var data = UserDataRequest(
+              name: value.user.displayName,
+              imageUrl: value.user.photoURL,
+              email: value.user.email,
+              age: 0,
+              uid: value.user.uid)
+          .toJson();
+      response = await Dio().post(Conts.baseUrl + "api/v1/users", data: data);
+    } else {
+      response = await Dio()
+          .get(Conts.baseUrl + "api/v1/users/email/${value.user.email}");
+    }
+    print(response.toString());
+    var resp = UserSignupResponse.fromJson(json.decode(response.toString()));
 
-   print(resp.data.user.toJson().toString());
-   saveUserExtras(resp.data.user.sId,resp.data.user.email);
-   // setSignUpState(SigningUpState.DONE);
-   return resp.data.user;
+    print(resp.data.user.toJson().toString());
+    saveUserExtras(resp.data.user.sId, resp.data.user.email);
+    // setSignUpState(SigningUpState.DONE);
+    return resp.data.user;
   }
 
   void doGogleAuth() {
@@ -83,8 +83,7 @@ class AccountsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
-  saveUserExtras(String userId,String email) async {
+  saveUserExtras(String userId, String email) async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     _prefs.setString("USER_EXTRAS_ID", userId);
     _prefs.setString("USER_EXTRAS_EMAIL", userId);
@@ -93,33 +92,26 @@ class AccountsProvider with ChangeNotifier {
   Future<DopeUser> getUserExtras() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     var email = _prefs.getString("USER_EXTRAS_ID");
-   var _id = _prefs.getString("USER_EXTRAS_EMAIL");
+    var _id = _prefs.getString("USER_EXTRAS_EMAIL");
 
-   if(_id!=null&&email!=null)
-     {
-      Response response = await Dio()
-           .get(Conts.baseUrl + "api/v1/users/email/email");
+    if (_id != null && email != null) {
+      Response response =
+          await Dio().get(Conts.baseUrl + "api/v1/users/email/email");
 
-    print(response.toString());
-    var resp = UserSignupResponse.fromJson(json.decode(response.toString()));
+      print(response.toString());
+      var resp = UserSignupResponse.fromJson(json.decode(response.toString()));
 
-    print(resp.data.user.toJson().toString());
-    saveUserExtras(resp.data.user.sId,resp.data.user.email);
-    // setSignUpState(SigningUpState.DONE);
-    return resp.data.user;
-
-     }
-
+      print(resp.data.user.toJson().toString());
+      saveUserExtras(resp.data.user.sId, resp.data.user.email);
+      // setSignUpState(SigningUpState.DONE);
+      return resp.data.user;
+    }
+    return null;
   }
 
   Future<DopeUser> loggedResponse() {
-    dopeuserResponse = getUserExtras();
+    return dopeuserResponse = getUserExtras();
   }
-
-
 }
-
-
-
 
 enum SigningUpState { NONE, LOADING, DONE }

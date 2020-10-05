@@ -8,9 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class NewPostProvider with ChangeNotifier {
-  PostProvider _postsProvider;
+ // PostProvider _postsProvider;
 
-  Queue<Posts> _uploadedQueue = new Queue();
+  final Queue<Posts> _uploadedQueue = new Queue();
 
 //  NewPostProvider(this._postsProvider);
 

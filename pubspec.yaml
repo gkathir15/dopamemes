@@ -36,10 +36,6 @@ dependencies:
   cached_video_player:
     git:
       url: git://github.com/gkathir15/flutter_cached_video_player.git
-
-  image_gallery:
-    git:
-      url: git://github.com/flutter-devs/image_gallery.git
   youtube_parser: ^1.1.0
   timeago: ^2.0.26
   image_picker: ^0.6.7+2
@@ -55,11 +51,9 @@ dependencies:
   google_sign_in: ^4.5.1
   dio: 3.0.10
   dio_flutter_transformer: ^3.0.2
-#use for playing YT in webView
-  youtube_player_iframe: ^1.1.0
+  google_nav_bar: ^3.0.0
   admob_flutter: "^0.3.4"
   visibility_detector: ^0.1.5
-  flutter_neumorphic: ^3.0.2
 
 
 
