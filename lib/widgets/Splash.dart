@@ -15,7 +15,8 @@ class Splash extends StatelessWidget {
         child: Center(
           child: Text(
             "Dopamemes",
-            style: GoogleFonts.bangers(fontSize: 60),
+            style: GoogleFonts.bangers(
+                fontSize: 80, letterSpacing: 3, fontWeight: FontWeight.w400),
           ),
         ),
       ),

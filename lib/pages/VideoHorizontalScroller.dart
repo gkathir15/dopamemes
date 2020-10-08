@@ -1,4 +1,5 @@
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:dopamemes/widgets/FullScreenCard.dart';
 import 'package:flutter/material.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/exports/WidgetExports.dart';
@@ -38,26 +39,13 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
                   scrollDirection: Axis.vertical,
                   itemBuilder: (BuildContext context, int index) {
                     if (_localList[index].postType == "youtube") {
-                      return YtPostWidget(_localList[index]);
+                      return FullScreenCard(postWidget: YtPostWidget(_localList[index]),posts: _localList[index]);
                     } else if (_localList[index].postType == "video") {
-                      return VideoPostWidget(_localList[index]);
+                      return FullScreenCard(postWidget:VideoPostWidget(_localList[index]),posts: _localList[index]);
                     } else if (_localList[index].postType == "ad") {
-                      return FutureBuilder(
-                        future: _admobReward.isLoaded,
-                        builder: (_, AsyncSnapshot<bool> snapshot) {
-                          if (snapshot.hasData) {
-                            if (snapshot.data) {
-                              _admobReward.show();
-                            } else {
-                              _pageController.jumpToPage(index + 1);
-                            }
-                            return Container();
-                          } else {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
+                      _admobReward.load();
+                      return Center(
+                        child: CircularProgressIndicator(),
                       );
                     } else {
                       return Container();
@@ -99,22 +87,26 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
   }
 
   onPageChanged(int index) {
-    if (_localList.length > index - 1 &&
-        _localList[index + 1].postType.toLowerCase() == "ad") {
-      _admobReward.load();
-    }
+    showAdIfLoaded(index);
 
     if (index == _localList.length - 1) {
-                    //print(snapshot.data[index].sId);
-                    if (Provider.of<PostProvider>(context, listen: false)
-                            .lastId !=
-                        _localList.last.sId) {
-                      Provider.of<PostProvider>(context, listen: false)
-                          .paginatePosts(_localList.last);
-                    }
-                    Provider.of<PostProvider>(context, listen: false).lastId =
-                        _localList.last.sId;
-                  }
+      //print(snapshot.data[index].sId);
+      if (Provider.of<PostProvider>(context, listen: false).lastId !=
+          _localList.last.sId) {
+        Provider.of<PostProvider>(context, listen: false)
+            .paginatePosts(_localList.last);
+      }
+      Provider.of<PostProvider>(context, listen: false).lastId =
+          _localList.last.sId;
+    }
+  }
+
+  showAdIfLoaded(int lastLastValue) async {
+    if (await _admobReward.isLoaded) _admobReward.load();
+    {
+      _admobReward.show();
+     // _pageController.jumpToPage(lastLastValue+1);
+    }
   }
 
   admobListener(AdmobAdEvent event, Map<String, dynamic> args) {

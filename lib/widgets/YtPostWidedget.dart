@@ -61,7 +61,7 @@ class YtPostWidgetState extends State<YtPostWidget> {
             hideControls: true,
             enableCaption: false,
             controlsVisibleAtStart: false,
-            autoPlay: true,
+            autoPlay: false,
             disableDragSeek: true));
     super.initState();
   }

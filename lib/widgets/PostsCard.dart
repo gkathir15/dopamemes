@@ -31,71 +31,64 @@ class PostsCardState extends State<PostsCard> {
     if (_document.fileUrl == null) _widget = Container();
 
     return Padding(
-      padding: const EdgeInsets.only(left: 2, right: 2, top: 2),
-      child: InkWell(
-        child: Card(
-          shadowColor: Theme.of(context).cardTheme.shadowColor,
-          elevation: 2,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.0)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: [
-                  Card(
-                    child: SizedBox(
-                      width: 30,
-                      height: 30,
-                      child: CachedNetworkImage(
-                          imageUrl: _document.ownerDetails.imageUrl != null
-                              ? _document.ownerDetails.imageUrl
-                              : "https://via.placeholder.com/150"),
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                  ),
-                  Text(_document.ownerDetails.displayName)
-                ],
-              ),
-              Text(_document.categoryDetails.displayName),
-              _widget,
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0, top: 4.0),
-                child: Text(
-                  _document.caption,
-                  style: GoogleFonts.nunito(),
-                  textScaleFactor: 1.2,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0, top: 4.0),
-                child: Text(
-                  timeAgo.format(DateTime.fromMillisecondsSinceEpoch(
-                      (_document.createdAt * 1000).toInt())),
-                  style: GoogleFonts.nunito(),
-                  textScaleFactor: 0.6,
-                ),
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.end,
+      padding: const EdgeInsets.only(top: 2),
+      child: Card(
+            child: InkWell(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  InkWell(
-                    child: Card(
-                      shape: cardRadius,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            right: 8, left: 8, top: 2, bottom: 2),
-                        child: Icon(LineAwesomeIcons.send_o),
-                      ),
+                  _widget, //The content widget..
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+                    child: Text(
+                      _document.caption,
+                      style: GoogleFonts.roboto(),
+                      textScaleFactor: 1.2,
                     ),
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8.0, top: 2.0, bottom: 4.0),
+                                child: Text(_document.categoryDetails.displayName,
+                                    style: GoogleFonts.roboto()),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Text(
+                                  timeAgo.format(
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                          (_document.createdAt * 1000).toInt())),
+                                  style: GoogleFonts.roboto(),
+                                  textScaleFactor: 0.6,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      InkWell(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              right: 2, left: 2, top: 2, bottom: 2),
+                          child: Icon(LineAwesomeIcons.share,size: 20,),
+                        ),
+                      )
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
+            ),
       ),
     );
   }

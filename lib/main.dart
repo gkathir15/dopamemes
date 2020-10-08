@@ -1,11 +1,12 @@
 import 'package:dopamemes/pages/VideoHorizontalScroller.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:dopamemes/exports/PagesExport.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 
 void main() {
-  //GestureBinding.instance.resamplingEnabled = true;
+//  GestureBinding.instance.resamplingEnabled = true;
   runApp(
     MultiProvider(
       child: MyApp(),
@@ -53,13 +54,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Dopamemes",
-      darkTheme: ThemeData(),
+      darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.system,
       theme: ThemeData(),
       routes: {
         '/': (context) => MainFeedList(),
         "login": (context) => GooleSigninPage(),
-        "fullVideo":(context)=>VideoHorizontalScroller()
+        "fullVideo": (context) => VideoHorizontalScroller()
       },
     );
   }

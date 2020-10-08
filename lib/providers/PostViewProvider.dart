@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
@@ -17,7 +18,7 @@ class PostProvider with ChangeNotifier {
     PostsResponse postsResponse =
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
-    _pData.addAll(postsResponse.data.posts);
+    _pData.addAll(pumpAds(postsResponse.data.posts));
     // _pData.add(Posts(postType: "ad"));
     postsData = allPostsFuture();
     notifyListeners();
@@ -29,6 +30,13 @@ class PostProvider with ChangeNotifier {
     return _pData;
   }
 
+  List<Posts> pumpAds(List<Posts> list) {
+    if (list.length > 9) {
+      list.insert(5, Posts(sId: "0", postType: "ad"));
+    }
+    return list;
+  }
+
   paginatePosts(Posts lastPost) async {
     print(lastPost.toJson().toString());
     var url = Conts.baseUrl + "api/v1/posts?lastId=${lastPost.sId}";
@@ -38,7 +46,7 @@ class PostProvider with ChangeNotifier {
     PostsResponse postsResponse =
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
-    _pData.addAll(postsResponse.data.posts);
+    _pData.addAll(pumpAds(postsResponse.data.posts));
     // _pData.add(Posts(postType: "ad"));
     postsData = allPostsFuture();
     notifyListeners();

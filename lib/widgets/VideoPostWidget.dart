@@ -35,6 +35,8 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
         }
       },
       child: Stack(
+        alignment: AlignmentDirectional.bottomStart,
+
         children: [
           Align(
             child: GestureDetector(
@@ -51,13 +53,10 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
               },
             ),
           ),
+          _PlayPauseOverlay(controller: _controller),
           Align(
-            child: _PlayPauseOverlay(controller: _controller),
             alignment: Alignment.bottomRight,
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Container(
+                      child: Container(
               height: 40,
               width: 40,
               child: GestureDetector(
@@ -141,7 +140,6 @@ class _PlayPauseOverlay extends StatelessWidget {
         return Center(
           child: Icon(
             Icons.pause,
-            color: Colors.white,
             size: 30.0,
           ),
         );
@@ -149,7 +147,6 @@ class _PlayPauseOverlay extends StatelessWidget {
         return Center(
           child: Icon(
             Icons.play_arrow,
-            color: Colors.white,
             size: 30.0,
           ),
         );

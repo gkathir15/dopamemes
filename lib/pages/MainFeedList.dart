@@ -12,6 +12,7 @@ import 'package:dopamemes/providers/PostViewProvider.dart';
 import 'package:dopamemes/pages/NewPostBottomSheet.dart';
 import 'package:dopamemes/widgets/PostsList.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MainFeedList extends StatefulWidget {
   MainFeedList({Key key}) : super(key: key);
@@ -38,7 +39,7 @@ class _MainFeedListState extends State<MainFeedList> {
             appBar: AppBar(
               title: Text(
                 "Dopamemes",
-                style: GoogleFonts.bangers(fontSize: 50),
+                style: GoogleFonts.bangers(fontSize: 50,letterSpacing: 3,fontWeight: FontWeight.w300),
               ),
               actions: [
                 InkWell(
@@ -56,15 +57,18 @@ class _MainFeedListState extends State<MainFeedList> {
               centerTitle: true,
               elevation: 0,
             ),
-            bottomNavigationBar: BottomAppBar(
+            bottomNavigationBar: 
+            
+            BottomAppBar(
+              shape: CircularNotchedRectangle(),
               notchMargin: 4,
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  IconButton(icon: Icon(LineAwesomeIcons.film,), onPressed: () {
+                  IconButton(icon: Icon(LineAwesomeIcons.film,),enableFeedback: true, onPressed: () {
                      Navigator.pushNamed(context, 'fullVideo');
-                  }),
+                  },),
                   IconButton(icon: Icon(Icons.search), onPressed: () {}),
                   IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
                 
