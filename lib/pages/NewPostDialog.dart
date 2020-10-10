@@ -3,17 +3,21 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:dio/dio.dart';
+import 'package:dopamemes/exports/WidgetExports.dart';
 import 'package:dopamemes/pages/CategoriesFullScreenDialog.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dopamemes/PostType.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart' as Yt;
 
 class NewPostDialog extends StatefulWidget {
   final PostType postType;
-   String filePath;
+  String filePath;
 
   NewPostDialog(this.postType);
 
@@ -33,8 +37,8 @@ class NewPostDialogState extends State<NewPostDialog> {
 // YoutubePlayerController _youtubePlayerController;
   CachedVideoPlayerController _videoPlayerController;
   TextEditingController titleTextController;
-  TextEditingController despController;
   TextEditingController linkTextController;
+  ValueNotifier<bool> _isNFSW = ValueNotifier(false);
 
   NewPostDialogState(this._postType);
 
@@ -67,17 +71,35 @@ class NewPostDialogState extends State<NewPostDialog> {
               ),
             ),
             LinkWidget(linkTextController, _postType),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Mature content",style: GoogleFonts.roboto(fontSize: 20),),
+                ValueListenableBuilder(
+                  valueListenable: _isNFSW,
+                  builder: (_, bool isChecked, __) {
+                    return Switch(
+                      value: isChecked,
+                      onChanged: (state) {
+                        _isNFSW.value = state;
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
             InkWell(
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text("Category"),
+                  Text("Select Category"),
                   Row(
                     children: [
-                      Text(Provider.of<CategoriesProvider>(context,
-                              listen: false)
-                          .newPostUploadCategory
-                          .displayName),
-                      Icon(Icons.arrow_drop_down_circle)
+                      Text(
+                          Provider.of<CategoriesProvider>(context, listen: true)
+                              .newPostUploadCategory
+                              .displayName),
+                      Icon(LineAwesomeIcons.angle_down)
                     ],
                   ),
                 ],
@@ -100,7 +122,10 @@ class NewPostDialogState extends State<NewPostDialog> {
 
                 Navigator.of(context).pop();
               },
-              child: Text("Continue"),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text("Continue",style: GoogleFonts.roboto(fontSize: 20),),
+              ),
             )
           ],
         ),
@@ -109,13 +134,6 @@ class NewPostDialogState extends State<NewPostDialog> {
   }
 
   youtubeUpload() {
-
-    // {
-    //   "caption": "Among us",
-    // "ownerId": "5f4bf11b4eece7b043c8cc29",
-    // "categoryId": "5f526da37eca858748fa1ca2",
-    // "youtubeUrl": "https://www.youtube.com/watch?v=CtmdUiv_sxs"
-    // }
     var map = Map<String, String>();
     map["caption"] = titleTextController.text;
     map["ownerId"] = "5f4bf11b4eece7b043c8cc29";
@@ -155,29 +173,24 @@ class NewPostDialogState extends State<NewPostDialog> {
   void dispose() {
     super.dispose();
     titleTextController?.dispose();
-    despController?.dispose();
     linkTextController?.dispose();
-    //  _youtubePlayerController?.dispose();
   }
 
   Widget fromPath(String path, PostType type) {
+    var size = MediaQuery.of(context).size;
     if (_filePath != null) {
       if (type == PostType.IMAGE) {
-        return Image.file(File(path));
+        return SizedBox(child: Image.file(File(path)), width: size.width,
+          height: size.height / 3);
       } else if (type == PostType.VIDEO) {
-        _videoPlayerController =
-            CachedVideoPlayerController.file(File(_filePath));
-        _videoPlayerController.initialize();
-        var size = MediaQuery.of(context).size;
+        
         return SizedBox(
-          child: CachedVideoPlayer(_videoPlayerController),
+          child: VideoPostWidget(path),
           width: size.width,
           height: size.height / 3,
         );
       } else if (type == PostType.YOUTUBE && path != null) {
-        return CachedNetworkImage(
-            imageUrl: Yt.YoutubePlayer.getThumbnail(
-                videoId: Yt.YoutubePlayer.convertUrlToId(path)));
+        return YtPostWidget(path);
       } else
         return Container();
     } else

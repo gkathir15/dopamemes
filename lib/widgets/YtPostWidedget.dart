@@ -7,26 +7,26 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart' as Yt;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YtPostWidget extends StatefulWidget {
-  final Posts documents;
+  final String _url;
 
-  YtPostWidget(this.documents);
+  YtPostWidget(this._url);
 
   @override
   State<StatefulWidget> createState() {
-    return YtPostWidgetState(documents);
+    return YtPostWidgetState(_url);
   }
 }
 
 class YtPostWidgetState extends State<YtPostWidget> {
-  Posts _documents;
-  YtPostWidgetState(this._documents);
+  String _url;
+  YtPostWidgetState(this._url);
   YoutubePlayerController _controller;
   // ValueNotifier<bool> _isClicked = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
-      key: ValueKey(_documents.sId),
+      key: ValueKey(_url),
       onVisibilityChanged: (visibilityInfo) {
         double visiblePercentage = visibilityInfo.visibleFraction * 100;
 
@@ -44,9 +44,10 @@ class YtPostWidgetState extends State<YtPostWidget> {
                   bottomActions: [Yt.PlayPauseButton()],
               controller: _controller,
               thumbnail: CachedNetworkImage(
-                  imageUrl: Yt.YoutubePlayer.getThumbnail(
-                      videoId:
-                          Yt.YoutubePlayer.convertUrlToId(_documents.fileUrl)))),
+                fit: BoxFit.fitWidth,
+                    imageUrl: Yt.YoutubePlayer.getThumbnail(
+                        videoId:
+                            Yt.YoutubePlayer.convertUrlToId(_url)))),
         ),
       ),
     );
@@ -55,7 +56,7 @@ class YtPostWidgetState extends State<YtPostWidget> {
   @override
   void initState() {
     _controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(_documents.fileUrl),
+        initialVideoId: YoutubePlayer.convertUrlToId(_url),
         flags: YoutubePlayerFlags(
       
             hideControls: true,

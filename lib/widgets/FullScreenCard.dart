@@ -10,25 +10,36 @@ class FullScreenCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        postWidget,
-        Padding(
-            padding: EdgeInsets.only(left: 4, right: 4),
-            child: Text(
-              posts.caption,
-              style: GoogleFonts.roboto(fontSize: 5.0),
-            )),
-        Padding(
-          padding: EdgeInsets.only(left: 4, right: 4),
-          child: Text(
-            posts.categoryDetails.displayName,
-            style: GoogleFonts.roboto(fontSize: 3.0),
-          ),
-        )
-      ],
+    return Expanded(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+
+        children: [
+          postWidget,
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+              padding: EdgeInsets.only(left: 4, right: 4),
+              child: Text(
+                posts.caption,
+                style: GoogleFonts.roboto(fontSize: 20),
+              )),
+                Padding(
+                  padding: EdgeInsets.only(left: 4, right: 4,top: 4),
+                  child: Text(
+                    posts.categoryDetails.displayName,
+                    style: GoogleFonts.roboto(fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

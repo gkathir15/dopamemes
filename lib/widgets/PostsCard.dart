@@ -43,8 +43,7 @@ class PostsCardState extends State<PostsCard> {
                     padding: const EdgeInsets.only(left: 8.0, top: 8.0),
                     child: Text(
                       _document.caption,
-                      style: GoogleFonts.roboto(),
-                      textScaleFactor: 1.2,
+                      style: GoogleFonts.roboto(fontSize:20,fontWeight: FontWeight.bold),
                     ),
                   ),
 

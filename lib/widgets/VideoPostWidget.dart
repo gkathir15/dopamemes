@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,26 +6,26 @@ import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPostWidget extends StatefulWidget {
-  final Posts _documents;
+  final String _url;
 
-  VideoPostWidget(this._documents);
+  VideoPostWidget(this._url);
 
   @override
   State<StatefulWidget> createState() {
-    return VideoPostWidgetState(_documents);
+    return VideoPostWidgetState(_url);
   }
 }
 
 class VideoPostWidgetState extends State<VideoPostWidget> {
-  Posts _documents;
-  VideoPostWidgetState(this._documents);
+  String _Url;
+  VideoPostWidgetState(this._Url);
   CachedVideoPlayerController _controller;
   ValueNotifier<bool> muteNotifier = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
-      key: ValueKey(_documents.sId),
+      key: ValueKey(_Url),
       onVisibilityChanged: (visibilityInfo) {
         double visiblePercentage = visibilityInfo.visibleFraction * 100;
 
@@ -36,7 +37,6 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
       },
       child: Stack(
         alignment: AlignmentDirectional.bottomStart,
-
         children: [
           Align(
             child: GestureDetector(
@@ -56,7 +56,7 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
           _PlayPauseOverlay(controller: _controller),
           Align(
             alignment: Alignment.bottomRight,
-                      child: Container(
+            child: Container(
               height: 40,
               width: 40,
               child: GestureDetector(
@@ -85,8 +85,12 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
 
   @override
   void initState() {
-    print(_documents.fileUrl);
-    _controller = CachedVideoPlayerController.network(_documents.fileUrl);
+    print(_Url);
+    if (_Url.startsWith("https"))
+      _controller = CachedVideoPlayerController.network(_Url);
+    else
+      _controller = CachedVideoPlayerController.file(File(_Url));
+
     // _controller.play();
 
     _controller.initialize().then((value) => {

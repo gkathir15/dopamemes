@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 
 class ImagePostWidget extends StatelessWidget{
- final  Posts documents;
-  ImagePostWidget(this.documents);
+ final  String _url;
+  ImagePostWidget(this._url);
 
 
 
@@ -14,6 +14,6 @@ class ImagePostWidget extends StatelessWidget{
   Widget build(BuildContext context) {
 
     return
-      CachedNetworkImage(imageUrl: documents.fileUrl);
+      CachedNetworkImage(imageUrl: _url);
   }
 }

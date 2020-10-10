@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CategoriesList extends StatelessWidget {
@@ -14,8 +15,10 @@ class CategoriesList extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
           onTap: () {
-            Provider.of<CategoriesProvider>(context,listen: false).setMainCategory(
-                Provider.of<CategoriesProvider>(context,listen: false).allCategories()[index]);
+            Provider.of<CategoriesProvider>(context, listen: false)
+                .setMainCategory(
+                    Provider.of<CategoriesProvider>(context, listen: false)
+                        .allCategories()[index]);
             Navigator.of(context).pop();
           },
           child: ListTile(
@@ -29,9 +32,12 @@ class CategoriesList extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
             ),
-            title: Text(Provider.of<CategoriesProvider>(context)
-                .allCategories()[index]
-                .displayName),
+            title: Text(
+              Provider.of<CategoriesProvider>(context)
+                  .allCategories()[index]
+                  .displayName,
+              style: GoogleFonts.roboto(fontSize:20),
+            ),
           ),
         );
       },

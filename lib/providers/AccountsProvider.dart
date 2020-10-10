@@ -91,12 +91,12 @@ class AccountsProvider with ChangeNotifier {
 
   Future<DopeUser> getUserExtras() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    var email = _prefs.getString("USER_EXTRAS_ID");
-    var _id = _prefs.getString("USER_EXTRAS_EMAIL");
+    var email = _prefs.getString("USER_EXTRAS_EMAIL");
+    var _id = _prefs.getString("USER_EXTRAS_ID");
 
     if (_id != null && email != null) {
       Response response =
-          await Dio().get(Conts.baseUrl + "api/v1/users/email/email");
+          await Dio().get(Conts.baseUrl + "api/v1/users/email/$email");
 
       print(response.toString());
       var resp = UserSignupResponse.fromJson(json.decode(response.toString()));

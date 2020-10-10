@@ -38,13 +38,13 @@ class PostsList extends StatelessWidget {
                   }
                   if (localList[index].postType == "youtube") {
                     return PostsCard(
-                        localList[index], YtPostWidget(localList[index]));
+                        localList[index], YtPostWidget(localList[index].fileUrl));
                   } else if (localList[index].postType == "image") {
                     return PostsCard(
-                        localList[index], ImagePostWidget(localList[index]));
+                        localList[index], ImagePostWidget(localList[index].fileUrl));
                   } else if (localList[index].postType == "video") {
                     return PostsCard(
-                        localList[index], VideoPostWidget(localList[index]));
+                        localList[index], VideoPostWidget(localList[index].fileUrl));
                   } else if (localList[index].postType == "ad") {
                     return AdMobBannerAd();
                   } else {

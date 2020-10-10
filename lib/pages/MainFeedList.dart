@@ -1,5 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:dopamemes/exports/PagesExport.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/exports/WidgetExports.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -47,7 +48,15 @@ class _MainFeedListState extends State<MainFeedList> {
                     child: Icon(LineAwesomeIcons.user),
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, 'login');
+                   // Navigator.pushNamed(context, 'login');
+
+                    showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return GoogleSigninPage();
+                    },
+                    isDismissible: true,
+                    isScrollControlled: false);
                   },
                 )
               ],
@@ -78,8 +87,6 @@ class _MainFeedListState extends State<MainFeedList> {
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 showModalBottomSheet<void>(
-              
-                  backgroundColor: Theme.of(context).bottomSheetTheme.backgroundColor,
                     context: context,
                     builder: (BuildContext context) {
                       return NewPostBottomSheet();
@@ -149,11 +156,12 @@ class _MainFeedListState extends State<MainFeedList> {
     if (!isReqSent) {
       isReqSent = true;
       //  Provider.of<AccountsProvider>(context).getCheckIfLoggedIn();
+      Firebase.initializeApp();
       Provider.of<PostProvider>(context).fetchPosts();
       Provider.of<CategoriesProvider>(context).fetchCategories();
       Provider.of<AccountsProvider>(context).loggedResponse();
       Admob.initialize("ca-app-pub-6011809596899441~9949339806");
-      Firebase.initializeApp();
+      
     }
   }
 }

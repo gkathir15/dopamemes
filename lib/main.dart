@@ -59,7 +59,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(),
       routes: {
         '/': (context) => MainFeedList(),
-        "login": (context) => GooleSigninPage(),
         "fullVideo": (context) => VideoHorizontalScroller()
       },
     );

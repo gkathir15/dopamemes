@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/exports/WidgetExports.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:flutter_native_admob/native_admob_controller.dart';
+import 'package:flutter_native_admob/native_admob_options.dart';
 import 'package:provider/provider.dart';
 
 class VideoHorizontalScroller extends StatefulWidget {
@@ -14,7 +17,7 @@ class VideoHorizontalScroller extends StatefulWidget {
 
 class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
   PageController _pageController;
-  AdmobReward _admobReward;
+  final _nativeAdController = NativeAdmobController();
 
   List<Posts> _localList;
 
@@ -39,13 +42,24 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
                   scrollDirection: Axis.vertical,
                   itemBuilder: (BuildContext context, int index) {
                     if (_localList[index].postType == "youtube") {
-                      return FullScreenCard(postWidget: YtPostWidget(_localList[index]),posts: _localList[index]);
+                      return FullScreenCard(
+                          postWidget: YtPostWidget(_localList[index].fileUrl),
+                          posts: _localList[index]);
                     } else if (_localList[index].postType == "video") {
-                      return FullScreenCard(postWidget:VideoPostWidget(_localList[index]),posts: _localList[index]);
+                      return FullScreenCard(
+                          postWidget:
+                              VideoPostWidget(_localList[index].fileUrl),
+                          posts: _localList[index]);
                     } else if (_localList[index].postType == "ad") {
-                      _admobReward.load();
-                      return Center(
-                        child: CircularProgressIndicator(),
+                      return NativeAdmob(
+                        loading: Center(child: CircularProgressIndicator()),
+                        error: Text("Failed to load the ad"),
+                        adUnitID: AdMobAdProvider.nativeAdvancedVideo,
+                        controller: _nativeAdController,
+                        type: NativeAdmobType.full,
+                        options: NativeAdmobOptions(
+                          ratingColor: Colors.red,
+                        ),
                       );
                     } else {
                       return Container();
@@ -65,15 +79,6 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
 
   @override
   void initState() {
-    _admobReward = AdmobReward(
-        adUnitId: AdMobAdProvider.testBannerAd,
-        listener: (AdmobAdEvent event, Map<String, dynamic> args) {
-          if (event == AdmobAdEvent.rewarded) {
-            print('User was rewarded!');
-            print('Reward type: ${args['type']}');
-            print('Reward amount: ${args['amount']}');
-          }
-        });
     _pageController = PageController();
 
     super.initState();
@@ -81,39 +86,9 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
 
   @override
   void dispose() {
-    _admobReward.dispose();
     _pageController.dispose();
     super.dispose();
   }
 
-  onPageChanged(int index) {
-    showAdIfLoaded(index);
-
-    if (index == _localList.length - 1) {
-      //print(snapshot.data[index].sId);
-      if (Provider.of<PostProvider>(context, listen: false).lastId !=
-          _localList.last.sId) {
-        Provider.of<PostProvider>(context, listen: false)
-            .paginatePosts(_localList.last);
-      }
-      Provider.of<PostProvider>(context, listen: false).lastId =
-          _localList.last.sId;
-    }
-  }
-
-  showAdIfLoaded(int lastLastValue) async {
-    if (await _admobReward.isLoaded) _admobReward.load();
-    {
-      _admobReward.show();
-     // _pageController.jumpToPage(lastLastValue+1);
-    }
-  }
-
-  admobListener(AdmobAdEvent event, Map<String, dynamic> args) {
-    if (event == AdmobAdEvent.rewarded) {
-      print('User was rewarded!');
-      print('Reward type: ${args['type']}');
-      print('Reward amount: ${args['amount']}');
-    }
-  }
+  onPageChanged(int index) {}
 }

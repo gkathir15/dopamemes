@@ -41,8 +41,9 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet> {
               children: <Widget>[
                 InkWell(
                   onTap: () async {
-                    var resp = await FilePicker.platform.pickFiles();
+                    var resp = await FilePicker.platform.pickFiles(type: FileType.image,allowCompression: true,allowMultiple: false);
                     if (resp != null) {
+                      Navigator.pop(context);
                       Navigator.of(context).push(PageRouteBuilder(
                           opaque: false,
                           pageBuilder: (BuildContext context, _, __) =>
@@ -66,7 +67,7 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet> {
                 ),
                 InkWell(
                   onTap: () async {
-                    var resp = await FilePicker.platform.pickFiles();
+                    var resp = await FilePicker.platform.pickFiles(type: FileType.video,allowMultiple: false);
                     print(resp.files.single.path);
 
                     if (resp != null) {
