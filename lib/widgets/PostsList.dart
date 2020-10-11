@@ -13,12 +13,10 @@ class PostsList extends StatelessWidget {
         builder:
             (BuildContext buildContext, AsyncSnapshot<List<Posts>> snapshot) {
           if (snapshot.hasData) {
-            // var snapshot.data
-             = snapshot.data;
+            // var snapshot.data = snapshot.data;
             // if (Provider.of<CategoriesProvider>(context).mainCategory.sId !=
             //     "0") {
-            //   snapshot.data
-             = snapshot.data
+            //   snapshot.data = snapshot.data
             //       .where((element) =>
             //           element.categoryId ==
             //           Provider.of<CategoriesProvider>(context).mainCategory.sId)
@@ -35,28 +33,18 @@ class PostsList extends StatelessWidget {
                       Provider.of<PostProvider>(context, listen: false)
                           .paginatePosts(snapshot.data.last);
                     }
-                    Provider.of<PostProvider>(context, listen: false).lastId =
-                        snapshot.data.last.sId;
+                    Provider.of<PostProvider>(context, listen: false).lastId=snapshot.data.last.sId;
                   }
                   if (snapshot.data[index].postType == "youtube") {
                     return PostsCard(
-                        snapshot.data
-                        [index], YtPostWidget(snapshot.data
-                        [index].fileUrl));
-                  } else if (snapshot.data
-                  [index].postType == "image") {
+                        snapshot.data[index], YtPostWidget(snapshot.data[index].fileUrl));
+                  } else if (snapshot.data[index].postType == "image") {
                     return PostsCard(
-                        snapshot.data
-                        [index], ImagePostWidget(snapshot.data
-                        [index].fileUrl));
-                  } else if (snapshot.data
-                  [index].postType == "video") {
+                        snapshot.data[index], ImagePostWidget(snapshot.data[index].fileUrl));
+                  } else if (snapshot.data[index].postType == "video") {
                     return PostsCard(
-                        snapshot.data
-                        [index], VideoPostWidget(snapshot.data
-                        [index].fileUrl));
-                  } else if (snapshot.data
-                  [index].postType == "ad") {
+                        snapshot.data[index], VideoPostWidget(snapshot.data[index].fileUrl));
+                  } else if (snapshot.data[index].postType == "ad") {
                     return AdMobBannerAd();
                   } else {
                     return Container();

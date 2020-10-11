@@ -1,6 +1,13 @@
+import 'package:hive/hive.dart';
+
+part 'OwnerDetails.g.dart';
+@HiveType(typeId: 2)
 class OwnerDetails {
+  @HiveField(0)
   String sId;
+  @HiveField(1)
   String displayName;
+  @HiveField(3)
   String imageUrl;
 
   OwnerDetails({this.sId, this.displayName, this.imageUrl});

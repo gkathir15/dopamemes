@@ -1,9 +1,20 @@
+import 'package:hive/hive.dart';
+
+part 'Categories.g.dart';
+
+@HiveType(typeId: 4)
 class Categories {
+  @HiveField(0)
   String sId;
+  @HiveField(1)
   double createdAt;
+  @HiveField(2)
   String displayIcon;
+  @HiveField(3)
   String displayName;
+  @HiveField(4)
   bool isMature;
+  @HiveField(5)
   double updatedAt;
 
   Categories(

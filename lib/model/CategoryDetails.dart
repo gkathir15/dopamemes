@@ -1,6 +1,13 @@
+import 'package:hive/hive.dart';
+
+part 'CategoryDetails.g.dart';
+@HiveType(typeId: 3)
 class CategoryDetails {
+  @HiveField(0)
   String sId;
+  @HiveField(1)
   String displayIcon;
+  @HiveField(3)
   String displayName;
 
   CategoryDetails({this.sId, this.displayIcon, this.displayName});

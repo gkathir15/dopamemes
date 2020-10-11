@@ -1,12 +1,13 @@
 import 'package:dopamemes/pages/VideoHorizontalScroller.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:dopamemes/exports/PagesExport.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() {
-//  GestureBinding.instance.resamplingEnabled = true;
+Hive.initFlutter();
   runApp(
     MultiProvider(
       child: MyApp(),

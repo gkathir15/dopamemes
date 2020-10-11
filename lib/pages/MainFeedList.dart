@@ -14,6 +14,8 @@ import 'package:dopamemes/pages/NewPostBottomSheet.dart';
 import 'package:dopamemes/widgets/PostsList.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class MainFeedList extends StatefulWidget {
   MainFeedList({Key key}) : super(key: key);
@@ -31,16 +33,17 @@ class _MainFeedListState extends State<MainFeedList> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Provider.of<PostProvider>(context).postsData,
-      builder:
-      
-       (BuildContext context, AsyncSnapshot<List<Posts>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<Posts>> snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
             extendBodyBehindAppBar: true,
             appBar: AppBar(
               title: Text(
                 "Dopamemes",
-                style: GoogleFonts.bangers(fontSize: 50,letterSpacing: 3,fontWeight: FontWeight.w300),
+                style: GoogleFonts.bangers(
+                    fontSize: 50,
+                    letterSpacing: 3,
+                    fontWeight: FontWeight.w300),
               ),
               actions: [
                 InkWell(
@@ -48,15 +51,15 @@ class _MainFeedListState extends State<MainFeedList> {
                     child: Icon(LineAwesomeIcons.user),
                   ),
                   onTap: () {
-                   // Navigator.pushNamed(context, 'login');
+                    // Navigator.pushNamed(context, 'login');
 
                     showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return GoogleSigninPage();
-                    },
-                    isDismissible: true,
-                    isScrollControlled: false);
+                        context: context,
+                        builder: (BuildContext context) {
+                          return GoogleSigninPage();
+                        },
+                        isDismissible: true,
+                        isScrollControlled: false);
                   },
                 )
               ],
@@ -66,21 +69,24 @@ class _MainFeedListState extends State<MainFeedList> {
               centerTitle: true,
               elevation: 0,
             ),
-            bottomNavigationBar: 
-            
-            BottomAppBar(
+            bottomNavigationBar: BottomAppBar(
               shape: CircularNotchedRectangle(),
               notchMargin: 4,
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  IconButton(icon: Icon(LineAwesomeIcons.film,),enableFeedback: true, onPressed: () {
-                     Navigator.pushNamed(context, 'fullVideo');
-                  },),
+                  IconButton(
+                    icon: Icon(
+                      LineAwesomeIcons.film,
+                    ),
+                    enableFeedback: true,
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'fullVideo');
+                    },
+                  ),
                   IconButton(icon: Icon(Icons.search), onPressed: () {}),
                   IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
-                
                 ],
               ),
             ),
@@ -106,7 +112,11 @@ class _MainFeedListState extends State<MainFeedList> {
                     builder: (bContext) {
                       if (Provider.of<NewPostProvider>(bContext).status() ==
                           UploadStatus.UPDATED) {
-                       Provider.of<PostProvider>(context,listen: false).addNewUploadedPost( Provider.of<NewPostProvider>(bContext,listen: false).pollQueue());
+                        Provider.of<PostProvider>(context, listen: false)
+                            .addNewUploadedPost(Provider.of<NewPostProvider>(
+                                    bContext,
+                                    listen: false)
+                                .pollQueue());
                       }
 
                       if (Provider.of<NewPostProvider>(bContext).status() ==
@@ -144,13 +154,11 @@ class _MainFeedListState extends State<MainFeedList> {
       isReqSent = true;
       //  Provider.of<AccountsProvider>(context).getCheckIfLoggedIn();
       Firebase.initializeApp();
+      
       Provider.of<PostProvider>(context).fetchPosts();
       Provider.of<CategoriesProvider>(context).fetchCategories();
       Provider.of<AccountsProvider>(context).loggedResponse();
       Admob.initialize("ca-app-pub-6011809596899441~9949339806");
-      
     }
   }
 }
-
-

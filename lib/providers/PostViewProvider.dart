@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/model/PostsResponse.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 
 import 'Conts.dart';
 
@@ -10,6 +11,11 @@ class PostProvider with ChangeNotifier {
   Future<List<Posts>> postsData;
   List<Posts> _pData = List();
   String lastId = "";
+  Box<Posts> _postsHiveBox;
+
+  PostProvider() {
+    openHiveBox();
+  }
 
   Future<List<Posts>> getFilteredList(Categories categoryDetails) async {
     if (categoryDetails.sId == "0")
@@ -67,5 +73,9 @@ class PostProvider with ChangeNotifier {
   addNewUploadedPost(Posts posts) {
     _pData.insert(0, posts);
     postsData = allPostsFuture();
+  }
+
+  openHiveBox() async {
+    _postsHiveBox = await Hive.openBox("POSTS");
   }
 }

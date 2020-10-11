@@ -1,16 +1,31 @@
 import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:hive/hive.dart';
 
+part 'Posts.g.dart';
+
+@HiveType(typeId : 1)
 class Posts {
+  @HiveField(0)
   String sId;
+  @HiveField(1)
   String caption;
+  @HiveField(2)
   CategoryDetails categoryDetails;
+  @HiveField(3)
   String categoryId;
+  @HiveField(4)
   double createdAt;
+  @HiveField(5)
   String fileUrl;
+  @HiveField(6)
   String isMature;
+  @HiveField(7)
   OwnerDetails ownerDetails;
+  @HiveField(8)
   String ownerId;
+  @HiveField(9)
   String postType;
+  @HiveField(10)
   double updatedAt;
 
   Posts(

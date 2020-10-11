@@ -17,19 +17,20 @@ class AppSettingsPage extends StatelessWidget {
       body: SettingContainer(sections: [
         SettingSection(title: "Appearence",
         items: [
-  //         SettingRadioItem<String>(
-  // title: 'Theme',
-  // displayValue: '',
-  // selectedValue: ThemeMode.system.toString(),
-  // items: [
-  //   SettingRadioValue('Light', 'Light'),
-  //   SettingRadioValue('Dark', 'Dark'),
-  //   SettingRadioValue('System Default', 'System Default'),
-  // ],
-  // onChanged: (v) => setState(() => theme = v),
-//),
+          SettingRadioItem<String>(
+  title: 'Theme',
+  displayValue: ThemeMode.dark.toString(),
+  selectedValue: ThemeMode.system.toString(),
+  items: [
+    SettingRadioValue('Light', 'Light'),
+    SettingRadioValue('Dark', 'Dark'),
+    SettingRadioValue('System Default', 'System Default'),
+  ],
+  onChanged: (v) => {},
+),
 
         ],),
+        SettingSection(title:"Playback",items: [])
       ],),
     );
   }

@@ -21,17 +21,22 @@ class DopeDrawer extends StatelessWidget {
             ),
             Expanded(child: CategoriesList()),
             InkWell(
-              child: ListTile(
-                leading: Icon(
-                  LineAwesomeIcons.cog,
-                  size: 50,
+                child: ListTile(
+              leading: Icon(
+                LineAwesomeIcons.cog,
+                size: 30,
+              ),
+              title: Text(
+                "Settings",
+                style: GoogleFonts.roboto(
+                  fontSize: 20,
                 ),
-                title: Text("Settings"),
               ),
               onTap: () {
+                Navigator.pop(context);
                 Navigator.of(context).pushNamed("settings");
               },
-            )
+            ))
           ],
         ),
       ),
