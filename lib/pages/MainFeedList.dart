@@ -122,20 +122,7 @@ class _MainFeedListState extends State<MainFeedList> {
                 ],
               ),
             ),
-            drawer: Drawer(
-              elevation: 8,
-              child: SafeArea(
-                child: Column(
-                  children: [
-                    Text(
-                      "Categories",
-                      style: GoogleFonts.roboto(fontSize: 25),
-                    ),
-                    Expanded(child: CategoriesList()),
-                  ],
-                ),
-              ),
-            ),
+            drawer: DopeDrawer(),
           );
         } else {
           return Splash();
@@ -165,3 +152,5 @@ class _MainFeedListState extends State<MainFeedList> {
     }
   }
 }
+
+

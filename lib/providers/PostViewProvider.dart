@@ -11,6 +11,17 @@ class PostProvider with ChangeNotifier {
   List<Posts> _pData = List();
   String lastId = "";
 
+  Future<List<Posts>> getFilteredList(Categories categoryDetails) async {
+    if (categoryDetails.sId == "0")
+      return postsData;
+    else {
+      var _data = await postsData;
+      return _data
+          .where((element) => element.categoryId == categoryDetails.sId)
+          .toList();
+    }
+  }
+
   fetchPosts() async {
     Response response = await Dio().get(Conts.baseUrl + "api/v1/posts");
     print(response.toString());

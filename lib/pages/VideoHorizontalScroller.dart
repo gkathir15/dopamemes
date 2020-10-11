@@ -17,7 +17,7 @@ class VideoHorizontalScroller extends StatefulWidget {
 
 class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
   PageController _pageController;
-  final _nativeAdController = NativeAdmobController();
+   NativeAdmobController _nativeAdController;
 
   List<Posts> _localList;
 
@@ -52,8 +52,9 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
                           posts: _localList[index]);
                     } else if (_localList[index].postType == "ad") {
                       return NativeAdmob(
+                        numberAds: _localList.where((element) => element.postType == "ad").length,
                         loading: Center(child: CircularProgressIndicator()),
-                        error: Text("Failed to load the ad"),
+                        error: CircularProgressIndicator(),
                         adUnitID: AdMobAdProvider.nativeAdvancedVideo,
                         controller: _nativeAdController,
                         type: NativeAdmobType.full,
@@ -80,13 +81,14 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
   @override
   void initState() {
     _pageController = PageController();
-
+    _nativeAdController = NativeAdmobController();
     super.initState();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
+    _nativeAdController.dispose();
     super.dispose();
   }
 

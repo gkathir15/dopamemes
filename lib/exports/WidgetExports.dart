@@ -7,3 +7,4 @@ export 'package:dopamemes/widgets/YtPostWidedget.dart';
 export 'package:dopamemes/widgets/AdMobBannerAd.dart';
 export 'package:dopamemes/widgets/CategoriesList.dart';
 export 'package:dopamemes/widgets/Splash.dart';
+export 'package:dopamemes/widgets/DopeDrawer.dart';

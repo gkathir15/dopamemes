@@ -1,16 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dopamemes/exports/ModelExports.dart';
 
 class ImagePostWidget extends StatelessWidget{
  final  String _url;
   ImagePostWidget(this._url);
-
-
-
-
-  @override
+@override
   Widget build(BuildContext context) {
 
     return

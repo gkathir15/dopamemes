@@ -59,7 +59,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(),
       routes: {
         '/': (context) => MainFeedList(),
-        "fullVideo": (context) => VideoHorizontalScroller()
+        "fullVideo": (context) => VideoHorizontalScroller(),
+        "settings": (context) => AppSettingsPage()
       },
     );
   }
