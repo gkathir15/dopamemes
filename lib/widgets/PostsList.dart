@@ -9,7 +9,7 @@ class PostsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Provider.of<PostProvider>(context).getFilteredList(Provider.of<CategoriesProvider>(context).mainCategory),
+        future:Provider.of<PostProvider>(context).getFilteredList(Provider.of<CategoriesProvider>(context).mainCategory),
         builder:
             (BuildContext buildContext, AsyncSnapshot<List<Posts>> snapshot) {
           if (snapshot.hasData) {

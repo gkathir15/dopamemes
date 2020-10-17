@@ -1,4 +1,7 @@
+import 'package:dopamemes/DopeTheme.dart';
+import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/pages/VideoHorizontalScroller.dart';
+import 'package:dopamemes/providers/AppSettingsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
@@ -6,8 +9,17 @@ import 'package:dopamemes/exports/PagesExport.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
-Hive.initFlutter();
+Future<void> main() async {
+ await  Hive.initFlutter();
+  Hive.registerAdapter(PostsAdapter());
+  Hive.registerAdapter(CategoriesAdapter());
+  Hive.registerAdapter(CategoryDetailsAdapter());
+  Hive.registerAdapter(OwnerDetailsAdapter());
+  Hive.registerAdapter(DopeUserAdapter());
+
+  await Hive.openBox<Categories>("CATEGORIES");
+  await Hive.openBox<Posts>("POSTS");
+  await Hive.openBox<DopeUser>("USER");
   runApp(
     MultiProvider(
       child: MyApp(),
@@ -21,6 +33,8 @@ Hive.initFlutter();
             create: (_) => CategoriesProvider()),
         ChangeNotifierProvider<NewPostProvider>(
             create: (_) => NewPostProvider()),
+        ChangeNotifierProvider<AppSettingProvider>(
+            create: (_) => AppSettingProvider()),
       ],
     ),
   );
@@ -55,9 +69,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Dopamemes",
-      darkTheme: ThemeData.dark(),
+      darkTheme: kDarkTheme,
       themeMode: ThemeMode.system,
-      theme: ThemeData(),
+      theme: kLightTheme,
       routes: {
         '/': (context) => MainFeedList(),
         "fullVideo": (context) => VideoHorizontalScroller(),

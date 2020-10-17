@@ -7,3 +7,4 @@ export 'package:dopamemes/model/UserDataRequest.dart';
 export 'package:dopamemes/model/OwnerDetails.dart';
 export 'package:dopamemes/model/CategoryDetails.dart';
 export 'package:dopamemes/model/NewPostResponse.dart';
+export 'package:dopamemes/model/AppSettingsModel.dart';

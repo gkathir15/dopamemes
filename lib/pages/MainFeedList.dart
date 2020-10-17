@@ -32,7 +32,7 @@ class _MainFeedListState extends State<MainFeedList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Provider.of<PostProvider>(context).postsData,
+      future: Provider.of<PostProvider>(context).getFilteredList(Provider.of<CategoriesProvider>(context).mainCategory),
       builder: (BuildContext context, AsyncSnapshot<List<Posts>> snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
@@ -69,27 +69,7 @@ class _MainFeedListState extends State<MainFeedList> {
               centerTitle: true,
               elevation: 0,
             ),
-            bottomNavigationBar: BottomAppBar(
-              shape: CircularNotchedRectangle(),
-              notchMargin: 4,
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      LineAwesomeIcons.film,
-                    ),
-                    enableFeedback: true,
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'fullVideo');
-                    },
-                  ),
-                  IconButton(icon: Icon(Icons.search), onPressed: () {}),
-                  IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
-                ],
-              ),
-            ),
+            bottomNavigationBar: BottomBar(),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 showModalBottomSheet<void>(
@@ -162,3 +142,5 @@ class _MainFeedListState extends State<MainFeedList> {
     }
   }
 }
+
+

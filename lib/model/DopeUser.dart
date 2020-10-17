@@ -1,22 +1,35 @@
+import 'package:hive/hive.dart';
+
+part 'DopeUser.g.dart';
+
+@HiveType(typeId:6)
 class DopeUser {
+  @HiveField(0)
   String sId;
+  @HiveField(1)
   int age;
+  @HiveField(2)
   double createdAt;
+  @HiveField(3)
   String displayName;
+  @HiveField(4)
   String email;
+  @HiveField(5)
   String imageUrl;
+  @HiveField(6)
   String uid;
+  @HiveField(7)
   double updatedAt;
 
   DopeUser(
       {this.sId,
-        this.age,
-        this.createdAt,
-        this.displayName,
-        this.email,
-        this.imageUrl,
-        this.uid,
-        this.updatedAt});
+      this.age,
+      this.createdAt,
+      this.displayName,
+      this.email,
+      this.imageUrl,
+      this.uid,
+      this.updatedAt});
 
   DopeUser.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

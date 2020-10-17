@@ -8,6 +8,7 @@ import 'package:dopamemes/model/UserSignupResponse.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountsProvider with ChangeNotifier {
@@ -17,6 +18,21 @@ class AccountsProvider with ChangeNotifier {
   Future<DopeUser> dopeuserResponse;
   //bool isLoggedInChecked=false;
   SigningUpState signingUpState = SigningUpState.NONE;
+
+
+  Box<DopeUser> _accountHiveBox;
+
+  AccountsProvider() {
+    openHiveBox();
+  }
+
+   openHiveBox() 
+   {
+
+     _accountHiveBox =  Hive.box<DopeUser>("USER");
+    
+
+  }
 
   Future<UserCredential> googleUserCredd;
 

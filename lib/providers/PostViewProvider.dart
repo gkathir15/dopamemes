@@ -11,20 +11,28 @@ class PostProvider with ChangeNotifier {
   Future<List<Posts>> postsData;
   List<Posts> _pData = List();
   String lastId = "";
-  Box<Posts> _postsHiveBox;
+  Box<Posts> postsHiveBox;
 
   PostProvider() {
+    print("PostsInit");
+    //  Hive.registerAdapter(PostsAdapter());
     openHiveBox();
   }
 
   Future<List<Posts>> getFilteredList(Categories categoryDetails) async {
-    if (categoryDetails.sId == "0")
-      return postsData;
-    else {
-      var _data = await postsData;
-      return _data
+    if (categoryDetails.sId == "0") {
+      var data = postsHiveBox.values.toList();
+     
+      return data;
+    } else {
+      var data = postsHiveBox.values
+          .toList()
           .where((element) => element.categoryId == categoryDetails.sId)
           .toList();
+       if (data.isEmpty) {
+        fetchPosts();
+      }
+      return data;
     }
   }
 
@@ -35,6 +43,7 @@ class PostProvider with ChangeNotifier {
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     _pData.addAll(pumpAds(postsResponse.data.posts));
+    postsHiveBox.addAll(postsResponse.data.posts);
     // _pData.add(Posts(postType: "ad"));
     postsData = allPostsFuture();
     notifyListeners();
@@ -62,6 +71,7 @@ class PostProvider with ChangeNotifier {
     PostsResponse postsResponse =
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
+    postsHiveBox.addAll(postsResponse.data.posts);
     _pData.addAll(pumpAds(postsResponse.data.posts));
     // _pData.add(Posts(postType: "ad"));
     postsData = allPostsFuture();
@@ -76,6 +86,6 @@ class PostProvider with ChangeNotifier {
   }
 
   openHiveBox() async {
-    _postsHiveBox = await Hive.openBox("POSTS");
+    postsHiveBox =  Hive.box<Posts>("POSTS");
   }
 }

@@ -12,32 +12,34 @@ class DopeDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       elevation: 8,
-      child: SafeArea(
-        child: Column(
-          children: [
-            Text(
-              "Categories",
-              style: GoogleFonts.roboto(fontSize: 25),
-            ),
-            Expanded(child: CategoriesList()),
-            InkWell(
-                child: ListTile(
-              leading: Icon(
-                LineAwesomeIcons.cog,
-                size: 30,
+      child: Container(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Text(
+                "Categories",
+                style: GoogleFonts.roboto(fontSize: 25),
               ),
-              title: Text(
-                "Settings",
-                style: GoogleFonts.roboto(
-                  fontSize: 20,
+              Expanded(child: CategoriesList()),
+              InkWell(
+                  child: ListTile(
+                leading: Icon(
+                  LineAwesomeIcons.cog,
+                  size: 30,
                 ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context).pushNamed("settings");
-              },
-            ))
-          ],
+                title: Text(
+                  "Settings",
+                  style: GoogleFonts.roboto(
+                    fontSize: 20,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("settings");
+                },
+              ))
+            ],
+          ),
         ),
       ),
     );
