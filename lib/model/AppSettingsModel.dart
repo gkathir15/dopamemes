@@ -3,19 +3,20 @@ import 'package:hive/hive.dart';
 part 'AppSettingsModel.g.dart';
 
 @HiveType(typeId: 5)
-class AppSettingsModel{
+class AppSettingsModel {
+
+  AppSettingsModel();
+
   @HiveField(0)
-  bool isSystemThemeSelected;
+  bool isSystemThemeSelected = true;
   @HiveField(1)
-  bool isDarkTheme ;
+  bool isDarkTheme = false;
   @HiveField(2)
-  bool isAutoPlayVideos ;
+  bool isAutoPlayVideos = true;
   @HiveField(3)
-  bool isMute;
+  bool isMute = true;
   @HiveField(4)
-  bool showNSFW;
+  bool showNSFW = false;
   @HiveField(5)
-  bool showNfswOverlay;
-
-
+  bool showNfswOverlay = true;
 }

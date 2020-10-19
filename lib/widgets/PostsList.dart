@@ -6,6 +6,7 @@ import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 
 class PostsList extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -22,7 +23,10 @@ class PostsList extends StatelessWidget {
             //           Provider.of<CategoriesProvider>(context).mainCategory.sId)
             //       .toList();
             // }
-            return ListView.builder(
+            return ListView.separated(
+              separatorBuilder: (context, index) => Divider(
+                height: 2,thickness: 4,endIndent: 2,
+      ),
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == snapshot.data.length - 1) {

@@ -8,13 +8,20 @@ class AppSettingProvider with ChangeNotifier {
     openHiveBox();
   }
 
-  Box<AppSettingsModel> _accountHiveBox;
+  AppSettingsModel defVal;
+  AppSettingsModel settings;
 
-  Future<Box<AppSettingsModel>> openHiveBox() async {
-    if (_accountHiveBox.isOpen) {
-      return _accountHiveBox;
-    } else {
-      return _accountHiveBox = await Hive.openBox<AppSettingsModel>("SETTING");
-    }
+  Box<AppSettingsModel> appSettingBox;
+
+  openHiveBox() {
+    appSettingBox = Hive.box<AppSettingsModel>("SETTING");
+    defVal = AppSettingsModel();
+    settings = appSettingBox.get("AppSettings", defaultValue: defVal);
+  }
+
+  setData(AppSettingsModel updatedModel) {
+    settings = updatedModel;
+    appSettingBox.put("AppSettings", settings);
+    notifyListeners();
   }
 }

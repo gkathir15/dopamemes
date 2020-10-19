@@ -30,80 +30,78 @@ class PostsCardState extends State<PostsCard> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size.width;
+    var height = size + (size / 4);
     if (_document.fileUrl == null) _widget = Container();
 
     return Padding(
       padding: const EdgeInsets.only(top: 2),
-      child: Card(
-        child: InkWell(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                constraints: BoxConstraints(maxHeight: size,minWidth: size),
-                child: PinchZoom(
-                  image: _widget,
-                  zoomedBackgroundColor: Colors.black.withOpacity(0.5),
-                  resetDuration: const Duration(milliseconds: 100),
-                  maxScale: 4,
-                ),
-              ), //The content widget..
-
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0, top: 8.0),
-                child: Text(
-                  _document.caption,
-                  style: GoogleFonts.roboto(
-                      fontSize: 20, fontWeight: FontWeight.bold),
-                ),
+      child: InkWell(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              constraints: BoxConstraints(
+                  maxHeight: height, minHeight: 0.0, minWidth: size - 20),
+              child: PinchZoom(
+                image: _widget,
+                zoomedBackgroundColor: Colors.black.withOpacity(0.5),
+                resetDuration: const Duration(milliseconds: 100),
+                maxScale: 4,
               ),
+            ), //The content widget..
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                
-                children: [
-                  Row(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 8.0, top: 2.0, bottom: 4.0),
-                            child: Text(_document.categoryDetails.displayName,
-                                style: GoogleFonts.roboto()),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+              child: Text(
+                _document.caption,
+                style: GoogleFonts.roboto(
+                    fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 8.0, top: 2.0, bottom: 4.0),
+                          child: Text(_document.categoryDetails.displayName,
+                              style: GoogleFonts.roboto()),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            timeAgo.format(DateTime.fromMillisecondsSinceEpoch(
+                                (_document.createdAt * 1000).toInt())),
+                            style: GoogleFonts.roboto(),
+                            textScaleFactor: 0.6,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              timeAgo.format(
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                      (_document.createdAt * 1000).toInt())),
-                              style: GoogleFonts.roboto(),
-                              textScaleFactor: 0.6,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  InkWell(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 2, left: 2, top: 2, bottom: 2),
-                      child: Icon(
-                        LineAwesomeIcons.share,
-                        size: 20,
-                      ),
+                        ),
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ],
-          ),
+                  ],
+                ),
+                InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        right: 2, left: 2, top: 2, bottom: 2),
+                    child: Icon(
+                      LineAwesomeIcons.share,
+                      size: 20,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ],
         ),
       ),
     );

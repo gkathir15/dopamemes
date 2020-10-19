@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/exports/WidgetExports.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:flutter_native_admob/native_admob_options.dart';
@@ -72,7 +73,7 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
               );
             }
           },
-          future: Provider.of<PostProvider>(context).postsData,
+          future: Provider.of<PostProvider>(context).getFilteredList(Provider.of<CategoriesProvider>(context).mainCategory),
         ),
       ),
     );
@@ -82,6 +83,7 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
   void initState() {
     _pageController = PageController();
     _nativeAdController = NativeAdmobController();
+    SystemChrome.setEnabledSystemUIOverlays([]);
     super.initState();
   }
 
@@ -89,6 +91,7 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
   void dispose() {
     _pageController.dispose();
     _nativeAdController.dispose();
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     super.dispose();
   }
 

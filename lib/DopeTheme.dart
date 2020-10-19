@@ -16,7 +16,7 @@ var kLightTheme = ThemeData(
       fontFamily: 'Proxima Nova',
       fontSize: 16,
       fontWeight: FontWeight.w800,
-      color: Color(0xFFFFFFFF),
+      color: Color(0xCEDAED),
     ),
     headline5: TextStyle(
       fontSize: 16.0,

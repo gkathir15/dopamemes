@@ -37,17 +37,25 @@ class YtPostWidgetState extends State<YtPostWidget> {
         }
       },
       child: Center(
-        child: AspectRatio(
-          aspectRatio: 16/9,
-                child: YoutubePlayer(
-                  showVideoProgressIndicator: false,
-                  bottomActions: [Yt.PlayPauseButton()],
-              controller: _controller,
-              thumbnail: CachedNetworkImage(
-                fit: BoxFit.fitWidth,
+        child: GestureDetector(
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: YoutubePlayer(
+                showVideoProgressIndicator: false,
+                bottomActions: [Yt.PlayPauseButton()],
+                controller: _controller,
+                thumbnail: CachedNetworkImage(
+                    fit: BoxFit.fitWidth,
                     imageUrl: Yt.YoutubePlayer.getThumbnail(
-                        videoId:
-                            Yt.YoutubePlayer.convertUrlToId(_url)))),
+                        videoId: Yt.YoutubePlayer.convertUrlToId(_url)))),
+          ),
+          onTap: () {
+            if (_controller.value.isPlaying)
+              _controller.pause();
+            else {
+              _controller.play();
+            }
+          },
         ),
       ),
     );
@@ -58,7 +66,6 @@ class YtPostWidgetState extends State<YtPostWidget> {
     _controller = YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(_url),
         flags: YoutubePlayerFlags(
-      
             hideControls: true,
             enableCaption: false,
             controlsVisibleAtStart: false,

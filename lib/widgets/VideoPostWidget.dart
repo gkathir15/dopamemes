@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPostWidget extends StatefulWidget {
@@ -40,18 +39,18 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
         children: [
           Align(
             child: GestureDetector(
-              child: AspectRatio(
-                  key: UniqueKey(),
-                  aspectRatio: _controller.value.aspectRatio > 0.0
-                      ? _controller.value.aspectRatio
-                      : 1.8,
-                  child: CachedVideoPlayer(_controller)),
-              onTap: () {
-                _controller.value.isPlaying
-                    ? _controller.pause()
-                    : _controller.play();
-              },
-            ),
+                child: AspectRatio(
+                    key: UniqueKey(),
+                    aspectRatio: _controller.value.aspectRatio > 0.0
+                        ? _controller.value.aspectRatio
+                        : 1.8,
+                    child: CachedVideoPlayer(_controller)),
+                onTap: () {
+                  _controller.value.isPlaying
+                      ? _controller.pause()
+                      : _controller.play();
+                },
+              ),
           ),
           _PlayPauseOverlay(controller: _controller),
           Align(
@@ -141,18 +140,14 @@ class _PlayPauseOverlay extends StatelessWidget {
       return Buffering();
     } else {
       if (value.isPlaying) {
-        return Center(
-          child: Icon(
-            Icons.pause,
-            size: 30.0,
-          ),
+        return Icon(
+          Icons.pause,
+          size: 30.0,
         );
       } else {
-        return Center(
-          child: Icon(
-            Icons.play_arrow,
-            size: 30.0,
-          ),
+        return Icon(
+          Icons.play_arrow,
+          size: 30.0,
         );
       }
     }
@@ -170,7 +165,6 @@ class Buffering extends StatelessWidget {
       height: 40,
       width: 40,
       child: CircularProgressIndicator(
-        backgroundColor: Colors.white,
       ),
     );
   }
