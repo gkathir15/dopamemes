@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:dopamemes/exports/ProviderExports.dart';
+import 'package:provider/provider.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart' as Yt;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -22,6 +24,7 @@ class YtPostWidgetState extends State<YtPostWidget> {
   YtPostWidgetState(this._url);
   YoutubePlayerController _controller;
   // ValueNotifier<bool> _isClicked = ValueNotifier(false);
+  AppSettingProvider settingsProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +53,9 @@ class YtPostWidgetState extends State<YtPostWidget> {
                         videoId: Yt.YoutubePlayer.convertUrlToId(_url)))),
           ),
           onTap: () {
-            if (_controller.value.isPlaying)
+            if (_controller.value.isPlaying) {
               _controller.pause();
-            else {
+            } else {
               _controller.play();
             }
           },
@@ -63,14 +66,17 @@ class YtPostWidgetState extends State<YtPostWidget> {
 
   @override
   void initState() {
+    settingsProvider = Provider.of<AppSettingProvider>(context);
     _controller = YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(_url),
         flags: YoutubePlayerFlags(
             hideControls: true,
             enableCaption: false,
             controlsVisibleAtStart: false,
-            autoPlay: false,
-            disableDragSeek: true));
+            autoPlay: settingsProvider.isAutolay(),
+            disableDragSeek: true)
+            );
+    settingsProvider.isMute() ? _controller.mute() : _controller.unMute();
     super.initState();
   }
 

@@ -18,7 +18,7 @@ class DopeDrawer extends StatelessWidget {
             children: [
               Text(
                 "Categories",
-                style: GoogleFonts.roboto(fontSize: 25),
+                style: GoogleFonts.roboto(fontSize: 30,fontWeight: FontWeight.w700),
               ),
               Expanded(child: CategoriesList()),
               InkWell(

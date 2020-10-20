@@ -27,14 +27,30 @@ class AppSettingsPage extends StatelessWidget {
               SettingRadioItem<String>(
                 priority: ItemPriority.normal,
                 title: 'Theme',
-                displayValue: ThemeMode.dark.toString(),
-                selectedValue: ThemeMode.system.toString(),
+                displayValue: selectedTheme(_appSettingsProvider),
+                selectedValue: selectedTheme(_appSettingsProvider),
                 items: [
                   SettingRadioValue('Light', 'Light'),
                   SettingRadioValue('Dark', 'Dark'),
                   SettingRadioValue('System Default', 'System Default'),
                 ],
-                onChanged: (v) => {},
+                onChanged: (v) => {
+                  if (v == "System Default")
+                    {
+                      _appSettingsProvider.settings.isSystemThemeSelected = true
+                      }
+                  else if (v == "Dark")
+                    {
+                      _appSettingsProvider.settings.isSystemThemeSelected = false,
+                      _appSettingsProvider.settings.isDarkTheme = true
+                    }else{
+                      _appSettingsProvider.settings.isSystemThemeSelected = false,
+                      _appSettingsProvider.settings.isDarkTheme = false
+                    },
+
+                    _appSettingsProvider.setData(_appSettingsProvider.settings),
+                    
+                },
               ),
             ],
           ),
@@ -54,8 +70,8 @@ class AppSettingsPage extends StatelessWidget {
                 title: "Volume Mute",
                 value: _appSettingsProvider.settings.isMute,
                 onChanged: (value) {
-                 _appSettingsProvider.settings.isMute= value;
-                _appSettingsProvider.setData(_appSettingsProvider.settings);
+                  _appSettingsProvider.settings.isMute = value;
+                  _appSettingsProvider.setData(_appSettingsProvider.settings);
                 },
                 description: "Mute videos"),
           ]),
@@ -63,19 +79,35 @@ class AppSettingsPage extends StatelessWidget {
             SettingSwitchItem(
               priority: ItemPriority.normal,
               title: "Allow NFSW content",
-              value: false,
-              onChanged: (value) {},
+              value: _appSettingsProvider.settings.showNSFW,
+              onChanged: (value) {
+                _appSettingsProvider.settings.showNSFW = value;
+                _appSettingsProvider.setData(_appSettingsProvider.settings);
+              },
               description: "Iam 18+ show NFSW",
             ),
             SettingSwitchItem(
                 priority: ItemPriority.normal,
                 title: "Hide NFSW content",
-                value: true,
-                onChanged: (value) {},
+                value: _appSettingsProvider.settings.showNfswOverlay,
+                onChanged: (value) {
+                  _appSettingsProvider.settings.showNfswOverlay = value;
+                  _appSettingsProvider.setData(_appSettingsProvider.settings);
+                },
                 description: "Show NFSW content"),
           ])
         ],
       ),
     );
+  }
+
+  String selectedTheme(AppSettingProvider provider) {
+    if (provider.settings.isSystemThemeSelected) {
+      return "System Default";
+    } else if (provider.settings.isDarkTheme) {
+      return "Dark Theme";
+    } else {
+      return "Light Theme";
+    }
   }
 }

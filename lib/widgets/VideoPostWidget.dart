@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:dopamemes/exports/ProviderExports.dart';
 
 class VideoPostWidget extends StatefulWidget {
   final String _url;
@@ -20,9 +22,11 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
   VideoPostWidgetState(this._Url);
   CachedVideoPlayerController _controller;
   ValueNotifier<bool> muteNotifier = ValueNotifier(false);
+  AppSettingProvider settingsProvider ;
 
   @override
   Widget build(BuildContext context) {
+    
     return VisibilityDetector(
       key: ValueKey(_Url),
       onVisibilityChanged: (visibilityInfo) {
@@ -84,6 +88,7 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
 
   @override
   void initState() {
+    settingsProvider = Provider.of<AppSettingProvider>(context);
     print(_Url);
     if (_Url.startsWith("https"))
       _controller = CachedVideoPlayerController.network(_Url);
@@ -94,9 +99,13 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
 
     _controller.initialize().then((value) => {
           setState(() {
+            if(settingsProvider.isAutolay())
             _controller.play();
+            
             _controller.setLooping(true);
-            _controller.setVolume(0.0);
+
+            
+            _controller.setVolume(settingsProvider.isMute()?0.0:1.0);
           })
         });
     super.initState();

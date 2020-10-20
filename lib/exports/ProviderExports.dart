@@ -8,3 +8,4 @@ export 'package:dopamemes/providers/CategoriesProvider.dart';
 export 'package:dopamemes/providers/AdMobAdProvider.dart';
 export 'package:dopamemes/providers/NewPostProvider.dart';
 export 'package:dopamemes/providers/Conts.dart';
+export 'package:dopamemes/providers/AppSettingsProvider.dart';

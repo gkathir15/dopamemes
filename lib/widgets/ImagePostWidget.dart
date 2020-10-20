@@ -9,6 +9,6 @@ class ImagePostWidget extends StatelessWidget{
   Widget build(BuildContext context) {
 
     return
-      CachedNetworkImage(imageUrl: _url);
+      CachedNetworkImage(imageUrl: _url,);
   }
 }

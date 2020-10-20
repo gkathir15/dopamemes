@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "Dopamemes",
       darkTheme: kDarkTheme,
-      themeMode: ThemeMode.system,
+      themeMode:  Provider.of<AppSettingProvider>(context).getTheme(),
       theme: kLightTheme,
       routes: {
         // '/': (context) => MainFeedList(),
