@@ -66,7 +66,20 @@ class YtPostWidgetState extends State<YtPostWidget> {
 
   @override
   void initState() {
-    settingsProvider = Provider.of<AppSettingProvider>(context);
+    
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.pause();
+    _controller.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+   settingsProvider = Provider.of<AppSettingProvider>(context);
     _controller = YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(_url),
         flags: YoutubePlayerFlags(
@@ -77,13 +90,6 @@ class YtPostWidgetState extends State<YtPostWidget> {
             disableDragSeek: true)
             );
     settingsProvider.isMute() ? _controller.mute() : _controller.unMute();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.pause();
-    _controller.dispose();
+    super.didChangeDependencies();
   }
 }

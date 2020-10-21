@@ -4,6 +4,7 @@ import 'package:dopamemes/providers/AppSettingsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:wiredash/wiredash.dart';
 
 class AppSettingsPage extends StatelessWidget {
   @override
@@ -36,20 +37,20 @@ class AppSettingsPage extends StatelessWidget {
                 ],
                 onChanged: (v) => {
                   if (v == "System Default")
-                    {
-                      _appSettingsProvider.settings.isSystemThemeSelected = true
-                      }
+                    {_appSettingsProvider.settings.isSystemThemeSelected = true}
                   else if (v == "Dark")
                     {
-                      _appSettingsProvider.settings.isSystemThemeSelected = false,
+                      _appSettingsProvider.settings.isSystemThemeSelected =
+                          false,
                       _appSettingsProvider.settings.isDarkTheme = true
-                    }else{
-                      _appSettingsProvider.settings.isSystemThemeSelected = false,
+                    }
+                  else
+                    {
+                      _appSettingsProvider.settings.isSystemThemeSelected =
+                          false,
                       _appSettingsProvider.settings.isDarkTheme = false
                     },
-
-                    _appSettingsProvider.setData(_appSettingsProvider.settings),
-                    
+                  _appSettingsProvider.setData(_appSettingsProvider.settings),
                 },
               ),
             ],
@@ -95,6 +96,18 @@ class AppSettingsPage extends StatelessWidget {
                   _appSettingsProvider.setData(_appSettingsProvider.settings);
                 },
                 description: "Show NFSW content"),
+
+                SettingSection(items: [
+                  InkWell(onTap: () {
+                Wiredash.of(context).show();
+              },
+                                      child: Padding(
+                padding: const EdgeInsets.all( 15.0),
+                child: Text("Connect with Us"),
+              ),
+                  ),
+                ],title: "Feedback",),
+          
           ])
         ],
       ),

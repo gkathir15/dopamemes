@@ -14,6 +14,7 @@ import 'package:dopamemes/exports/PagesExport.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
+import 'package:wiredash/wiredash.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
@@ -57,19 +58,27 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool isReqSent = false;
   StreamSubscription _shareRecieveIntentSubScription;
+  final _navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Dopamemes",
-      darkTheme: kDarkTheme,
-      themeMode:  Provider.of<AppSettingProvider>(context).getTheme(),
-      theme: kLightTheme,
-      routes: {
-        // '/': (context) => MainFeedList(),
-        "fullVideo": (context) => VideoHorizontalScroller(),
-        "settings": (context) => AppSettingsPage()
-      },
-      home: MainFeedList(),
+    return Wiredash(
+      navigatorKey: _navigatorKey,
+          child: MaterialApp(
+            navigatorObservers: [],
+            navigatorKey: _navigatorKey,
+        title: "Dopamemes",
+        darkTheme: kDarkTheme,
+        themeMode:  Provider.of<AppSettingProvider>(context).getTheme(),
+        theme: kLightTheme,
+        routes: {
+          // '/': (context) => MainFeedList(),
+          "fullVideo": (context) => VideoHorizontalScroller(),
+          "settings": (context) => AppSettingsPage()
+        },
+        home: MainFeedList(),
+      ),
+      projectId: "dopamemes-hnv70v6",
+      secret: "2awlquvdc4c1ac60ottz6to5mvdbmmo1",
     );
   }
 

@@ -88,7 +88,13 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
 
   @override
   void initState() {
-    settingsProvider = Provider.of<AppSettingProvider>(context);
+   
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+     settingsProvider = Provider.of<AppSettingProvider>(context);
     print(_Url);
     if (_Url.startsWith("https"))
       _controller = CachedVideoPlayerController.network(_Url);
@@ -108,11 +114,6 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
             _controller.setVolume(settingsProvider.isMute()?0.0:1.0);
           })
         });
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
     super.didChangeDependencies();
     // _controller = CachedVideoPlayerController.network(_documents.fileUrl);
   }
