@@ -9,16 +9,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountsProvider with ChangeNotifier {
-  // bool isEmailValidated = false;
-  // bool isPasswrordValidated = false;
-  // bool isUseNameValidated = false;
-  Future<DopeUser> dopeuserResponse;
-  //bool isLoggedInChecked=false;
   SigningUpState signingUpState = SigningUpState.NONE;
-
 
   Box<DopeUser> _accountHiveBox;
 
@@ -26,17 +19,13 @@ class AccountsProvider with ChangeNotifier {
     openHiveBox();
   }
 
-   openHiveBox() 
-   {
-
-     _accountHiveBox =  Hive.box<DopeUser>("USER");
-    
-
+  openHiveBox() {
+    _accountHiveBox = Hive.box<DopeUser>("USER");
   }
 
   Future<UserCredential> googleUserCredd;
 
-  Future<DopeUser> SignUporSignIN() async {
+  doGogleAuth() async {
     var value = await signInWithGoogle();
 
     print(value.additionalUserInfo.toString());
@@ -61,13 +50,9 @@ class AccountsProvider with ChangeNotifier {
     var resp = UserSignupResponse.fromJson(json.decode(response.toString()));
 
     print(resp.data.user.toJson().toString());
-    saveUserExtras(resp.data.user.sId, resp.data.user.email);
-    // setSignUpState(SigningUpState.DONE);
-    return resp.data.user;
-  }
-
-  void doGogleAuth() {
-    dopeuserResponse = SignUporSignIN();
+    saveUserExtras(resp.data.user);
+    setSignUpState(SigningUpState.DONE);
+    notifyListeners();
   }
 
   Future<UserCredential> signInWithGoogle() async {
@@ -99,34 +84,16 @@ class AccountsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  saveUserExtras(String userId, String email) async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.setString("USER_EXTRAS_ID", userId);
-    _prefs.setString("USER_EXTRAS_EMAIL", userId);
+  saveUserExtras(DopeUser dopeUser) {
+    _accountHiveBox.put("USER", dopeUser);
   }
 
-  Future<DopeUser> getUserExtras() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    var email = _prefs.getString("USER_EXTRAS_EMAIL");
-    var _id = _prefs.getString("USER_EXTRAS_ID");
-
-    if (_id != null && email != null) {
-      Response response =
-          await Dio().get(Conts.baseUrl + "api/v1/users/email/$email");
-
-      print(response.toString());
-      var resp = UserSignupResponse.fromJson(json.decode(response.toString()));
-
-      print(resp.data.user.toJson().toString());
-      saveUserExtras(resp.data.user.sId, resp.data.user.email);
-      // setSignUpState(SigningUpState.DONE);
-      return resp.data.user;
-    }
-    return null;
+  DopeUser getUserExtras() {
+    return _accountHiveBox.get("USER");
   }
 
-  Future<DopeUser> loggedResponse() {
-    return dopeuserResponse = getUserExtras();
+  Future<DopeUser> getUserFuture() async {
+    return _accountHiveBox.get("USER");
   }
 }
 

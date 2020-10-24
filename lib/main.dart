@@ -63,12 +63,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Wiredash(
       navigatorKey: _navigatorKey,
-          child: MaterialApp(
-            navigatorObservers: [],
-            navigatorKey: _navigatorKey,
+      child: MaterialApp(
+        navigatorObservers: [],
+        navigatorKey: _navigatorKey,
         title: "Dopamemes",
         darkTheme: kDarkTheme,
-        themeMode:  Provider.of<AppSettingProvider>(context).getTheme(),
+        themeMode: Provider.of<AppSettingProvider>(context).getTheme(),
         theme: kLightTheme,
         routes: {
           // '/': (context) => MainFeedList(),
@@ -118,6 +118,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     _shareRecieveIntentSubScription.cancel();
+    disposeBoxes();
     super.dispose();
   }
 
@@ -131,7 +132,6 @@ class _MyAppState extends State<MyApp> {
 
       Provider.of<PostProvider>(context).fetchPosts();
       Provider.of<CategoriesProvider>(context).fetchCategories();
-      Provider.of<AccountsProvider>(context).loggedResponse();
       Admob.initialize("ca-app-pub-6011809596899441~9949339806");
     }
     super.didChangeDependencies();
@@ -145,5 +145,12 @@ class _MyAppState extends State<MyApp> {
         opaque: false,
         pageBuilder: (BuildContext context, _, __) =>
             NewPostDialog.withPath(posttype, value.first.path)));
+  }
+
+  disposeBoxes() async {
+    (await Hive.openBox<Categories>("CATEGORIES")).close();
+    (await Hive.openBox<Posts>("POSTS")).close();
+    (await Hive.openBox<DopeUser>("USER")).close();
+    (await Hive.openBox<AppSettingsModel>("SETTING")).close();
   }
 }

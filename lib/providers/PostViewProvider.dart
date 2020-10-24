@@ -21,15 +21,15 @@ class PostProvider with ChangeNotifier {
 
   Future<List<Posts>> getFilteredList(Categories categoryDetails) async {
     if (categoryDetails.sId == "0") {
-      var data = postsHiveBox.values.toList();
-     
+      var data = postsHiveBox.values.distinctBy((element) => element.sId);
+
       return data;
     } else {
       var data = postsHiveBox.values
           .toList()
           .where((element) => element.categoryId == categoryDetails.sId)
-          .toList();
-       if (data.isEmpty) {
+      .distinctBy((element) => element.sId);
+      if (data.isEmpty) {
         fetchPosts();
       }
       return data;
@@ -56,8 +56,10 @@ class PostProvider with ChangeNotifier {
   }
 
   List<Posts> pumpAds(List<Posts> list) {
+
     if (list.length > 9) {
       list.insert(5, Posts(sId: "0", postType: "ad"));
+      //   list.insert(0, Posts(sId: "0", postType: "vidList"));
     }
     return list;
   }
@@ -86,6 +88,6 @@ class PostProvider with ChangeNotifier {
   }
 
   openHiveBox() async {
-    postsHiveBox =  Hive.box<Posts>("POSTS");
+    postsHiveBox = Hive.box<Posts>("POSTS");
   }
 }

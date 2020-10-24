@@ -1,3 +1,4 @@
+import 'package:dopamemes/jam_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 
@@ -8,25 +9,35 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
-      shape: CircularNotchedRectangle(),
-      notchMargin: 4,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          IconButton(
-            icon: Icon(
-              LineAwesomeIcons.film,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(200.0),
+      child: BottomAppBar(
+        elevation: 8,
+        clipBehavior: Clip.hardEdge,
+        shape: CircularNotchedRectangle(),
+        notchMargin: 4,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: IconButton(
+                icon: Icon(
+                  JamIcons.movie,
+                ),
+                enableFeedback: true,
+                onPressed: () {
+                  Navigator.pushNamed(context, 'fullVideo');
+                },
+              ),
             ),
-            enableFeedback: true,
-            onPressed: () {
-              Navigator.pushNamed(context, 'fullVideo');
-            },
-          ),
-          IconButton(icon: Icon(Icons.search), onPressed: () {}),
-          IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: IconButton(icon: Icon(JamIcons.home), onPressed: () {}),
+            ),
+          ],
+        ),
       ),
     );
   }

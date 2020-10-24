@@ -1,5 +1,7 @@
 import 'dart:core';
 
+import 'package:flutter/services.dart';
+
 enum type { None, Alphabetic, Numeric, AlphaNumeric }
 
 class EmailValidator {
@@ -95,7 +97,8 @@ class EmailValidator {
 
     _index++;
 
-    while (_index < text.length && _isDomain(text[_index], allowInternational)) {
+    while (
+        _index < text.length && _isDomain(text[_index], allowInternational)) {
       _index++;
     }
 
@@ -372,4 +375,23 @@ class EmailValidator {
 
     return _index == email.length;
   }
+}
+
+void setOrientationPortrait() {
+  
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+  ]);
+}
+
+void setOrientationFullAuto()
+{
+     SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeRight,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 }

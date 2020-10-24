@@ -55,7 +55,7 @@ class GoogleSigninPage extends StatelessWidget {
           );
         }
       },
-      future: Provider.of<AccountsProvider>(context).dopeuserResponse,
+      future: Provider.of<AccountsProvider>(context).getUserFuture(),
     ));
   }
 }

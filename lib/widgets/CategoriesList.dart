@@ -29,7 +29,8 @@ class CategoriesList extends StatelessWidget {
                     .displayIcon,
                 width: 50,
                 height: 50,
-                fit: BoxFit.contain,
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.center,
               ),
             ),
             title: Text(

@@ -7,28 +7,31 @@ import 'package:dopamemes/providers/PostViewProvider.dart';
 import 'package:dopamemes/widgets/PostsList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:dopamemes/utils.dart';
 
+class MainFeedList extends StatefulWidget {
+  @override
+  _MainFeedListState createState() => _MainFeedListState();
+}
 
-
-class MainFeedList extends StatelessWidget {
-  
-
+class _MainFeedListState extends State<MainFeedList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Provider.of<PostProvider>(context).getFilteredList(Provider.of<CategoriesProvider>(context).mainCategory),
+      future: Provider.of<PostProvider>(context).getFilteredList(
+          Provider.of<CategoriesProvider>(context).mainCategory),
       builder: (BuildContext context, AsyncSnapshot<List<Posts>> snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
-            extendBodyBehindAppBar: true,
             appBar: AppBar(
               title: Text(
                 "Dopamemes",
                 style: GoogleFonts.bangers(
-                    fontSize: 50,
+                    fontSize: 40,
                     letterSpacing: 3,
                     fontWeight: FontWeight.w300),
               ),
@@ -70,7 +73,7 @@ class MainFeedList extends StatelessWidget {
               child: Icon(Icons.add),
             ),
             floatingActionButtonLocation:
-                FloatingActionButtonLocation.endDocked,
+                FloatingActionButtonLocation.centerDocked,
             body: Container(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -108,7 +111,15 @@ class MainFeedList extends StatelessWidget {
     );
   }
 
+  @override
+  void initState() {
+    setOrientationPortrait();
+    super.initState();
+  }
 
+  @override
+  void dispose() {
+   
+    super.dispose();
+  }
 }
-
-

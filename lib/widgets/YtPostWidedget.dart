@@ -26,6 +26,7 @@ class YtPostWidgetState extends State<YtPostWidget> {
   // ValueNotifier<bool> _isClicked = ValueNotifier(false);
   AppSettingProvider settingsProvider;
 
+
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -36,7 +37,7 @@ class YtPostWidgetState extends State<YtPostWidget> {
         if (_controller.value.isPlaying) {
           if (visiblePercentage < 90) _controller.pause();
         } else {
-          if (visiblePercentage > 90) _controller.play();
+          if (visiblePercentage > 99) _controller.play();
         }
       },
       child: Center(

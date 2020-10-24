@@ -57,12 +57,16 @@ dependencies:
   flutter_native_admob: ^2.1.0+3
   clean_settings:
     git:
-      url: git://github.com/grouped/clean_settings.git
+      url: git://github.com/gkathir15/clean_settings.git
+      ref: master
   receive_sharing_intent: ^1.4.1
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   pinch_zoom: ^0.0.4
   wiredash: ^0.3.0
+  transparent_image: ^1.0.0
+  flutter_extentions: 0.0.2
+  
 
 dev_dependencies:
   flutter_test:
@@ -84,4 +88,9 @@ flutter:
   assets:
     - assets/bgListImg/
   #   - images/a_dot_ham.jpeg
+
+  fonts:
+    - family: JamIcons
+      fonts:
+        - asset: assets/fonts/JamIcons.ttf
 

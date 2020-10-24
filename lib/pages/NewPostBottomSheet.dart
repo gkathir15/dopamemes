@@ -32,7 +32,7 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet> {
             Padding(
               padding:
                   const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 24),
-              child: Text("Create a new Post with"),
+              child: Text("Create a new Post with",style: GoogleFonts.roboto(),),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -170,8 +170,6 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet> {
     super.initState();
   }
 
-  @override
-  void reassemble() {}
 
   @override
   void dispose() {

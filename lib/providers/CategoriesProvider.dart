@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:hive/hive.dart';
+import 'package:flutter_extentions/iterable.dart';
 
 class CategoriesProvider with ChangeNotifier {
   List<Categories> categories = List();
@@ -32,7 +33,7 @@ class CategoriesProvider with ChangeNotifier {
         CategoriesResponse.fromJson(json.decode(response.toString()));
     print(categoriesResponse.data.catagories.length);
     categoriesHiveBox.addAll(categoriesResponse.data.catagories);
-    categories = categoriesHiveBox.values.toList();
+    categories = categoriesHiveBox.values.distinctBy((element) => element.sId);
     newPostUploadCategory = categories[0];
     notifyListeners();
   }
@@ -41,7 +42,7 @@ class CategoriesProvider with ChangeNotifier {
     newPostUploadCategory = categories[pos];
   }
 
-  List<Categories> allCategories() => categoriesHiveBox.values.toList();
+  List<Categories> allCategories() => categoriesHiveBox.values.distinctBy((e) =>e.sId);
 
   setMainCategory(Categories selectedCategory) {
     mainCategory = selectedCategory;

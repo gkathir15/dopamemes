@@ -92,6 +92,8 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
     super.initState();
   }
 
+  
+
   @override
   void didChangeDependencies() {
      settingsProvider = Provider.of<AppSettingProvider>(context);
@@ -106,11 +108,8 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
     _controller.initialize().then((value) => {
           setState(() {
             if(settingsProvider.isAutolay())
-            _controller.play();
-            
-            _controller.setLooping(true);
-
-            
+            _controller.play();            
+            _controller.setLooping(true);            
             _controller.setVolume(settingsProvider.isMute()?0.0:1.0);
           })
         });

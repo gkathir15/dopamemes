@@ -26,7 +26,7 @@ class AppSettingsPage extends StatelessWidget {
             title: "Appearence",
             items: [
               SettingRadioItem<String>(
-                priority: ItemPriority.normal,
+                priority: ItemPriority.defaultThemeColors,
                 title: 'Theme',
                 displayValue: selectedTheme(_appSettingsProvider),
                 selectedValue: selectedTheme(_appSettingsProvider),
@@ -57,7 +57,7 @@ class AppSettingsPage extends StatelessWidget {
           ),
           SettingSection(title: " Media Playback", items: [
             SettingSwitchItem(
-              priority: ItemPriority.normal,
+              priority: ItemPriority.defaultThemeColors,
               title: "Autoplay",
               value: _appSettingsProvider.settings.isAutoPlayVideos,
               onChanged: (value) {
@@ -67,7 +67,7 @@ class AppSettingsPage extends StatelessWidget {
               description: "Automatically play videos",
             ),
             SettingSwitchItem(
-                priority: ItemPriority.normal,
+                priority: ItemPriority.defaultThemeColors,
                 title: "Volume Mute",
                 value: _appSettingsProvider.settings.isMute,
                 onChanged: (value) {
@@ -78,7 +78,7 @@ class AppSettingsPage extends StatelessWidget {
           ]),
           SettingSection(title: " NFSW Content", items: [
             SettingSwitchItem(
-              priority: ItemPriority.normal,
+              priority: ItemPriority.defaultThemeColors,
               title: "Allow NFSW content",
               value: _appSettingsProvider.settings.showNSFW,
               onChanged: (value) {
@@ -88,7 +88,7 @@ class AppSettingsPage extends StatelessWidget {
               description: "Iam 18+ show NFSW",
             ),
             SettingSwitchItem(
-                priority: ItemPriority.normal,
+                priority: ItemPriority.defaultThemeColors,
                 title: "Hide NFSW content",
                 value: _appSettingsProvider.settings.showNfswOverlay,
                 onChanged: (value) {

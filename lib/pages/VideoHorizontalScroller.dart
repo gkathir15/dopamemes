@@ -9,6 +9,7 @@ import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:flutter_native_admob/native_admob_options.dart';
 import 'package:provider/provider.dart';
+import 'package:dopamemes/utils.dart';
 
 class VideoHorizontalScroller extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class VideoHorizontalScroller extends StatefulWidget {
 
 class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
   PageController _pageController;
-   NativeAdmobController _nativeAdController;
+  NativeAdmobController _nativeAdController;
 
   List<Posts> _localList;
 
@@ -37,6 +38,8 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
                       element.postType == "ad")
                   .toList();
               return PageView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  pageSnapping: true,
                   itemCount: _localList.length,
                   onPageChanged: (value) => onPageChanged(value),
                   controller: _pageController,
@@ -44,18 +47,21 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
                   itemBuilder: (BuildContext context, int index) {
                     if (_localList[index].postType == "youtube") {
                       return FullScreenCard(
-                          postWidget: YtPostWidget(_localList[index].fileUrl),
+                          postWidget: YTFullScreenWidget(
+                              url: _localList[index].fileUrl),
                           posts: _localList[index]);
                     } else if (_localList[index].postType == "video") {
                       return FullScreenCard(
-                          postWidget:
-                              VideoPostWidget(_localList[index].fileUrl),
+                          postWidget: VideoFullScreenPlayer(
+                              url: _localList[index].fileUrl),
                           posts: _localList[index]);
                     } else if (_localList[index].postType == "ad") {
                       return NativeAdmob(
-                        numberAds: _localList.where((element) => element.postType == "ad").length,
+                        numberAds: _localList
+                            .where((element) => element.postType == "ad")
+                            .length,
                         loading: Center(child: CircularProgressIndicator()),
-                        error: CircularProgressIndicator(),
+                        error: Center(child: CircularProgressIndicator()),
                         adUnitID: AdMobAdProvider.nativeAdvancedVideo,
                         controller: _nativeAdController,
                         type: NativeAdmobType.full,
@@ -69,11 +75,12 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
                   });
             } else {
               return Center(
-                child: CircularProgressIndicator(),
+                child: Center(child: CircularProgressIndicator()),
               );
             }
           },
-          future: Provider.of<PostProvider>(context).getFilteredList(Provider.of<CategoriesProvider>(context).mainCategory),
+          future: Provider.of<PostProvider>(context).getFilteredList(
+              Provider.of<CategoriesProvider>(context).mainCategory),
         ),
       ),
     );
@@ -83,7 +90,7 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
   void initState() {
     _pageController = PageController();
     _nativeAdController = NativeAdmobController();
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    setOrientationFullAuto();
     super.initState();
   }
 
@@ -92,6 +99,7 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
     _pageController.dispose();
     _nativeAdController.dispose();
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    setOrientationPortrait();
     super.dispose();
   }
 
