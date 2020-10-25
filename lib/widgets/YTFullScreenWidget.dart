@@ -44,7 +44,7 @@ class _YTFullScreenWidgetState extends State<YTFullScreenWidget> {
 
   @override
   void dispose() {
-   if (_controller != null) _controller.dispose();
+    if (_controller != null) _controller.dispose();
     super.dispose();
   }
 
@@ -58,6 +58,7 @@ class _YTFullScreenWidgetState extends State<YTFullScreenWidget> {
             controlsVisibleAtStart: false,
             autoPlay: true,
             disableDragSeek: true));
+    
     super.didChangeDependencies();
   }
 }

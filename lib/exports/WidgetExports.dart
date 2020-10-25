@@ -12,3 +12,4 @@ export 'package:dopamemes/widgets/Bottombar.dart';
 export 'package:dopamemes/widgets/YTFullScreenWidget.dart';
 export 'package:dopamemes/widgets/VideoFullScreenPlayer.dart';
 export 'package:dopamemes/widgets/HorizontalVideoIntruder.dart';
+export 'package:dopamemes/widgets/CenterLoading.dart';

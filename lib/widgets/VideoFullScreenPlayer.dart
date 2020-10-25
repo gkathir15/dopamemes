@@ -1,4 +1,7 @@
 import 'package:cached_video_player/cached_video_player.dart';
+import 'package:dopamemes/VideoState.dart';
+import 'package:dopamemes/VideoStateNotification.dart';
+import 'package:dopamemes/widgets/CenterLoading.dart';
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -20,47 +23,59 @@ class _VideoFullScreenPlayerState extends State<VideoFullScreenPlayer> {
     return ValueListenableBuilder(
       valueListenable: _cachedVideoPlayerController,
       builder: (_, CachedVideoPlayerValue value, Widget child) {
-        return VisibilityDetector(
-          key: ValueKey(url),
-          child: Center(
-            child: AspectRatio(
-                child: CachedVideoPlayer(_cachedVideoPlayerController),
-                aspectRatio:
-                    value.aspectRatio!=null&& value.aspectRatio!= 0.0 ? value.aspectRatio : 16 / 9),
-          ),
-          onVisibilityChanged: (visibilityInfo) {
-            double visiblePercentage = visibilityInfo.visibleFraction * 100;
+        if (value.hasError) {
+          print("onError");
+          VideoStateNotification(VideoState.ON_ERROR)..dispatch(context);
+          return CenterLoading();
+        }
+        if (value.duration == value.position) {
+          print("onFinish");
+          VideoStateNotification(VideoState.FINISHED)..dispatch(context);
+        }
+        if (value.initialized) {
+          _cachedVideoPlayerController.play();
+          _cachedVideoPlayerController.setLooping(false);
+          _cachedVideoPlayerController.setVolume(1.0);
+          return VisibilityDetector(
+            key: ValueKey(url),
+            child: Center(
+              child: AspectRatio(
+                  child: CachedVideoPlayer(_cachedVideoPlayerController),
+                  aspectRatio:
+                      value.aspectRatio != null && value.aspectRatio > 0.0
+                          ? value.aspectRatio
+                          : 1.8),
+            ),
+            onVisibilityChanged: (visibilityInfo) {
+              double visiblePercentage = visibilityInfo.visibleFraction * 100;
 
-            if (_cachedVideoPlayerController.value.isPlaying) {
-              if (visiblePercentage < 90) _cachedVideoPlayerController.pause();
-            } else {
-              if (visiblePercentage > 90) _cachedVideoPlayerController.play();
-            }
-          },
-        );
+              if (_cachedVideoPlayerController.value.isPlaying) {
+                if (visiblePercentage < 90)
+                  _cachedVideoPlayerController.pause();
+              } else {
+                if (visiblePercentage > 90) _cachedVideoPlayerController.play();
+              }
+            },
+          );
+        } else {
+          return CenterLoading();
+        }
       },
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
+      child: CenterLoading(),
     );
   }
 
   @override
   void dispose() {
-  if (_cachedVideoPlayerController != null)  _cachedVideoPlayerController.dispose();
+    if (_cachedVideoPlayerController != null)
+      _cachedVideoPlayerController.dispose();
     super.dispose();
   }
 
   @override
   void didChangeDependencies() {
     _cachedVideoPlayerController = CachedVideoPlayerController.network(url);
-    _cachedVideoPlayerController.initialize().then((value) => {
-          setState(() {
-            _cachedVideoPlayerController.play();
-            _cachedVideoPlayerController.setLooping(true);
-            _cachedVideoPlayerController.setVolume(1.0);
-          })
-        });
+    _cachedVideoPlayerController.initialize();
 
     super.didChangeDependencies();
   }

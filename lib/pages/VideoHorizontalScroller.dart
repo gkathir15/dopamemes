@@ -1,4 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:dopamemes/VideoState.dart';
+import 'package:dopamemes/VideoStateNotification.dart';
 import 'package:dopamemes/widgets/FullScreenCard.dart';
 import 'package:flutter/material.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
@@ -37,42 +39,54 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
                       element.postType.toLowerCase() == "video" ||
                       element.postType == "ad")
                   .toList();
-              return PageView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  pageSnapping: true,
-                  itemCount: _localList.length,
-                  onPageChanged: (value) => onPageChanged(value),
-                  controller: _pageController,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (_localList[index].postType == "youtube") {
-                      return FullScreenCard(
-                          postWidget: YTFullScreenWidget(
-                              url: _localList[index].fileUrl),
-                          posts: _localList[index]);
-                    } else if (_localList[index].postType == "video") {
-                      return FullScreenCard(
-                          postWidget: VideoFullScreenPlayer(
-                              url: _localList[index].fileUrl),
-                          posts: _localList[index]);
-                    } else if (_localList[index].postType == "ad") {
-                      return NativeAdmob(
-                        numberAds: _localList
-                            .where((element) => element.postType == "ad")
-                            .length,
-                        loading: Center(child: CircularProgressIndicator()),
-                        error: Center(child: CircularProgressIndicator()),
-                        adUnitID: AdMobAdProvider.nativeAdvancedVideo,
-                        controller: _nativeAdController,
-                        type: NativeAdmobType.full,
-                        options: NativeAdmobOptions(
-                          ratingColor: Colors.red,
-                        ),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  });
+              return NotificationListener<VideoStateNotification>(
+                onNotification: (value) {
+                  if (value.videoState == VideoState.FINISHED &&
+                      value.videoState == VideoState.ON_ERROR) {
+                    print("parent${value.videoState.toString()}");
+                    _pageController.nextPage(
+                        duration: Duration(milliseconds: 100),
+                        curve: Curves.bounceIn);
+                  }
+                  return true;
+                },
+                child: PageView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    pageSnapping: true,
+                    itemCount: _localList.length,
+                    onPageChanged: (value) => onPageChanged(value),
+                    controller: _pageController,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (_localList[index].postType == "youtube") {
+                        return FullScreenCard(
+                            postWidget: YTFullScreenWidget(
+                                url: _localList[index].fileUrl),
+                            posts: _localList[index]);
+                      } else if (_localList[index].postType == "video") {
+                        return FullScreenCard(
+                            postWidget: VideoFullScreenPlayer(
+                                url: _localList[index].fileUrl),
+                            posts: _localList[index]);
+                      } else if (_localList[index].postType == "ad") {
+                        return NativeAdmob(
+                          numberAds: _localList
+                              .where((element) => element.postType == "ad")
+                              .length,
+                          loading: Center(child: CircularProgressIndicator()),
+                          error: Center(child: CircularProgressIndicator()),
+                          adUnitID: AdMobAdProvider.nativeAdvancedVideo,
+                          controller: _nativeAdController,
+                          type: NativeAdmobType.full,
+                          options: NativeAdmobOptions(
+                            ratingColor: Colors.red,
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }),
+              );
             } else {
               return Center(
                 child: Center(child: CircularProgressIndicator()),

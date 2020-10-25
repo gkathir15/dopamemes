@@ -18,8 +18,8 @@ class VideoPostWidget extends StatefulWidget {
 }
 
 class VideoPostWidgetState extends State<VideoPostWidget> {
-  String _Url;
-  VideoPostWidgetState(this._Url);
+  String _url;
+  VideoPostWidgetState(this._url);
   CachedVideoPlayerController _controller;
   ValueNotifier<bool> muteNotifier = ValueNotifier(false);
   AppSettingProvider settingsProvider ;
@@ -28,7 +28,7 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
   Widget build(BuildContext context) {
     
     return VisibilityDetector(
-      key: ValueKey(_Url),
+      key: ValueKey(_url),
       onVisibilityChanged: (visibilityInfo) {
         double visiblePercentage = visibilityInfo.visibleFraction * 100;
 
@@ -97,11 +97,11 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
   @override
   void didChangeDependencies() {
      settingsProvider = Provider.of<AppSettingProvider>(context);
-    print(_Url);
-    if (_Url.startsWith("https"))
-      _controller = CachedVideoPlayerController.network(_Url);
+    print(_url);
+    if (_url.startsWith("https"))
+      _controller = CachedVideoPlayerController.network(_url);
     else
-      _controller = CachedVideoPlayerController.file(File(_Url));
+      _controller = CachedVideoPlayerController.file(File(_url));
 
     // _controller.play();
 
