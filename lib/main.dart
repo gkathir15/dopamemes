@@ -86,6 +86,28 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
+  }
+
+  @override
+  void dispose() {
+    _shareRecieveIntentSubScription.cancel();
+    disposeBoxes();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    print("didChangeDep");
+    if (!isReqSent) {
+      isReqSent = true;
+      //  Provider.of<AccountsProvider>(context).getCheckIfLoggedIn();
+      Firebase.initializeApp();
+
+      Provider.of<PostProvider>(context).fetchPosts();
+      Provider.of<CategoriesProvider>(context).fetchCategories();
+      Admob.initialize("ca-app-pub-6011809596899441~9949339806");
+
+      
     // For sharing images coming from outside the app while the app is in the memory
     _shareRecieveIntentSubScription = ReceiveSharingIntent.getMediaStream()
         .listen((List<SharedMediaFile> value) {
@@ -113,26 +135,6 @@ class _MyAppState extends State<MyApp> {
     ReceiveSharingIntent.getInitialText().then((String value) {
       print("share" + value);
     });
-  }
-
-  @override
-  void dispose() {
-    _shareRecieveIntentSubScription.cancel();
-    disposeBoxes();
-    super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    print("didChangeDep");
-    if (!isReqSent) {
-      isReqSent = true;
-      //  Provider.of<AccountsProvider>(context).getCheckIfLoggedIn();
-      Firebase.initializeApp();
-
-      Provider.of<PostProvider>(context).fetchPosts();
-      Provider.of<CategoriesProvider>(context).fetchCategories();
-      Admob.initialize("ca-app-pub-6011809596899441~9949339806");
     }
     super.didChangeDependencies();
   }

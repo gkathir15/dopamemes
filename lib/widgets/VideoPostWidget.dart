@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:cached_video_player/cached_video_player.dart';
+import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:dopamemes/jam_icons_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,19 +9,19 @@ import 'package:visibility_detector/visibility_detector.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 
 class VideoPostWidget extends StatefulWidget {
-  final String _url;
+  final Posts  _posts;
 
-  VideoPostWidget(this._url);
+  VideoPostWidget(this._posts);
 
   @override
   State<StatefulWidget> createState() {
-    return VideoPostWidgetState(_url);
+    return VideoPostWidgetState();
   }
 }
 
 class VideoPostWidgetState extends State<VideoPostWidget> {
-  String _url;
-  VideoPostWidgetState(this._url);
+  
+
   CachedVideoPlayerController _controller;
   ValueNotifier<bool> muteNotifier = ValueNotifier(false);
   AppSettingProvider settingsProvider ;
@@ -28,7 +30,7 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
   Widget build(BuildContext context) {
     
     return VisibilityDetector(
-      key: ValueKey(_url),
+      key: ValueKey(widget._posts.fileUrl),
       onVisibilityChanged: (visibilityInfo) {
         double visiblePercentage = visibilityInfo.visibleFraction * 100;
 
@@ -73,9 +75,9 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
                 child: ValueListenableBuilder(
                   builder: (_, bool value, child) {
                     return Icon(
-                        value ? Icons.volume_up : Icons.volume_off_sharp);
+                        value ? JamIcons.volume_up : JamIcons.volume_mute );
                   },
-                  child: Icon(Icons.volume_off_sharp),
+                  child: Icon(JamIcons.volume_mute),
                   valueListenable: muteNotifier,
                 ),
               ),
@@ -97,11 +99,11 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
   @override
   void didChangeDependencies() {
      settingsProvider = Provider.of<AppSettingProvider>(context);
-    print(_url);
-    if (_url.startsWith("https"))
-      _controller = CachedVideoPlayerController.network(_url);
+    print(widget._posts.fileUrl);
+    if (widget._posts.fileUrl.startsWith("https"))
+      _controller = CachedVideoPlayerController.network(widget._posts.fileUrl);
     else
-      _controller = CachedVideoPlayerController.file(File(_url));
+      _controller = CachedVideoPlayerController.file(File(widget._posts.fileUrl));
 
     // _controller.play();
 
@@ -150,12 +152,12 @@ class _PlayPauseOverlay extends StatelessWidget {
     } else {
       if (value.isPlaying) {
         return Icon(
-          Icons.pause,
+          JamIcons.pause,
           size: 30.0,
         );
       } else {
         return Icon(
-          Icons.play_arrow,
+          JamIcons.play,
           size: 30.0,
         );
       }

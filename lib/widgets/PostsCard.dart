@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dopamemes/jam_icons_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,19 +40,8 @@ class PostsCardState extends State<PostsCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Container(
-              constraints: BoxConstraints(
-                  maxHeight: height, minHeight: 0.0, minWidth: size - 20),
-              child: PinchZoom(
-                image: _widget,
-                zoomedBackgroundColor: Colors.black.withOpacity(0.5),
-                resetDuration: const Duration(milliseconds: 100),
-                maxScale: 4,
-              ),
-            ), //The content widget..
-
             Padding(
               padding: const EdgeInsets.only(left: 8.0, top: 8.0),
               child: Text(
@@ -60,42 +50,50 @@ class PostsCardState extends State<PostsCard> {
                     fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8.0, top: 2.0, bottom: 4.0),
-                          child: Text(_document.categoryDetails.displayName,
-                              style: GoogleFonts.roboto()),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            timeAgo.format(DateTime.fromMillisecondsSinceEpoch(
-                                (_document.createdAt * 1000).toInt())),
-                            style: GoogleFonts.roboto(),
-                            textScaleFactor: 0.6,
-                          ),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 8.0, top: 2.0, bottom: 4.0),
+                      child: Text(_document.categoryDetails.displayName,
+                          style: GoogleFonts.roboto()),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        timeAgo.format(DateTime.fromMillisecondsSinceEpoch(
+                            (_document.createdAt * 1000).toInt())),
+                        style: GoogleFonts.roboto(),
+                        textScaleFactor: 0.6,
+                      ),
                     ),
                   ],
                 ),
+              ],
+            ),
+            _widget, //The content widget..
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
                 InkWell(
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                        right: 2, left: 2, top: 2, bottom: 2),
+                    padding: const EdgeInsets.all(8),
                     child: Icon(
-                      LineAwesomeIcons.share,
-                      size: 20,
+                      JamIcons.gps,
+                      size: 30,
+                    ),
+                  ),
+                ),
+                InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Icon(
+                      JamIcons.heart,
+                      size: 30,
                     ),
                   ),
                 )

@@ -1,6 +1,9 @@
+import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/jam_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:provider/provider.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({
@@ -34,7 +37,13 @@ class BottomBar extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: IconButton(icon: Icon(JamIcons.home), onPressed: () {}),
+              child: IconButton(icon: Icon(JamIcons.home), onPressed: () {
+                 Provider.of<CategoriesProvider>(context, listen: false)
+                .setMainCategory(
+                    Categories(sId: "0"));
+            Provider.of<PostProvider>(context, listen: false)
+                .animateToTopOfList();
+              }),
             ),
           ],
         ),

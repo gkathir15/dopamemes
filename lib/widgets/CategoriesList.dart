@@ -19,6 +19,8 @@ class CategoriesList extends StatelessWidget {
                 .setMainCategory(
                     Provider.of<CategoriesProvider>(context, listen: false)
                         .allCategories()[index]);
+            Provider.of<PostProvider>(context, listen: false)
+                .animateToTopOfList();
             Navigator.of(context).pop();
           },
           child: ListTile(
@@ -37,7 +39,7 @@ class CategoriesList extends StatelessWidget {
               Provider.of<CategoriesProvider>(context)
                   .allCategories()[index]
                   .displayName,
-              style: GoogleFonts.roboto(fontSize:20),
+              style: GoogleFonts.roboto(fontSize: 20),
             ),
           ),
         );

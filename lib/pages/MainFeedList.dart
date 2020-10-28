@@ -2,6 +2,7 @@ import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/exports/PagesExport.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/exports/WidgetExports.dart';
+import 'package:dopamemes/jam_icons_icons.dart';
 import 'package:dopamemes/pages/NewPostBottomSheet.dart';
 import 'package:dopamemes/providers/PostViewProvider.dart';
 import 'package:dopamemes/widgets/PostsList.dart';
@@ -21,13 +22,24 @@ class MainFeedList extends StatefulWidget {
 class _MainFeedListState extends State<MainFeedList> {
   @override
   Widget build(BuildContext context) {
+    var _scaffoldKey = GlobalKey<ScaffoldState>();
     return FutureBuilder(
       future: Provider.of<PostProvider>(context).getFilteredList(
           Provider.of<CategoriesProvider>(context).mainCategory),
       builder: (BuildContext context, AsyncSnapshot<List<Posts>> snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
+            key: _scaffoldKey,
             appBar: AppBar(
+              leading: InkWell(
+                child: Icon(
+                  JamIcons.menu,
+                  size: 35,
+                ),
+                onTap: () {
+                  _scaffoldKey.currentState.openDrawer();
+                },
+              ),
               title: Text(
                 "Dopamemes",
                 style: GoogleFonts.bangers(
@@ -60,6 +72,7 @@ class _MainFeedListState extends State<MainFeedList> {
               elevation: 0,
             ),
             bottomNavigationBar: BottomBar(),
+            drawer: DopeDrawer(),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 showModalBottomSheet<void>(
@@ -102,7 +115,6 @@ class _MainFeedListState extends State<MainFeedList> {
                 ],
               ),
             ),
-            drawer: DopeDrawer(),
           );
         } else {
           return Splash();
@@ -119,7 +131,6 @@ class _MainFeedListState extends State<MainFeedList> {
 
   @override
   void dispose() {
-   
     super.dispose();
   }
 }

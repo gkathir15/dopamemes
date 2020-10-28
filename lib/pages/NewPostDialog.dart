@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:dio/dio.dart';
+import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/exports/WidgetExports.dart';
 import 'package:dopamemes/pages/CategoriesFullScreenDialog.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart' as Yt;
+
 
 class NewPostDialog extends StatefulWidget {
   final PostType postType;
@@ -185,12 +186,12 @@ class NewPostDialogState extends State<NewPostDialog> {
       } else if (type == PostType.VIDEO) {
         
         return SizedBox(
-          child: VideoPostWidget(path),
+          child: VideoPostWidget(Posts(fileUrl: path)),
           width: size.width,
           height: size.height / 3,
         );
       } else if (type == PostType.YOUTUBE && path != null) {
-        return YtPostWidget(path);
+        return YtPostWidget(Posts(fileUrl: path));
       } else
         return Container();
     } else

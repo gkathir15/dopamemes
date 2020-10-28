@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 
 part 'Posts.g.dart';
 
-@HiveType(typeId : 1)
+@HiveType(typeId: 1)
 class Posts {
   @HiveField(0)
   String sId;
@@ -40,6 +40,11 @@ class Posts {
       this.ownerId,
       this.postType,
       this.updatedAt});
+
+  bool chekcIfMature() {
+    if (isMature == null) return true;
+    return isMature == "1";
+  }
 
   Posts.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

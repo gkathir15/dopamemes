@@ -24,6 +24,7 @@ class PostsList extends StatelessWidget {
             //       .toList();
             // }
             return ListView.separated(
+              controller: Provider.of<PostProvider>(context).scrollController,
                 separatorBuilder: (context, index) => Divider(
                       height: 2,
                       thickness: 4,
@@ -44,13 +45,13 @@ class PostsList extends StatelessWidget {
                   }
                   if (snapshot.data[index].postType == "youtube") {
                     return PostsCard(snapshot.data[index],
-                        YtPostWidget(snapshot.data[index].fileUrl));
+                        YtPostWidget(snapshot.data[index]));
                   } else if (snapshot.data[index].postType == "image") {
                     return PostsCard(snapshot.data[index],
-                        ImagePostWidget(snapshot.data[index].fileUrl));
+                        ImagePostWidget(snapshot.data[index]));
                   } else if (snapshot.data[index].postType == "video") {
                     return PostsCard(snapshot.data[index],
-                        VideoPostWidget(snapshot.data[index].fileUrl));
+                        VideoPostWidget(snapshot.data[index]));
                   } else if (snapshot.data[index].postType == "ad") {
                     return AdMobBannerAd();
                   } else if (snapshot.data[index].postType == "vidList") {

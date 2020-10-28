@@ -103,7 +103,7 @@ class AppSettingsPage extends StatelessWidget {
               },
                                       child: Padding(
                 padding: const EdgeInsets.all( 15.0),
-                child: Text("Connect with Us"),
+                child: Text("Do we Suck,if yes how hard?"),
               ),
                   ),
                 ],title: "Feedback",),

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/model/PostsResponse.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
@@ -13,27 +14,38 @@ class PostProvider with ChangeNotifier {
   String lastId = "";
   Box<Posts> postsHiveBox;
 
+  ScrollController scrollController;
+
   PostProvider() {
     print("PostsInit");
     //  Hive.registerAdapter(PostsAdapter());
     openHiveBox();
+    scrollController = ScrollController();
   }
 
   Future<List<Posts>> getFilteredList(Categories categoryDetails) async {
     if (categoryDetails.sId == "0") {
       var data = postsHiveBox.values.distinctBy((element) => element.sId);
-
+      // scrollController.animateTo(0,
+      //     duration: Duration(seconds: 2), curve: Curves.bounceIn);
       return data;
     } else {
       var data = postsHiveBox.values
           .toList()
           .where((element) => element.categoryId == categoryDetails.sId)
-      .distinctBy((element) => element.sId);
+          .distinctBy((element) => element.sId);
       if (data.isEmpty) {
         fetchPosts();
       }
+      // scrollController.animateTo(0,
+      //     duration: Duration(seconds: 2), curve: Curves.bounceIn);
       return data;
     }
+  }
+
+  animateToTopOfList() {
+    scrollController.animateTo(0,
+        duration: Duration(seconds: postsHiveBox.values.length~/5), curve: Curves.easeOutQuad);
   }
 
   fetchPosts() async {
@@ -56,7 +68,6 @@ class PostProvider with ChangeNotifier {
   }
 
   List<Posts> pumpAds(List<Posts> list) {
-
     if (list.length > 9) {
       list.insert(5, Posts(sId: "0", postType: "ad"));
       //   list.insert(0, Posts(sId: "0", postType: "vidList"));
@@ -83,6 +94,7 @@ class PostProvider with ChangeNotifier {
   ///dummy profiel id 5f4bf11b4eece7b043c8cc29
 
   addNewUploadedPost(Posts posts) {
+    postsHiveBox.add(posts);
     _pData.insert(0, posts);
     postsData = allPostsFuture();
   }

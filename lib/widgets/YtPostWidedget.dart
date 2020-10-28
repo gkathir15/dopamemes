@@ -9,19 +9,18 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart' as Yt;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YtPostWidget extends StatefulWidget {
-  final String _url;
+final Posts _posts;
 
-  YtPostWidget(this._url);
+  YtPostWidget(this._posts);
 
   @override
   State<StatefulWidget> createState() {
-    return YtPostWidgetState(_url);
+    return YtPostWidgetState();
   }
 }
 
 class YtPostWidgetState extends State<YtPostWidget> {
-  String _url;
-  YtPostWidgetState(this._url);
+  
   YoutubePlayerController _controller;
   // ValueNotifier<bool> _isClicked = ValueNotifier(false);
   AppSettingProvider settingsProvider;
@@ -30,7 +29,7 @@ class YtPostWidgetState extends State<YtPostWidget> {
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
-      key: ValueKey(_url),
+      key: ValueKey(widget._posts.fileUrl),
       onVisibilityChanged: (visibilityInfo) {
         double visiblePercentage = visibilityInfo.visibleFraction * 100;
 
@@ -51,7 +50,7 @@ class YtPostWidgetState extends State<YtPostWidget> {
                 thumbnail: CachedNetworkImage(
                     fit: BoxFit.fitWidth,
                     imageUrl: Yt.YoutubePlayer.getThumbnail(
-                        videoId: Yt.YoutubePlayer.convertUrlToId(_url)))),
+                        videoId: Yt.YoutubePlayer.convertUrlToId(widget._posts.fileUrl)))),
           ),
           onTap: () {
             if (_controller.value.isPlaying) {
@@ -82,7 +81,7 @@ class YtPostWidgetState extends State<YtPostWidget> {
   void didChangeDependencies() {
    settingsProvider = Provider.of<AppSettingProvider>(context);
     _controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(_url),
+        initialVideoId: YoutubePlayer.convertUrlToId(widget._posts.fileUrl),
         flags: YoutubePlayerFlags(
             hideControls: true,
             enableCaption: false,
