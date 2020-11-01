@@ -24,32 +24,49 @@ class PostProvider with ChangeNotifier {
   }
 
   Future<List<Posts>> getFilteredList(Categories categoryDetails) async {
+    var data = List<Posts>();
     if (categoryDetails.sId == "0") {
-      var data = postsHiveBox.values.distinctBy((element) => element.sId);
-      // scrollController.animateTo(0,
-      //     duration: Duration(seconds: 2), curve: Curves.bounceIn);
-      return data;
+      data = postsHiveBox.values.distinctBy((element) => element.sId);
     } else {
-      var data = postsHiveBox.values
+      data = postsHiveBox.values
           .toList()
           .where((element) => element.categoryId == categoryDetails.sId)
           .distinctBy((element) => element.sId);
       if (data.isEmpty) {
         fetchPosts();
       }
-      // scrollController.animateTo(0,
-      //     duration: Duration(seconds: 2), curve: Curves.bounceIn);
-      return data;
+
+      if (data.isEmpty) {
+        fetchPosts();
+      } else {
+        fetchRecents(data.first.sId);
+      }
     }
+
+    return data;
   }
 
   animateToTopOfList() {
     scrollController.animateTo(0,
-        duration: Duration(seconds: postsHiveBox.values.length~/5), curve: Curves.easeOutQuad);
+        duration: Duration(seconds: 5), curve: Curves.easeOutQuad);
   }
 
   fetchPosts() async {
     Response response = await Dio().get(Conts.baseUrl + "api/v1/posts");
+    print(response.toString());
+    PostsResponse postsResponse =
+        PostsResponse.fromJson(json.decode(response.toString()));
+    print(postsResponse.data.posts.length);
+    _pData.addAll(pumpAds(postsResponse.data.posts));
+    postsHiveBox.addAll(postsResponse.data.posts);
+    // _pData.add(Posts(postType: "ad"));
+    postsData = allPostsFuture();
+    notifyListeners();
+  }
+
+  fetchRecents(String firstId) async {
+    Response response =
+        await Dio().get(Conts.baseUrl + "api/v1/posts?firstId=$firstId");
     print(response.toString());
     PostsResponse postsResponse =
         PostsResponse.fromJson(json.decode(response.toString()));
@@ -101,5 +118,9 @@ class PostProvider with ChangeNotifier {
 
   openHiveBox() async {
     postsHiveBox = Hive.box<Posts>("POSTS");
+  }
+
+  sharePost(Posts posts) {
+    
   }
 }

@@ -30,12 +30,12 @@ class PostsCardState extends State<PostsCard> {
   PostsCardState(this._document, this._widget);
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size.width;
-    var height = size + (size / 4);
+    // var size = MediaQuery.of(context).size.width;
+    // var height = size + (size / 4);
     if (_document.fileUrl == null) _widget = Container();
 
     return Padding(
-      padding: const EdgeInsets.only(top: 2),
+      padding: const EdgeInsets.only(top: 8),
       child: InkWell(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,14 +77,14 @@ class PostsCardState extends State<PostsCard> {
             ),
             _widget, //The content widget..
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 InkWell(
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: Icon(
-                      JamIcons.gps,
-                      size: 30,
+                      JamIcons.heart,
+                      size: 35,
                     ),
                   ),
                 ),
@@ -92,11 +92,11 @@ class PostsCardState extends State<PostsCard> {
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: Icon(
-                      JamIcons.heart,
-                      size: 30,
+                      JamIcons.gps,
+                      size: 35,
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ],

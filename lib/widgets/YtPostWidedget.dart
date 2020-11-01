@@ -36,7 +36,7 @@ class YtPostWidgetState extends State<YtPostWidget> {
         if (_controller.value.isPlaying) {
           if (visiblePercentage < 90) _controller.pause();
         } else {
-          if (visiblePercentage > 99) _controller.play();
+          if (visiblePercentage > 100) _controller.play();
         }
       },
       child: Center(

@@ -27,8 +27,8 @@ class PostsList extends StatelessWidget {
               controller: Provider.of<PostProvider>(context).scrollController,
                 separatorBuilder: (context, index) => Divider(
                       height: 2,
-                      thickness: 4,
-                      endIndent: 2,
+                      thickness: 1,
+                    
                     ),
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -55,7 +55,6 @@ class PostsList extends StatelessWidget {
                   } else if (snapshot.data[index].postType == "ad") {
                     return AdMobBannerAd();
                   } else if (snapshot.data[index].postType == "vidList") {
-                    ;
                    // list.shuffle();
                     return HorizontalVideoIntruder(postsList:snapshot.data.where((element) => element.postType=="video").toList() );
                   } else {

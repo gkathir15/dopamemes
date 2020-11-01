@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/widgets/NotSafePlaceHolder.dart';
+import 'package:dopamemes/widgets/WaveloadingWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,11 @@ class ImagePostWidget extends StatelessWidget {
       builder: (_, bool value, child) {
         if (value) {
           return CachedNetworkImage(
+            progressIndicatorBuilder: (_, __, ___) {
+              return WaveloadingWidget();
+            },
             imageUrl: _posts.fileUrl,
-            placeholder: (context, url) => Image.memory(kTransparentImage),
+            // placeholder: (context, url) => Image.memory(kTransparentImage),
           );
         } else {
           return InkWell(

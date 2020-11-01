@@ -13,3 +13,5 @@ export 'package:dopamemes/widgets/YTFullScreenWidget.dart';
 export 'package:dopamemes/widgets/VideoFullScreenPlayer.dart';
 export 'package:dopamemes/widgets/HorizontalVideoIntruder.dart';
 export 'package:dopamemes/widgets/CenterLoading.dart';
+export 'package:dopamemes/widgets/NotSafePlaceHolder.dart';
+export 'package:dopamemes/widgets/WaveloadingWidget.dart';
