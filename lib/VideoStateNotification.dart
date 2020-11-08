@@ -5,5 +5,7 @@ class VideoStateNotification extends Notification {
   final VideoState videoState;
 
   VideoStateNotification(this.videoState);
+
+  
   
 }

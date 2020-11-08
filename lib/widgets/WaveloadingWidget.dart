@@ -13,4 +13,3 @@ class WaveloadingWidget extends StatelessWidget {
        highlightColor: Colors.white10,direction: ShimmerDirection.btt,enabled: true,)    );
   }
 }
-t

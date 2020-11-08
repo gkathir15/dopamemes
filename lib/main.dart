@@ -85,7 +85,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -107,34 +106,7 @@ class _MyAppState extends State<MyApp> {
       Provider.of<CategoriesProvider>(context).fetchCategories();
       Admob.initialize("ca-app-pub-6011809596899441~9949339806");
 
-      
-    // For sharing images coming from outside the app while the app is in the memory
-    _shareRecieveIntentSubScription = ReceiveSharingIntent.getMediaStream()
-        .listen((List<SharedMediaFile> value) {
-      print("share" + value.first.path);
-      navigateToNewPost(value);
-    }, onError: (err) {
-      print("getIntentDataStream error: $err");
-    });
-
-    // For sharing images coming from outside the app while the app is closed
-    ReceiveSharingIntent.getInitialMedia().then((List<SharedMediaFile> value) {
-      print("share" + value.first.path);
-      navigateToNewPost(value);
-    });
-
-    // For sharing or opening urls/text coming from outside the app while the app is in the memory
-    _shareRecieveIntentSubScription =
-        ReceiveSharingIntent.getTextStream().listen((String value) {
-      print("share" + value);
-    }, onError: (err) {
-      print("getLinkStream error: $err");
-    });
-
-    // For sharing or opening urls/text coming from outside the app while the app is closed
-    ReceiveSharingIntent.getInitialText().then((String value) {
-      print("share" + value);
-    });
+      // For sharing images coming from outside the app while the app is in the memory
     }
     super.didChangeDependencies();
   }

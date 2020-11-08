@@ -90,6 +90,7 @@ class _MainFeedListState extends State<MainFeedList> {
             body: Container(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Builder(
                     builder: (bContext) {

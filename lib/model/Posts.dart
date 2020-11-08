@@ -42,8 +42,8 @@ class Posts {
       this.updatedAt});
 
   bool chekcIfMature() {
-    if (isMature == null) return true;
-    return isMature == "1";
+    if (isMature == null) return false;
+    return isMature == "true";
   }
 
   Posts.fromJson(Map<String, dynamic> json) {

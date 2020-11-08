@@ -2,6 +2,7 @@ import 'package:admob_flutter/admob_flutter.dart';
 import 'package:dopamemes/VideoState.dart';
 import 'package:dopamemes/VideoStateNotification.dart';
 import 'package:dopamemes/widgets/FullScreenCard.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/exports/WidgetExports.dart';
@@ -40,19 +41,24 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
                       element.postType == "ad")
                   .toList();
               return NotificationListener<VideoStateNotification>(
-                onNotification: (value) {
-                  if (value.videoState == VideoState.FINISHED &&
+                onNotification: (VideoStateNotification value) {
+                  print("Listener ${value.videoState.toString()}");
+                  print("listened ${value.toString()}");
+                  if (value.videoState == VideoState.FINISHED ||
                       value.videoState == VideoState.ON_ERROR) {
                     print("parent${value.videoState.toString()}");
                     _pageController.nextPage(
                         duration: Duration(milliseconds: 100),
                         curve: Curves.bounceIn);
                   }
-                  return true;
+                  return false;
                 },
                 child: PageView.builder(
+                    // clipBehavior: Clip.antiAlias,
+                    // allowImplicitScrolling: true,
+                    // dragStartBehavior: DragStartBehavior.start,
                     physics: const BouncingScrollPhysics(),
-                    pageSnapping: true,
+                    // pageSnapping: false,
                     itemCount: _localList.length,
                     onPageChanged: (value) => onPageChanged(value),
                     controller: _pageController,

@@ -23,15 +23,15 @@ class _VideoFullScreenPlayerState extends State<VideoFullScreenPlayer> {
     return ValueListenableBuilder(
       valueListenable: _cachedVideoPlayerController,
       builder: (_, CachedVideoPlayerValue value, Widget child) {
-        if (value.hasError) {
-          print("onError");
-          VideoStateNotification(VideoState.ON_ERROR)..dispatch(context);
-          return CenterLoading();
-        }
-        if (value.duration == value.position) {
-          print("onFinish");
-          VideoStateNotification(VideoState.FINISHED)..dispatch(context);
-        }
+        // if (value.hasError) {
+        //   print("onError");
+        //   VideoStateNotification(VideoState.ON_ERROR)..dispatch(context);
+        //   return CenterLoading();
+        // }
+        // if (value.duration == value.position) {
+        //   print("onFinish ${value.position } of ${ value.duration}");
+        //   VideoStateNotification(VideoState.FINISHED)..dispatch(context);
+        // }
         if (value.initialized) {
           _cachedVideoPlayerController.play();
           _cachedVideoPlayerController.setLooping(false);
@@ -76,6 +76,18 @@ class _VideoFullScreenPlayerState extends State<VideoFullScreenPlayer> {
   void didChangeDependencies() {
     _cachedVideoPlayerController = CachedVideoPlayerController.network(url);
     _cachedVideoPlayerController.initialize();
+    _cachedVideoPlayerController.addListener(() {
+           if (_cachedVideoPlayerController.value.hasError) {
+          print("onError");
+          VideoStateNotification(VideoState.ON_ERROR)..dispatch(context);
+          return CenterLoading();
+        }
+        if (_cachedVideoPlayerController.value.duration == _cachedVideoPlayerController.value.position) {
+          print("onFinish ${_cachedVideoPlayerController.value.position } of ${ _cachedVideoPlayerController.value.duration}");
+         
+          VideoStateNotification(VideoState.FINISHED)..dispatch(context);
+        }
+    });
 
     super.didChangeDependencies();
   }

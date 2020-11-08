@@ -1,3 +1,5 @@
+import 'package:dopamemes/VideoState.dart';
+import 'package:dopamemes/VideoStateNotification.dart';
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -58,7 +60,17 @@ class _YTFullScreenWidgetState extends State<YTFullScreenWidget> {
             controlsVisibleAtStart: false,
             autoPlay: true,
             disableDragSeek: true));
-    
+    _controller.addListener(() {
+      if (_controller.value.hasError) {
+        print("onError");
+        VideoStateNotification(VideoState.ON_ERROR)..dispatch(context);
+      }
+      if (_controller.value.playerState == PlayerState.ended) {
+        VideoStateNotification(VideoState.FINISHED)..dispatch(context);
+        return;
+      }
+    });
+
     super.didChangeDependencies();
   }
 }
