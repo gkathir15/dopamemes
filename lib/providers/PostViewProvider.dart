@@ -9,8 +9,7 @@ import 'package:hive/hive.dart';
 import 'Conts.dart';
 
 class PostProvider with ChangeNotifier {
-  Future<List<Posts>> postsData;
-  List<Posts> _pData = List();
+
   String lastId = "";
   Box<Posts> postsHiveBox;
 
@@ -24,23 +23,22 @@ class PostProvider with ChangeNotifier {
   }
 
   Future<List<Posts>> getFilteredList(Categories categoryDetails) async {
-    var data = List<Posts>();
+    var data = postsHiveBox.values.distinctBy((element) => element.sId);
+    data.sort((a, b) => a.createdAt.toInt().compareTo(b.createdAt.toInt()));
+
+    if (data.isEmpty) {
+      fetchPosts();
+    }
     if (categoryDetails.sId == "0") {
       data = postsHiveBox.values.distinctBy((element) => element.sId);
+    data.distinctBy((element) => element.sId);
+      data.toList();
     } else {
       data = postsHiveBox.values
           .toList()
-          .where((element) => element.categoryId == categoryDetails.sId)
           .distinctBy((element) => element.sId);
-      if (data.isEmpty) {
-        fetchPosts();
-      }
-
-      if (data.isEmpty) {
-        fetchPosts();
-      } else {
-        fetchRecents(data.first.sId);
-      }
+      data.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+      data.toList();
     }
 
     return data;
@@ -57,32 +55,25 @@ class PostProvider with ChangeNotifier {
     PostsResponse postsResponse =
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
-    _pData.addAll(pumpAds(postsResponse.data.posts));
     postsHiveBox.addAll(postsResponse.data.posts);
-    // _pData.add(Posts(postType: "ad"));
-    postsData = allPostsFuture();
+
     notifyListeners();
   }
 
-  fetchRecents(String firstId) async {
+  fetchRecent(String firstId) async {
     Response response =
         await Dio().get(Conts.baseUrl + "api/v1/posts?firstId=$firstId");
     print(response.toString());
     PostsResponse postsResponse =
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
-    _pData.addAll(pumpAds(postsResponse.data.posts));
     postsHiveBox.addAll(postsResponse.data.posts);
-    // _pData.add(Posts(postType: "ad"));
-    postsData = allPostsFuture();
     notifyListeners();
   }
 
-  List<Posts> allPosts() => _pData;
 
-  Future<List<Posts>> allPostsFuture() async {
-    return _pData;
-  }
+
+
 
   List<Posts> pumpAds(List<Posts> list) {
     if (list.length > 9) {
@@ -92,9 +83,11 @@ class PostProvider with ChangeNotifier {
     return list;
   }
 
-  paginatePosts(Posts lastPost) async {
-    print(lastPost.toJson().toString());
-    var url = Conts.baseUrl + "api/v1/posts?lastId=${lastPost.sId}";
+  paginatePosts() async {
+    var data = postsHiveBox.values.distinctBy((element) => element.sId);
+    data.sort((a, b) => a.createdAt.toInt().compareTo(b.createdAt.toInt()));
+    print(data.last.toJson().toString());
+    var url = Conts.baseUrl + "api/v1/posts?lastId=${data.last.sId}";
     print(url);
     Response response = await Dio().get(url);
     print(response.toString());
@@ -102,25 +95,20 @@ class PostProvider with ChangeNotifier {
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     postsHiveBox.addAll(postsResponse.data.posts);
-    _pData.addAll(pumpAds(postsResponse.data.posts));
-    // _pData.add(Posts(postType: "ad"));
-    postsData = allPostsFuture();
     notifyListeners();
   }
 
   ///dummy profiel id 5f4bf11b4eece7b043c8cc29
 
   addNewUploadedPost(Posts posts) {
-    postsHiveBox.add(posts);
-    _pData.insert(0, posts);
-    postsData = allPostsFuture();
+    var data = postsHiveBox.values.distinctBy((element) => element.sId);
+    data.sort((a, b) => a.createdAt.toInt().compareTo(b.createdAt.toInt()));
+    fetchRecent(data.first.sId);
   }
 
   openHiveBox() async {
     postsHiveBox = Hive.box<Posts>("POSTS");
   }
 
-  sharePost(Posts posts) {
-    
-  }
+  sharePost(Posts posts) {}
 }

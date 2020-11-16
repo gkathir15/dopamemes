@@ -14,7 +14,7 @@ class Posts {
   @HiveField(3)
   String categoryId;
   @HiveField(4)
-  double createdAt;
+  int createdAt;
   @HiveField(5)
   String fileUrl;
   @HiveField(6)
@@ -53,7 +53,7 @@ class Posts {
         ? new CategoryDetails.fromJson(json['category_details'])
         : null;
     categoryId = json['category_id'];
-    createdAt = json['created_at'];
+    createdAt = (json['created_at'].toInt());
     fileUrl = json['file_url'];
     isMature = json['is_mature'].toString();
     ownerDetails = json['owner_details'] != null

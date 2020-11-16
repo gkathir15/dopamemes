@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
-import 'package:timeago/timeago.dart' as timeAgo;
+import 'package:dopamemes/TimeFormat.dart' as timeAgo;
 
 class PostsCard extends StatefulWidget {
   final Posts _document;
@@ -32,7 +32,15 @@ class PostsCardState extends State<PostsCard> {
   Widget build(BuildContext context) {
     // var size = MediaQuery.of(context).size.width;
     // var height = size + (size / 4);
+    print("time ${_document.createdAt}");
+
+
+
+  var diff =   DateTime.now().difference(DateTime.fromMicrosecondsSinceEpoch(_document.createdAt));
+
+
     if (_document.fileUrl == null) _widget = Container();
+
 
     return Padding(
       padding: const EdgeInsets.only(top: 8),
@@ -65,8 +73,9 @@ class PostsCardState extends State<PostsCard> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
-                        timeAgo.format(DateTime.fromMillisecondsSinceEpoch(
-                            (_document.createdAt * 1000).toInt())),
+
+                        timeAgo.formatTime(_document.createdAt),
+
                         style: GoogleFonts.roboto(),
                         textScaleFactor: 0.6,
                       ),

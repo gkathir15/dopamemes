@@ -21,7 +21,7 @@ class PostsAdapter extends TypeAdapter<Posts> {
       caption: fields[1] as String,
       categoryDetails: fields[2] as CategoryDetails,
       categoryId: fields[3] as String,
-      createdAt: fields[4] as double,
+      createdAt: fields[4] as int,
       fileUrl: fields[5] as String,
       isMature: fields[6] as String,
       ownerDetails: fields[7] as OwnerDetails,

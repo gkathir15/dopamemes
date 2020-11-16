@@ -10,7 +10,7 @@ class PostsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: Provider.of<PostProvider>(context).getFilteredList(
-            Provider.of<CategoriesProvider>(context).mainCategory),
+            Provider.of<CategoriesProvider>(context,listen:false).mainCategory),
         builder:
             (BuildContext buildContext, AsyncSnapshot<List<Posts>> snapshot) {
           if (snapshot.hasData) {
@@ -38,14 +38,15 @@ class PostsList extends StatelessWidget {
                             .lastId !=
                         snapshot.data.last.sId) {
                       Provider.of<PostProvider>(context, listen: false)
-                          .paginatePosts(snapshot.data.last);
+                          .paginatePosts();
                     }
-                    Provider.of<PostProvider>(context, listen: false).lastId =
+                    Provider.of<
+                        PostProvider>(context, listen: false).lastId =
                         snapshot.data.last.sId;
                   }
                   if (snapshot.data[index].postType == "youtube") {
                     return PostsCard(snapshot.data[index],
-                        YtPostWidget(snapshot.data[index]));
+                        YTFullScreenWidget(url:snapshot.data[index].fileUrl));
                   } else if (snapshot.data[index].postType == "image") {
                     return PostsCard(snapshot.data[index],
                         ImagePostWidget(snapshot.data[index]));

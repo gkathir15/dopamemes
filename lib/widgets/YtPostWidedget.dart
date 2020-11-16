@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ext_video_player/ext_video_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
@@ -21,7 +22,7 @@ final Posts _posts;
 
 class YtPostWidgetState extends State<YtPostWidget> {
   
-  YoutubePlayerController _controller;
+  VideoPlayerController _controller;
   // ValueNotifier<bool> _isClicked = ValueNotifier(false);
   AppSettingProvider settingsProvider;
 
@@ -43,14 +44,7 @@ class YtPostWidgetState extends State<YtPostWidget> {
         child: GestureDetector(
           child: AspectRatio(
             aspectRatio: 16 / 9,
-            child: YoutubePlayer(
-                showVideoProgressIndicator: false,
-                bottomActions: [Yt.PlayPauseButton()],
-                controller: _controller,
-                thumbnail: CachedNetworkImage(
-                    fit: BoxFit.fitWidth,
-                    imageUrl: Yt.YoutubePlayer.getThumbnail(
-                        videoId: Yt.YoutubePlayer.convertUrlToId(widget._posts.fileUrl)))),
+            child: VideoPlayer(_controller),
           ),
           onTap: () {
             if (_controller.value.isPlaying) {
@@ -80,16 +74,16 @@ class YtPostWidgetState extends State<YtPostWidget> {
   @override
   void didChangeDependencies() {
    settingsProvider = Provider.of<AppSettingProvider>(context);
-    _controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(widget._posts.fileUrl),
-        flags: YoutubePlayerFlags(
-            hideControls: true,
-            enableCaption: false,
-            controlsVisibleAtStart: false,
-            autoPlay: settingsProvider.isAutolay(),
-            disableDragSeek: true)
-            );
-    settingsProvider.isMute() ? _controller.mute() : _controller.unMute();
+   print(widget._posts.fileUrl);
+      _controller = VideoPlayerController.network(widget._posts.fileUrl);
+
+   // _controller.addListener(() {
+   //   setState(() {});
+   // });
+   _controller.initialize();
+   _controller.setLooping(true);
+
+    settingsProvider.isMute() ? _controller.setVolume(0) : _controller.setVolume(1);
     super.didChangeDependencies();
   }
 }
