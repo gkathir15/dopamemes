@@ -19,7 +19,7 @@ class VideoPostWidget extends StatefulWidget {
   }
 }
 
-class VideoPostWidgetState extends State<VideoPostWidget> {
+class VideoPostWidgetState extends State<VideoPostWidget> with AutomaticKeepAliveClientMixin{
   
 
   CachedVideoPlayerController _controller;
@@ -124,6 +124,10 @@ class VideoPostWidgetState extends State<VideoPostWidget> {
     super.dispose();
     if (_controller != null) _controller.dispose();
   }
+
+  @override
+
+  bool get wantKeepAlive => true;
 }
 
 class _PlayPauseOverlay extends StatelessWidget {

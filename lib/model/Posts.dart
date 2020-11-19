@@ -27,6 +27,11 @@ class Posts {
   String postType;
   @HiveField(10)
   double updatedAt;
+  @HiveField(11)
+  bool is_liked;
+  @HiveField(12)
+  int likes_count;
+
 
   Posts(
       {this.sId,
@@ -39,9 +44,11 @@ class Posts {
       this.ownerDetails,
       this.ownerId,
       this.postType,
-      this.updatedAt});
+      this.updatedAt,
+      this.is_liked,
+      this.likes_count});
 
-  bool chekcIfMature() {
+  bool checkIfMature() {
     if (isMature == null) return false;
     return isMature == "true";
   }
@@ -62,6 +69,8 @@ class Posts {
     ownerId = json['owner_id'];
     postType = json['post_type'];
     updatedAt = json['updated_at'];
+    is_liked = json['is_liked'];
+    likes_count = json['likes_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -81,6 +90,8 @@ class Posts {
     data['owner_id'] = this.ownerId;
     data['post_type'] = this.postType;
     data['updated_at'] = this.updatedAt;
+    data['is_liked'] = this.is_liked;
+    data['likes_count'] = this.likes_count;
     return data;
   }
 }

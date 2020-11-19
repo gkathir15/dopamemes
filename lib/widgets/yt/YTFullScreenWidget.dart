@@ -14,7 +14,7 @@ class YTFullScreenWidget extends StatefulWidget {
   _YTFullScreenWidgetState createState() => _YTFullScreenWidgetState(url);
 }
 
-class _YTFullScreenWidgetState extends State<YTFullScreenWidget> {
+class _YTFullScreenWidgetState extends State<YTFullScreenWidget> with AutomaticKeepAliveClientMixin {
   final String url;
   VideoPlayerController _controller;
   YoutubePlayerController _webPlayerController;
@@ -107,4 +107,8 @@ class _YTFullScreenWidgetState extends State<YTFullScreenWidget> {
 
     super.didChangeDependencies();
   }
+
+  @override
+
+  bool get wantKeepAlive => true;
 }

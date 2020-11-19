@@ -8,12 +8,12 @@ import 'package:dopamemes/pages/VideoHorizontalScroller.dart';
 import 'package:dopamemes/providers/AppSettingsProvider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:dopamemes/exports/PagesExport.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import 'package:wiredash/wiredash.dart';
 
 Future<void> main() async {
@@ -85,33 +85,20 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+     const receiveIntent = const MethodChannel('receivedIntent');
+     var recievedData = receiveIntent.invokeListMethod("receivedIntent");
+     getRecievedData(recievedData);
 
-    _shareRecieveIntentSubScription = ReceiveSharingIntent.getMediaStream()
-        .listen((List<SharedMediaFile> value) {
-      print("share" + value.first.path);
-      navigateToNewPost(value);
-    }, onError: (err) {
-      print("getIntentDataStream error: $err");
-    });
 
-    // For sharing images coming from outside the app while the app is closed
-    ReceiveSharingIntent.getInitialMedia().then((List<SharedMediaFile> value) {
-      print("share" + value.first.path);
-      navigateToNewPost(value);
-    });
 
-    // For sharing or opening urls/text coming from outside the app while the app is in the memory
-    _shareRecieveIntentSubScription =
-        ReceiveSharingIntent.getTextStream().listen((String value) {
-          print("share" + value);
-        }, onError: (err) {
-          print("getLinkStream error: $err");
-        });
 
-    // For sharing or opening urls/text coming from outside the app while the app is closed
-    ReceiveSharingIntent.getInitialText().then((String value) {
-      print("share" + value);
-    });
+  }
+
+  Future<void> getRecievedData(Future<List<dynamic>> recievedData)
+  async {
+   var data = await recievedData;
+
+    print("recievedData${data.length}");
   }
 
   @override
@@ -132,23 +119,20 @@ class _MyAppState extends State<MyApp> {
       Provider.of<PostProvider>(context).fetchPosts();
       Provider.of<CategoriesProvider>(context).fetchCategories();
       Admob.initialize("ca-app-pub-6011809596899441~9949339806");
-
-
-
       // For sharing images coming from outside the app while the app is in the memory
     }
     super.didChangeDependencies();
   }
 
-  void navigateToNewPost(List<SharedMediaFile> value) {
-    var prototype = value.first.type == SharedMediaType.IMAGE
-        ? PostType.IMAGE
-        : PostType.VIDEO;
-    Navigator.of(context).push(PageRouteBuilder(
-        opaque: false,
-        pageBuilder: (BuildContext context, _, __) =>
-            NewPostDialog.withPath(prototype, value.first.path)));
-  }
+  // void navigateToNewPost(List<SharedMediaFile> value,BuildContext context) {
+  //   var prototype = value.first.type == SharedMediaType.IMAGE
+  //       ? PostType.IMAGE
+  //       : PostType.VIDEO;
+  //   Navigator.of(context).push(PageRouteBuilder(
+  //       opaque: false,
+  //       pageBuilder: (BuildContext context, _, __) =>
+  //           NewPostDialog.withPath(prototype, value.first.path)));
+  // }
 
   disposeBoxes() async {
     (await Hive.openBox<Categories>("CATEGORIES")).close();

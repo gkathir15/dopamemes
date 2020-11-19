@@ -11,17 +11,24 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class ImagePostWidget extends StatelessWidget {
+class ImagePostWidget extends StatefulWidget {
   final Posts _posts;
   ImagePostWidget(this._posts);
+
+  @override
+  _ImagePostWidgetState createState() => _ImagePostWidgetState();
+}
+
+class _ImagePostWidgetState extends State<ImagePostWidget> with AutomaticKeepAliveClientMixin {
   ValueNotifier<bool> _valueListenable;
+
   @override
   Widget build(BuildContext context) {
     var showNsfwOverLay =
         Provider.of<AppSettingProvider>(context).isShowNfswOverLay();
 
     _valueListenable =
-        ValueNotifier(!(_posts.chekcIfMature() && showNsfwOverLay));
+        ValueNotifier(!(widget._posts.checkIfMature() && showNsfwOverLay));
 
     return ValueListenableBuilder(
       valueListenable: _valueListenable,
@@ -31,7 +38,7 @@ class ImagePostWidget extends StatelessWidget {
             progressIndicatorBuilder: (_, __, ___) {
               return WaveloadingWidget();
             },
-            imageUrl: _posts.fileUrl,
+            imageUrl: widget._posts.fileUrl,
             // placeholder: (context, url) => Image.memory(kTransparentImage),
           );
         } else {
@@ -39,11 +46,14 @@ class ImagePostWidget extends StatelessWidget {
             child: NotSafePlaceholder(),
             onTap: () {
               _valueListenable.value = true;
-              _posts.isMature = "false";
+              widget._posts.isMature = "false";
             },
           );
         }
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

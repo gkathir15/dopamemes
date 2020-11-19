@@ -10,7 +10,7 @@ class PostsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: Provider.of<PostProvider>(context).getFilteredList(
-            Provider.of<CategoriesProvider>(context,listen:false).mainCategory),
+            Provider.of<CategoriesProvider>(context,listen:true).mainCategory),
         builder:
             (BuildContext buildContext, AsyncSnapshot<List<Posts>> snapshot) {
           if (snapshot.hasData) {
@@ -24,7 +24,8 @@ class PostsList extends StatelessWidget {
             //       .toList();
             // }
             return ListView.separated(
-              controller: Provider.of<PostProvider>(context).scrollController,
+              addAutomaticKeepAlives: true,
+              controller: Provider.of<PostProvider>(context,listen: false).scrollController,
                 separatorBuilder: (context, index) => Divider(
                       height: 2,
                       thickness: 1,
@@ -44,23 +45,7 @@ class PostsList extends StatelessWidget {
                         PostProvider>(context, listen: false).lastId =
                         snapshot.data.last.sId;
                   }
-                  if (snapshot.data[index].postType == "youtube") {
-                    return PostsCard(snapshot.data[index],
-                        YTFullScreenWidget(url:snapshot.data[index].fileUrl));
-                  } else if (snapshot.data[index].postType == "image") {
-                    return PostsCard(snapshot.data[index],
-                        ImagePostWidget(snapshot.data[index]));
-                  } else if (snapshot.data[index].postType == "video") {
-                    return PostsCard(snapshot.data[index],
-                        VideoPostWidget(snapshot.data[index]));
-                  } else if (snapshot.data[index].postType == "ad") {
-                    return AdMobBannerAd();
-                  } else if (snapshot.data[index].postType == "vidList") {
-                   // list.shuffle();
-                    return HorizontalVideoIntruder(postsList:snapshot.data.where((element) => element.postType=="video").toList() );
-                  } else {
-                    return Container();
-                  }
+                    return PostsCard(snapshot.data[index]);
                 });
           } else {
             print(snapshot.connectionState);

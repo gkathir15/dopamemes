@@ -24,8 +24,7 @@ class _MainFeedListState extends State<MainFeedList> {
   Widget build(BuildContext context) {
     var _scaffoldKey = GlobalKey<ScaffoldState>();
     return FutureBuilder(
-      future: Provider.of<PostProvider>(context).getFilteredList(
-          Provider.of<CategoriesProvider>(context).mainCategory),
+      future: Provider.of<PostProvider>(context).getList(),
       builder: (BuildContext context, AsyncSnapshot<List<Posts>> snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
@@ -92,26 +91,10 @@ class _MainFeedListState extends State<MainFeedList> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Builder(
-                    builder: (bContext) {
-                      if (Provider.of<NewPostProvider>(bContext).status() ==
-                          UploadStatus.UPDATED) {
-                        Provider.of<PostProvider>(context, listen: false)
-                            .addNewUploadedPost(Provider.of<NewPostProvider>(
-                                    bContext,
-                                    listen: false)
-                                .pollQueue());
-                      }
-
-                      if (Provider.of<NewPostProvider>(bContext).status() ==
-                          UploadStatus.UPLOADING) {
-                        return SafeArea(child: LinearProgressIndicator());
-                      } else
-                        return Container(
-                          height: 0,
-                        );
-                    },
-                  ),
+                  ValueListenableBuilder<UploadStatus>(builder: (_context,bool,_){
+                    return bool == UploadStatus.UPLOADING?LinearProgressIndicator():Container(height: 0,);
+                  },
+                  valueListenable: Provider.of<NewPostProvider>(context).pollQueue(),),
                   Expanded(child: PostsList()),
                 ],
               ),

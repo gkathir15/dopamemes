@@ -1,47 +1,37 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:ui';
+
+import 'package:dopamemes/exports/WidgetExports.dart';
 import 'package:dopamemes/jam_icons_icons.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
-import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:dopamemes/TimeFormat.dart' as timeAgo;
+import 'package:share/share.dart';
 
 class PostsCard extends StatefulWidget {
   final Posts _document;
-  final Widget _widget;
+  //final Widget _widget;
 
-  PostsCard(this._document, this._widget);
+  PostsCard(this._document);
 
   @override
   State<StatefulWidget> createState() {
-    return PostsCardState(_document, _widget);
+    return PostsCardState(_document);
   }
 }
 
 class PostsCardState extends State<PostsCard> {
   Posts _document;
-  Widget _widget;
 
   var cardRadius =
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0));
 
-  PostsCardState(this._document, this._widget);
+  PostsCardState(this._document);
   @override
   Widget build(BuildContext context) {
-    // var size = MediaQuery.of(context).size.width;
-    // var height = size + (size / 4);
-    print("time ${_document.createdAt}");
-
-
-
-  var diff =   DateTime.now().difference(DateTime.fromMicrosecondsSinceEpoch(_document.createdAt));
-
-
-    if (_document.fileUrl == null) _widget = Container();
-
-
+    ValueNotifier<bool> isLiked = ValueNotifier(_document.is_liked!=null?_document.is_liked:false);
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: InkWell(
@@ -84,27 +74,54 @@ class PostsCardState extends State<PostsCard> {
                 ),
               ],
             ),
-            _widget, //The content widget..
+            ClipRRect(child: contextWidget(_document),borderRadius: BorderRadius.circular(8.0),),
+      //The content widget..
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                InkWell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Icon(
-                      JamIcons.heart,
-                      size: 35,
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: (){
+                        isLiked.value = !isLiked.value;
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: ValueListenableBuilder<bool>(
+                          builder: (_,bool,__){
+                            return bool?Icon(
+                              JamIcons.heart_f,
+                              color: Colors.redAccent,
+                              size: 30,
+                            ):Icon(
+                              JamIcons.heart,
+                              size: 30,
+                            );
+                          },
+                          valueListenable:isLiked ,
+                        ),
+                      ),
                     ),
-                  ),
+                    Text("${_document.likes_count} likes")
+                  ],
+
                 ),
-                InkWell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Icon(
-                      JamIcons.gps,
-                      size: 35,
+                Column(
+                  children: [
+                    InkWell(
+                      onTap: (){
+                      Share.share("Check out this post form Dopamemes www.Dopamemes.live/${_document.sId}",subject: "Share Via");
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top:10,left: 10,right:10),
+                        child: Icon(
+                          JamIcons.share,
+                          size: 30,
+                        ),
+                      ),
                     ),
-                  ),
+                    Text("Share",style: GoogleFonts.roboto(),)
+                  ],
                 ),
               ],
             ),
@@ -112,5 +129,25 @@ class PostsCardState extends State<PostsCard> {
         ),
       ),
     );
+  }
+
+  Widget contextWidget(Posts _document)
+  {
+    if (_document.postType == "youtube") {
+      return  YTFullScreenWidget(url:_document.fileUrl);
+    } else if (_document.postType == "image") {
+      return ImagePostWidget(_document);
+    } else if (_document.postType == "video") {
+      return
+        kIsWeb?WebVideoPostWidget(_document):VideoPostWidget(_document);
+    } else if (_document.postType == "ad") {
+      return AdMobBannerAd();
+    } else if (_document.postType == "vidList") {
+
+      return Container();
+        //HorizontalVideoIntruder(postsList:snapshot.data.where((element) => element.postType=="video").toList() );
+    } else {
+      return Container();
+    }
   }
 }

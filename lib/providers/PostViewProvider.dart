@@ -24,24 +24,24 @@ class PostProvider with ChangeNotifier {
 
   Future<List<Posts>> getFilteredList(Categories categoryDetails) async {
     var data = postsHiveBox.values.distinctBy((element) => element.sId);
-    data.sort((a, b) => a.createdAt.toInt().compareTo(b.createdAt.toInt()));
-
     if (data.isEmpty) {
       fetchPosts();
     }
     if (categoryDetails.sId == "0") {
       data = postsHiveBox.values.distinctBy((element) => element.sId);
-    data.distinctBy((element) => element.sId);
-      data.toList();
     } else {
-      data = postsHiveBox.values
-          .toList()
-          .distinctBy((element) => element.sId);
-      data.sort((a, b) => a.createdAt.compareTo(b.createdAt));
-      data.toList();
+      data = postsHiveBox.values.where((element) => element.categoryId==categoryDetails.sId);
     }
 
     return data;
+  }
+
+
+  Future<List<Posts>> getList() async {
+
+
+
+    return postsHiveBox.values.distinctBy((element) => element.sId);
   }
 
   animateToTopOfList() {
@@ -55,9 +55,13 @@ class PostProvider with ChangeNotifier {
     PostsResponse postsResponse =
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
+    if(postsResponse.data.posts.isNotEmpty)
+      {
+        await postsHiveBox.clear();
+      }
     postsHiveBox.addAll(postsResponse.data.posts);
 
-    notifyListeners();
+   // notifyListeners();
   }
 
   fetchRecent(String firstId) async {
@@ -68,7 +72,7 @@ class PostProvider with ChangeNotifier {
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     postsHiveBox.addAll(postsResponse.data.posts);
-    notifyListeners();
+   // notifyListeners();
   }
 
 
@@ -85,7 +89,6 @@ class PostProvider with ChangeNotifier {
 
   paginatePosts() async {
     var data = postsHiveBox.values.distinctBy((element) => element.sId);
-    data.sort((a, b) => a.createdAt.toInt().compareTo(b.createdAt.toInt()));
     print(data.last.toJson().toString());
     var url = Conts.baseUrl + "api/v1/posts?lastId=${data.last.sId}";
     print(url);
@@ -95,14 +98,14 @@ class PostProvider with ChangeNotifier {
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     postsHiveBox.addAll(postsResponse.data.posts);
-    notifyListeners();
+   notifyListeners();
   }
 
-  ///dummy profiel id 5f4bf11b4eece7b043c8cc29
+  ///dummy profile id 5f4bf11b4eece7b043c8cc29
 
   addNewUploadedPost(Posts posts) {
     var data = postsHiveBox.values.distinctBy((element) => element.sId);
-    data.sort((a, b) => a.createdAt.toInt().compareTo(b.createdAt.toInt()));
+    // data.sort((a, b) => a.createdAt.toInt().compareTo(b.createdAt.toInt()));
     fetchRecent(data.first.sId);
   }
 
