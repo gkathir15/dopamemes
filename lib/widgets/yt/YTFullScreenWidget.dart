@@ -1,8 +1,10 @@
 import 'package:dopamemes/VideoState.dart';
 import 'package:dopamemes/VideoStateNotification.dart';
+import 'package:dopamemes/providers/AppSettingsProvider.dart';
 import 'package:ext_video_player/ext_video_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -67,7 +69,7 @@ class _YTFullScreenWidgetState extends State<YTFullScreenWidget> with AutomaticK
     _controller = VideoPlayerController.network(url);
 
     _controller.initialize();
-    _controller.setLooping(true);
+    _controller.setLooping(false);
 
 
     _controller.addListener(() {
@@ -82,7 +84,7 @@ class _YTFullScreenWidgetState extends State<YTFullScreenWidget> with AutomaticK
                 hideControls: true,
                 enableCaption: false,
                 controlsVisibleAtStart: false,
-                autoPlay: true,
+                autoPlay: Provider.of<AppSettingProvider>(context).isAutolay(),
                 disableDragSeek: true));
     _webPlayerController.addListener(() {
       if (_webPlayerController.value.hasError) {

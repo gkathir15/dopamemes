@@ -31,18 +31,19 @@ class BottomBar extends StatelessWidget {
                 ),
                 enableFeedback: true,
                 onPressed: () {
-                  Navigator.pushNamed(context, 'fullVideo');
+                  Provider.of<PostProvider>(context, listen: false).selectedBottomSheet =1;
                 },
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: IconButton(icon: Icon(JamIcons.home), onPressed: () {
-                 Provider.of<CategoriesProvider>(context, listen: false)
-                .setMainCategory(
-                    Categories(sId: "0"));
-            Provider.of<PostProvider>(context, listen: false)
-                .animateToTopOfList();
+            //      Provider.of<CategoriesProvider>(context, listen: false)
+            //     .setMainCategory(
+            //         Categories(sId: "0"));
+            // Provider.of<PostProvider>(context, listen: false)
+            //     .animateToTopOfList();
+                Provider.of<PostProvider>(context, listen: false).selectedBottomSheet =0;
               }),
             ),
           ],

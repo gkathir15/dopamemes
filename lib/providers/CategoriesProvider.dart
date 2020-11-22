@@ -9,8 +9,8 @@ import 'package:flutter_extentions/iterable.dart';
 
 class CategoriesProvider with ChangeNotifier {
   List<Categories> categories = List();
-  Categories mainCategory = Categories(sId: "0", displayName: "All");
-  Categories newPostUploadCategory;
+  Categories _feedSelectedCategory = Categories(sId: "0", displayName: "All");
+  Categories _newPostUploadCategory;
 
   // CategoriesProvider(this._postProvider, this._newPostProv);
 
@@ -26,26 +26,59 @@ class CategoriesProvider with ChangeNotifier {
     categoriesHiveBox =  Hive.box<Categories>("CATEGORIES");
   }
 
+  Categories getFeedCategory()
+  {
+    if(_feedSelectedCategory!=null){
+      return _feedSelectedCategory;
+    }
+    else{
+      _feedSelectedCategory = categoriesHiveBox.values.distinctBy((element) => element.sId)[0];
+      return _feedSelectedCategory;
+    }
+  }
+
+  void setFeedCategory(Categories selectedFeedCate)
+  {
+    _feedSelectedCategory = selectedFeedCate;
+    notifyListeners();
+  }
+
   fetchCategories() async {
     Response response = await Dio().get(Conts.baseUrl + "api/v1/categories");
     print(response.toString());
     CategoriesResponse categoriesResponse =
         CategoriesResponse.fromJson(json.decode(response.toString()));
     print(categoriesResponse.data.catagories.length);
+    if(categoriesResponse.data.catagories.isNotEmpty)
+      {
+      await   categoriesHiveBox.clear();
+      }
     categoriesHiveBox.addAll(categoriesResponse.data.catagories);
     categories = categoriesHiveBox.values.distinctBy((element) => element.sId);
-    newPostUploadCategory = categories[0];
+    _newPostUploadCategory = categories[0];
     notifyListeners();
   }
 
   setNewPostSelected(int pos) {
-    newPostUploadCategory = categories[pos];
+    _newPostUploadCategory =  categoriesHiveBox.values.distinctBy((element) => element.sId)[pos];
+  }
+
+  getNewPostsSelectedCategory()
+  {
+    if(_newPostUploadCategory!=null){
+      return _newPostUploadCategory;
+    }
+    else{
+      _newPostUploadCategory = categoriesHiveBox.values.distinctBy((element) => element.sId)[0];
+      return _newPostUploadCategory;
+    }
+
   }
 
   List<Categories> allCategories() => categoriesHiveBox.values.distinctBy((e) =>e.sId);
 
   setMainCategory(Categories selectedCategory) {
-    mainCategory = selectedCategory;
+    _feedSelectedCategory = selectedCategory;
     notifyListeners();
   }
 }

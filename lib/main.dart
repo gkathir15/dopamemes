@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:dopamemes/exports/PagesExport.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:splashscreen/splashscreen.dart';
 import 'package:wiredash/wiredash.dart';
 
 Future<void> main() async {
@@ -75,7 +76,7 @@ class _MyAppState extends State<MyApp> {
           "fullVideo": (context) => VideoHorizontalScroller(),
           "settings": (context) => AppSettingsPage()
         },
-        home: MainFeedList(),
+        home: SplashScreen(useLoader: true,navigateAfterSeconds:MainFeedList() ,seconds: 3,),
       ),
       projectId: "dopamemes-hnv70v6",
       secret: "2awlquvdc4c1ac60ottz6to5mvdbmmo1",

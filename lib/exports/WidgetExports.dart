@@ -16,3 +16,4 @@ export 'package:dopamemes/widgets/CenterLoading.dart';
 export 'package:dopamemes/widgets/NotSafePlaceHolder.dart';
 export 'package:dopamemes/widgets/WaveloadingWidget.dart';
 export 'package:dopamemes/widgets/video/WebVideoPostWidget.dart';
+export 'package:dopamemes/widgets/MainListWithNewPostLoader.dart';

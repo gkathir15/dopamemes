@@ -98,7 +98,7 @@ class NewPostDialogState extends State<NewPostDialog> {
                     children: [
                       Text(
                           Provider.of<CategoriesProvider>(context, listen: true)
-                              .newPostUploadCategory
+                              .getNewPostsSelectedCategory()
                               .displayName),
                       Icon(LineAwesomeIcons.angle_down)
                     ],
@@ -138,8 +138,8 @@ class NewPostDialogState extends State<NewPostDialog> {
     var map = Map<String, String>();
     map["caption"] = titleTextController.text;
     map["ownerId"] = "5f4bf11b4eece7b043c8cc29";
-    map["categoryId"] = Provider.of<CategoriesProvider>(context, listen: false)
-        .newPostUploadCategory
+    map["categoryId"] = Provider.of<CategoriesProvider>(context)
+        .getNewPostsSelectedCategory()
         .sId;
     map["youtubeUrl"] = _filePath;
     Provider.of<NewPostProvider>(context, listen: false).newYoutubePost(map);
@@ -150,8 +150,8 @@ class NewPostDialogState extends State<NewPostDialog> {
     var map = Map<String, dynamic>();
     map["caption"] = titleTextController.text;
     map["ownerId"] = "5f4bf11b4eece7b043c8cc29";
-    map["categoryId"] = Provider.of<CategoriesProvider>(context, listen: false)
-        .newPostUploadCategory
+    map["categoryId"] = Provider.of<CategoriesProvider>(context,listen: false)
+        .getNewPostsSelectedCategory()
         .sId;
     map["file"] = await MultipartFile.fromFile(_filePath);
     map["postType"] = _postType

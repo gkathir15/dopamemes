@@ -12,6 +12,15 @@ class PostProvider with ChangeNotifier {
 
   String lastId = "";
   Box<Posts> postsHiveBox;
+  int _selectedBottomSheet =0;
+
+
+  int get selectedBottomSheet => _selectedBottomSheet;
+
+  set selectedBottomSheet(int value) {
+    _selectedBottomSheet = value;
+    notifyListeners();
+  }
 
   ScrollController scrollController;
 
@@ -19,32 +28,29 @@ class PostProvider with ChangeNotifier {
     print("PostsInit");
     //  Hive.registerAdapter(PostsAdapter());
     openHiveBox();
-    scrollController = ScrollController();
+    scrollController = ScrollController(keepScrollOffset: true);
   }
 
   Future<List<Posts>> getFilteredList(Categories categoryDetails) async {
+    print("filterCategory"+categoryDetails.displayName);
     var data = postsHiveBox.values.distinctBy((element) => element.sId);
-    if (data.isEmpty) {
-      fetchPosts();
-    }
+
     if (categoryDetails.sId == "0") {
       data = postsHiveBox.values.distinctBy((element) => element.sId);
     } else {
-      data = postsHiveBox.values.where((element) => element.categoryId==categoryDetails.sId);
+      data = postsHiveBox.values;
+          //.where((element) => element.categoryDetails.sId==categoryDetails.sId);
     }
-
     return data;
   }
 
 
   Future<List<Posts>> getList() async {
-
-
-
     return postsHiveBox.values.distinctBy((element) => element.sId);
   }
 
   animateToTopOfList() {
+    if(scrollController.hasClients)
     scrollController.animateTo(0,
         duration: Duration(seconds: 5), curve: Curves.easeOutQuad);
   }
@@ -60,8 +66,6 @@ class PostProvider with ChangeNotifier {
         await postsHiveBox.clear();
       }
     postsHiveBox.addAll(postsResponse.data.posts);
-
-   // notifyListeners();
   }
 
   fetchRecent(String firstId) async {
@@ -72,7 +76,6 @@ class PostProvider with ChangeNotifier {
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     postsHiveBox.addAll(postsResponse.data.posts);
-   // notifyListeners();
   }
 
 
@@ -80,10 +83,18 @@ class PostProvider with ChangeNotifier {
 
 
   List<Posts> pumpAds(List<Posts> list) {
-    if (list.length > 9) {
-      list.insert(5, Posts(sId: "0", postType: "ad"));
-      //   list.insert(0, Posts(sId: "0", postType: "vidList"));
-    }
+    int interval = 10;
+    int adCount=(list.length/interval).toInt();
+    print("COUNT $adCount");
+    int ct =0;
+    while(ct<adCount)
+      {
+        ++ct;
+
+        var slot = (ct*interval)-3;
+        print("slot $slot");
+        list.insert(slot, Posts(sId: "$ct", postType: "ad") );
+      }
     return list;
   }
 
@@ -98,7 +109,6 @@ class PostProvider with ChangeNotifier {
         PostsResponse.fromJson(json.decode(response.toString()));
     print(postsResponse.data.posts.length);
     postsHiveBox.addAll(postsResponse.data.posts);
-   notifyListeners();
   }
 
   ///dummy profile id 5f4bf11b4eece7b043c8cc29
