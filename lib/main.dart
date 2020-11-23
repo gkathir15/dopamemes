@@ -87,19 +87,27 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
      const receiveIntent = const MethodChannel('receivedIntent');
-     var recievedData = receiveIntent.invokeListMethod("receivedIntent");
-     getRecievedData(recievedData);
+     var recievedData = receiveIntent.invokeMapMethod("receivedIntent");
+     if(recievedData!=null)
+    getReceivedData(recievedData);
+   // receiveIntent.setMethodCallHandler((call) => {});
 
 
 
 
   }
 
-  Future<void> getRecievedData(Future<List<dynamic>> recievedData)
+  Future<void> getReceivedData(Future<Map<dynamic,dynamic>> recievedData)
   async {
    var data = await recievedData;
+    print("receivedData${data?.toString()}");
+    //data = receivedData{path: https://youtu.be/eq3zolkk-DU, type: text/plain, fileType: text}
+    if(data!=null)
+      {
 
-    print("recievedData${data.length}");
+      }
+    
+
   }
 
   @override

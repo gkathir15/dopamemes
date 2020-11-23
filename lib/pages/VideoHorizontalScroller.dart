@@ -1,8 +1,6 @@
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:dopamemes/VideoState.dart';
 import 'package:dopamemes/VideoStateNotification.dart';
 import 'package:dopamemes/widgets/FullScreenCard.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/exports/WidgetExports.dart';
@@ -11,6 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:flutter_native_admob/native_admob_options.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:dopamemes/utils.dart';
 
@@ -29,77 +29,55 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder(
-        builder: (BuildContext context, AsyncSnapshot<List<Posts>> snapshot) {
-          if (snapshot.hasData) {
-            _localList = snapshot.data
-                .where((element) =>
-            element.postType.toLowerCase() == "youtube" ||
-                element.postType.toLowerCase() == "video" ||
-                element.postType == "ad")
-                .toList();
-            return NotificationListener<VideoStateNotification>(
-              onNotification: (VideoStateNotification value) {
-                print("Listener ${value.videoState.toString()}");
-                print("listened ${value.toString()}");
-                if (value.videoState == VideoState.FINISHED ||
-                    value.videoState == VideoState.ON_ERROR) {
-                  print("parent${value.videoState.toString()}");
-                  _pageController.nextPage(
-                      duration: Duration(milliseconds: 100),
-                      curve: Curves.bounceIn);
-                }
-                return false;
-              },
-              child: PageView.builder(
-                // clipBehavior: Clip.antiAlias,
-                // allowImplicitScrolling: true,
-                // dragStartBehavior: DragStartBehavior.start,
-                  physics: const BouncingScrollPhysics(),
-                  // pageSnapping: false,
-                  itemCount: _localList.length,
-                  onPageChanged: (value) => onPageChanged(value),
-                  controller: _pageController,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (_localList[index].postType == "youtube") {
-                      return FullScreenCard(
-                          postWidget: YTFullScreenWidget(
-                              url: _localList[index].fileUrl),
-                          posts: _localList[index]);
-                    } else if (_localList[index].postType == "video") {
-                      return FullScreenCard(
-                          postWidget: VideoFullScreenPlayer(
-                              url: _localList[index].fileUrl),
-                          posts: _localList[index]);
-                    } else if (_localList[index].postType == "ad") {
-                      return NativeAdmob(
-                        numberAds: _localList
-                            .where((element) => element.postType == "ad")
-                            .length,
-                        loading: Center(child: CircularProgressIndicator()),
-                        error: Center(child: CircularProgressIndicator()),
-                        adUnitID: AdMobAdProvider.nativeAdvancedVideo,
-                        controller: _nativeAdController,
-                        type: NativeAdmobType.full,
-                        options: NativeAdmobOptions(
-                          ratingColor: Colors.red,
-                        ),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  }),
-            );
-          } else {
-            return Center(
-              child: Center(child: CircularProgressIndicator()),
-            );
-          }
-        },
-        future: Provider.of<PostProvider>(context).getFilteredList(
-            Provider.of<CategoriesProvider>(context).getFeedCategory()),
-      ),
+      child: ValueListenableBuilder(
+        valueListenable: Provider.of<PostProvider>(context).postsHiveBox.listenable(),
+        builder: (BuildContext context, Box<Posts> snapshot,Widget child) {
+          _localList = snapshot.values
+              .where((element) =>
+          element.postType.toLowerCase() == "youtube" ||
+              element.postType.toLowerCase() == "video" ||
+              element.postType == "ad")
+              .toList();
+          return NotificationListener<VideoStateNotification>(
+            onNotification: (VideoStateNotification value) {
+              print("Listener ${value.videoState.toString()}");
+              print("listened ${value.toString()}");
+              if (value.videoState == VideoState.FINISHED ||
+                  value.videoState == VideoState.ON_ERROR) {
+                print("parent${value.videoState.toString()}");
+                _pageController.nextPage(
+                    duration: Duration(milliseconds: 100),
+                    curve: Curves.bounceIn);
+              }
+              return false;
+            },
+            child: PageView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: _localList.length,
+                onPageChanged: (value) => onPageChanged(value),
+                controller: _pageController,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (BuildContext context, int index) {
+                  if (_localList[index].postType == "youtube") {
+                    return FullScreenCard(
+                        postWidget: YTFullScreenWidget(
+                            url: _localList[index].fileUrl),
+                        posts: _localList[index]);
+                  } else if (_localList[index].postType == "video") {
+                    return FullScreenCard(
+                        postWidget: VideoFullScreenPlayer(
+                            url: _localList[index].fileUrl),
+                        posts: _localList[index]);
+                  } else if (_localList[index].postType == "ad") {
+                    return NativeAdWidget(count: _localList
+                        .where((element) => element.postType == "ad")
+                        .length, nativeAdController: _nativeAdController);
+                  } else {
+                    return Container();
+                  }
+                }),
+          );
+        }),
     );
   }
 
@@ -122,3 +100,5 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
 
   onPageChanged(int index) {}
 }
+
+

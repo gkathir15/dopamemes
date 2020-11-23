@@ -113,7 +113,7 @@ class PostProvider with ChangeNotifier {
 
   ///dummy profile id 5f4bf11b4eece7b043c8cc29
 
-  addNewUploadedPost(Posts posts) {
+  addNewUploadedPost() {
     var data = postsHiveBox.values.distinctBy((element) => element.sId);
     // data.sort((a, b) => a.createdAt.toInt().compareTo(b.createdAt.toInt()));
     fetchRecent(data.first.sId);

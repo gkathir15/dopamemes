@@ -20,36 +20,54 @@ class _PostsListState extends State<PostsList> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
         valueListenable: Provider.of<PostProvider>(context, listen: false)
-            .postsHiveBox
-            .listenable(),
+            .postsHiveBox.listenable(),
         builder: (BuildContext ctx, Box<Posts> snap, Widget child) {
-          var snapshot = Provider.of<PostProvider>(context, listen: false)
-              .pumpAds(snap.values.toList());
-          return ListView.separated(
-              addAutomaticKeepAlives: true,
-              controller: Provider.of<PostProvider>(context).scrollController,
-              separatorBuilder: (context, index) => Divider(
-                    height: 2,
-                    thickness: 1,
-                  ),
-              itemCount: snapshot.length,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == snapshot.length - 1) {
-                  print(snapshot[index].sId);
-                  if (Provider.of<PostProvider>(context, listen: false)
-                          .lastId !=
-                      snapshot.last.sId) {
-                    Provider.of<PostProvider>(context, listen: false)
-                        .paginatePosts();
+          var snapshot = List<Posts>();
+          if(Provider.of<CategoriesProvider>(context).getFeedCategory().sId!="0")
+            {
+               snapshot = Provider.of<PostProvider>(context, listen: false)
+                  .pumpAds(snap.values.where((element) => element.categoryId==Provider.of<CategoriesProvider>(context).getFeedCategory().sId).toList());
+            }else{
+             snapshot = Provider.of<PostProvider>(context, listen: false)
+                .pumpAds(snap.values.toList());
+          }
+          if(snapshot.isNotEmpty) {
+            return ListView.separated(
+                addAutomaticKeepAlives: true,
+                controller: Provider
+                    .of<PostProvider>(context)
+                    .scrollController,
+                separatorBuilder: (context, index) =>
+                    Divider(
+                      height: 2,
+                      thickness: 1,
+                    ),
+                itemCount: snapshot.length,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == snapshot.length - 1) {
+                    print(snapshot[index].sId);
+                    if (Provider
+                        .of<PostProvider>(context, listen: false)
+                        .lastId !=
+                        snapshot.last.sId) {
+                      Provider.of<PostProvider>(context, listen: false)
+                          .paginatePosts();
+                    }
+                    Provider
+                        .of<PostProvider>(context, listen: false)
+                        .lastId =
+                        snapshot.last.sId;
                   }
-                  Provider.of<PostProvider>(context, listen: false).lastId =
-                      snapshot.last.sId;
-                }
-                if (snapshot[index].postType == "ad") {
-                  return AdMobBannerAd();
-                }
-                return PostsCard(snapshot[index]);
-              });
+                  if (snapshot[index].postType == "ad") {
+                    return AdMobBannerAd();
+                  }
+                  return PostsCard(snapshot[index]);
+                });
+          }else{
+           return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         },
         child: Center(
           child: CircularProgressIndicator(),

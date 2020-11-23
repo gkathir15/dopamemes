@@ -8,7 +8,6 @@ import 'package:hive/hive.dart';
 import 'package:flutter_extentions/iterable.dart';
 
 class CategoriesProvider with ChangeNotifier {
-  List<Categories> categories = List();
   Categories _feedSelectedCategory = Categories(sId: "0", displayName: "All");
   Categories _newPostUploadCategory;
 
@@ -37,11 +36,7 @@ class CategoriesProvider with ChangeNotifier {
     }
   }
 
-  void setFeedCategory(Categories selectedFeedCate)
-  {
-    _feedSelectedCategory = selectedFeedCate;
-    notifyListeners();
-  }
+
 
   fetchCategories() async {
     Response response = await Dio().get(Conts.baseUrl + "api/v1/categories");
@@ -54,8 +49,7 @@ class CategoriesProvider with ChangeNotifier {
       await   categoriesHiveBox.clear();
       }
     categoriesHiveBox.addAll(categoriesResponse.data.catagories);
-    categories = categoriesHiveBox.values.distinctBy((element) => element.sId);
-    _newPostUploadCategory = categories[0];
+    _newPostUploadCategory = categoriesHiveBox.values.distinctBy((element) => element.sId)[0];
     notifyListeners();
   }
 

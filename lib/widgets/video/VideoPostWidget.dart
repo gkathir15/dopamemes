@@ -110,7 +110,7 @@ class VideoPostWidgetState extends State<VideoPostWidget> with AutomaticKeepAliv
     _controller.initialize().then((value) => {
           setState(() {
             if(settingsProvider.isAutolay())
-              if( Provider.of<AppSettingProvider>(context).isAutolay()){
+              if( Provider.of<AppSettingProvider>(context,listen: false).isAutolay()){
             _controller.play();            }
             _controller.setLooping(true);            
             _controller.setVolume(settingsProvider.isMute()?0.0:1.0);

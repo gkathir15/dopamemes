@@ -16,9 +16,13 @@ class MainListWithNewPostLoader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ValueListenableBuilder<UploadStatus>(builder: (_context,bool,_){
+            print("upload status ${bool.toString()}");
+            if( bool==UploadStatus.UPDATED)
+              {Provider.of<PostProvider>(context, listen: false).addNewUploadedPost();
+                Provider.of<NewPostProvider>(context).uploadStatus = UploadStatus.DONE;              }
             return bool == UploadStatus.UPLOADING?LinearProgressIndicator():Container(height: 0,);
           },
-            valueListenable: Provider.of<NewPostProvider>(context).pollQueue(),),
+            valueListenable: Provider.of<NewPostProvider>(context).uploadStatues(),),
           Expanded(child: PostsList()),
         ],
       ),

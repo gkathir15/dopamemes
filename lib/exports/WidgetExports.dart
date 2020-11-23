@@ -14,6 +14,7 @@ export 'package:dopamemes/widgets/video/VideoFullScreenPlayer.dart';
 export 'package:dopamemes/widgets/HorizontalVideoIntruder.dart';
 export 'package:dopamemes/widgets/CenterLoading.dart';
 export 'package:dopamemes/widgets/NotSafePlaceHolder.dart';
+export 'package:dopamemes/widgets/NativeAdWidget.dart';
 export 'package:dopamemes/widgets/WaveloadingWidget.dart';
 export 'package:dopamemes/widgets/video/WebVideoPostWidget.dart';
 export 'package:dopamemes/widgets/MainListWithNewPostLoader.dart';

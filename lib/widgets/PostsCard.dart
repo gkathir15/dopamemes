@@ -26,12 +26,14 @@ class PostsCardState extends State<PostsCard> {
   Posts _document;
 
   var cardRadius =
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0));
+  RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0));
 
   PostsCardState(this._document);
+
   @override
   Widget build(BuildContext context) {
-    ValueNotifier<bool> isLiked = ValueNotifier(_document.is_liked!=null?_document.is_liked:false);
+    ValueNotifier<bool> isLiked = ValueNotifier(
+        _document.is_liked != null ? _document.is_liked : false);
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: InkWell(
@@ -74,31 +76,32 @@ class PostsCardState extends State<PostsCard> {
                 ),
               ],
             ),
-            ClipRRect(child: contextWidget(_document),borderRadius: BorderRadius.circular(8.0),),
-      //The content widget..
+            ClipRRect(child: contextWidget(_document),
+              borderRadius: BorderRadius.circular(8.0),),
+            //The content widget..
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Row(
                   children: [
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         isLiked.value = !isLiked.value;
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: ValueListenableBuilder<bool>(
-                          builder: (_,bool,__){
-                            return bool?Icon(
+                          builder: (_, bool, __) {
+                            return bool ? Icon(
                               JamIcons.heart_f,
                               color: Colors.redAccent,
                               size: 30,
-                            ):Icon(
+                            ) : Icon(
                               JamIcons.heart,
                               size: 30,
                             );
                           },
-                          valueListenable:isLiked ,
+                          valueListenable: isLiked,
                         ),
                       ),
                     ),
@@ -109,18 +112,21 @@ class PostsCardState extends State<PostsCard> {
                 Column(
                   children: [
                     InkWell(
-                      onTap: (){
-                      Share.share("Check out this post form Dopamemes www.Dopamemes.live/${_document.sId}",subject: "Share Via");
+                      onTap: () {
+                        Share.share(
+                            "Check out this post form Dopamemes www.Dopamemes.live/${_document
+                                .sId}", subject: "Share Via");
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(top:10,left: 10,right:10),
+                        padding: const EdgeInsets.only(
+                            top: 10, left: 10, right: 10),
                         child: Icon(
                           JamIcons.share,
                           size: 30,
                         ),
                       ),
                     ),
-                    Text("Share",style: GoogleFonts.roboto(),)
+                    Text("Share", style: GoogleFonts.roboto(),)
                   ],
                 ),
               ],
@@ -131,21 +137,23 @@ class PostsCardState extends State<PostsCard> {
     );
   }
 
-  Widget contextWidget(Posts _document)
-  {
-    if (_document.postType == "youtube") {
-      return  YTFullScreenWidget(url:_document.fileUrl);
-    } else if (_document.postType == "image") {
-      return ImagePostWidget(_document);
-    } else if (_document.postType == "video") {
-      return
-        kIsWeb?WebVideoPostWidget(_document):VideoPostWidget(_document);
-    } else if (_document.postType == "ad") {
-      return AdMobBannerAd();
-    } else if (_document.postType == "vidList") {
-
-      return Container();
+  Widget contextWidget(Posts _document) {
+    if (_document.fileUrl != null) {
+      if (_document.postType == "youtube") {
+        return YTFullScreenWidget(url: _document.fileUrl);
+      } else if (_document.postType == "image") {
+        return ImagePostWidget(_document);
+      } else if (_document.postType == "video") {
+        return
+          kIsWeb ? WebVideoPostWidget(_document) : VideoPostWidget(_document);
+      } else if (_document.postType == "ad") {
+        return AdMobBannerAd();
+      } else if (_document.postType == "vidList") {
+        return Container();
         //HorizontalVideoIntruder(postsList:snapshot.data.where((element) => element.postType=="video").toList() );
+      } else {
+        return Container();
+      }
     } else {
       return Container();
     }

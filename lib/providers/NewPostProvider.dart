@@ -13,8 +13,12 @@ class NewPostProvider with ChangeNotifier {
 
 
 
-  ValueNotifier<UploadStatus> pollQueue() {
+  ValueNotifier<UploadStatus> uploadStatues() {
   return  _uploadStatus;
+  }
+
+  set uploadStatus(UploadStatus value) {
+    _uploadStatus.value = value;
   }
 
   ValueNotifier<UploadStatus> _uploadStatus = ValueNotifier(UploadStatus.NONE);
