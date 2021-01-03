@@ -1,7 +1,6 @@
 export 'package:dopamemes/widgets/ImagePostWidget.dart';
 export 'package:dopamemes/widgets/PostsCard.dart';
 export 'package:dopamemes/widgets/PostsList.dart';
-export 'package:dopamemes/widgets/StaggeredMemeList.dart';
 export 'package:dopamemes/widgets/video/VideoPostWidget.dart';
 export 'package:dopamemes/widgets/yt/YtPostWidedget.dart';
 export 'package:dopamemes/widgets/AdMobBannerAd.dart';
@@ -18,3 +17,4 @@ export 'package:dopamemes/widgets/NativeAdWidget.dart';
 export 'package:dopamemes/widgets/WaveloadingWidget.dart';
 export 'package:dopamemes/widgets/video/WebVideoPostWidget.dart';
 export 'package:dopamemes/widgets/MainListWithNewPostLoader.dart';
+export 'package:dopamemes/widgets/LikeShare.dart';

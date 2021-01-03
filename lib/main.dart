@@ -6,6 +6,7 @@ import 'package:dopamemes/PostType.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/pages/VideoHorizontalScroller.dart';
 import 'package:dopamemes/providers/AppSettingsProvider.dart';
+import 'package:dopamemes/providers/FirebaseProvider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,6 +47,8 @@ Future<void> main() async {
             create: (_) => NewPostProvider()),
         ChangeNotifierProvider<AppSettingProvider>(
             create: (_) => AppSettingProvider()),
+        ChangeNotifierProvider<FirebaseProvider>(
+            create: (_) => FirebaseProvider()),
       ],
     ),
   );
@@ -56,16 +59,19 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with RouteAware {
   bool isReqSent = false;
   StreamSubscription _shareRecieveIntentSubScription;
   final _navigatorKey = GlobalKey<NavigatorState>();
+  final RouteObserver<PageRoute> _routeObserver = RouteObserver<PageRoute>();
+
   @override
   Widget build(BuildContext context) {
     return Wiredash(
       navigatorKey: _navigatorKey,
       child: MaterialApp(
-        navigatorObservers: [],
+        debugShowCheckedModeBanner: false,
+        navigatorObservers: [_routeObserver],
         navigatorKey: _navigatorKey,
         title: "Dopamemes",
         darkTheme: kDarkTheme,
@@ -76,30 +82,30 @@ class _MyAppState extends State<MyApp> {
           "fullVideo": (context) => VideoHorizontalScroller(),
           "settings": (context) => AppSettingsPage()
         },
-        home: SplashScreen(useLoader: true,navigateAfterSeconds:MainFeedList() ,seconds: 3,),
+        home: SplashScreen(useLoader: false,navigateAfterSeconds:MainFeedList() ,seconds: 3,imageBackground: AssetImage("assets/image/splash.jpg"),)
       ),
       projectId: "dopamemes-hnv70v6",
       secret: "2awlquvdc4c1ac60ottz6to5mvdbmmo1",
     );
   }
 
+
+
   @override
   void initState() {
     super.initState();
      const receiveIntent = const MethodChannel('receivedIntent');
-     var recievedData = receiveIntent.invokeMapMethod("receivedIntent");
-     if(recievedData!=null)
-    getReceivedData(recievedData);
+     var receivedData = receiveIntent.invokeMapMethod("receivedIntent");
+     if(receiveIntent!=null) {
+       getReceivedData(receivedData);
+     }
    // receiveIntent.setMethodCallHandler((call) => {});
+     }
 
 
-
-
-  }
-
-  Future<void> getReceivedData(Future<Map<dynamic,dynamic>> recievedData)
+  Future<void> getReceivedData(Future<Map<dynamic,dynamic>> receivedData)
   async {
-   var data = await recievedData;
+   var data = await receivedData;
     print("receivedData${data?.toString()}");
     //data = receivedData{path: https://youtu.be/eq3zolkk-DU, type: text/plain, fileType: text}
     if(data!=null)
@@ -114,16 +120,20 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     _shareRecieveIntentSubScription.cancel();
     disposeBoxes();
+    _routeObserver.unsubscribe(this);
     super.dispose();
   }
+
+
 
   @override
   void didChangeDependencies() {
     print("didChangeDep");
+    // _routeObserver.subscribe(this,ModalRoute.of(context));
     if (!isReqSent) {
       isReqSent = true;
       //  Provider.of<AccountsProvider>(context).getCheckIfLoggedIn();
-      Firebase.initializeApp();
+
 
       Provider.of<PostProvider>(context).fetchPosts();
       Provider.of<CategoriesProvider>(context).fetchCategories();
@@ -148,5 +158,25 @@ class _MyAppState extends State<MyApp> {
     (await Hive.openBox<Posts>("POSTS")).close();
     (await Hive.openBox<DopeUser>("USER")).close();
     (await Hive.openBox<AppSettingsModel>("SETTING")).close();
+  }
+
+  @override
+  void didPushNext() {
+    
+  }
+
+  @override
+  void didPop() {
+
+  }
+
+  @override
+  void didPush() {
+
+  }
+
+  @override
+  void didPopNext() {
+
   }
 }

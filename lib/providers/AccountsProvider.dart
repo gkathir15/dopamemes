@@ -27,7 +27,7 @@ class AccountsProvider with ChangeNotifier {
 
   doGogleAuth() async {
     var value = await signInWithGoogle();
-
+    print("token ${value.credential.token}");
     print(value.additionalUserInfo.toString());
     print(value.credential.toString());
     print(value.user.toString());

@@ -22,13 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.40.4"
-  animations:
-    dependency: "direct main"
-    description:
-      name: animations
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.2"
   archive:
     dependency: transitive
     description:
@@ -229,13 +222,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.10"
-  dio_flutter_transformer:
-    dependency: "direct main"
-    description:
-      name: dio_flutter_transformer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.2"
   ext_video_player:
     dependency: "direct main"
     description:
@@ -278,48 +264,69 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.3.2"
+  firebase_analytics:
+    dependency: "direct main"
+    description:
+      name: firebase_analytics
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.3.0"
+  firebase_analytics_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_analytics_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
+  firebase_analytics_web:
+    dependency: transitive
+    description:
+      name: firebase_analytics_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   firebase_auth:
     dependency: "direct main"
     description:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.1+2"
+    version: "0.18.4"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
       name: firebase_auth_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.4"
   firebase_auth_web:
     dependency: transitive
     description:
       name: firebase_auth_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.1+1"
+    version: "0.3.2+2"
   firebase_core:
     dependency: "direct main"
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0+1"
+    version: "0.5.3"
   firebase_core_platform_interface:
     dependency: transitive
     description:
       name: firebase_core_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.1.0"
   firebase_core_web:
     dependency: transitive
     description:
       name: firebase_core_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.1+1"
   fixnum:
     dependency: transitive
     description:
@@ -367,20 +374,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.8.1"
-  flutter_local_notifications:
-    dependency: "direct main"
-    description:
-      name: flutter_local_notifications
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.5.0+1"
-  flutter_local_notifications_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_local_notifications_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   flutter_native_admob:
     dependency: "direct main"
     description:
@@ -402,13 +395,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  flutter_staggered_grid_view:
-    dependency: "direct main"
-    description:
-      name: flutter_staggered_grid_view
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -440,13 +426,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
-  google_nav_bar:
-    dependency: "direct main"
-    description:
-      name: google_nav_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.0"
   google_sign_in:
     dependency: "direct main"
     description:
@@ -566,13 +545,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
-  line_awesome_icons:
-    dependency: "direct main"
-    description:
-      name: line_awesome_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4+2"
   logging:
     dependency: transitive
     description:

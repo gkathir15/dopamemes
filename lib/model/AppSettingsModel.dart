@@ -19,4 +19,6 @@ class AppSettingsModel {
   bool showNSFW = false;
   @HiveField(5)
   bool showNfswOverlay = true;
+  @HiveField(6)
+  bool isLoggedIn = false;
 }

@@ -2,7 +2,6 @@ import 'package:dopamemes/exports/WidgetExports.dart';
 import 'package:dopamemes/jam_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 
 class DopeDrawer extends StatelessWidget {
   const DopeDrawer({

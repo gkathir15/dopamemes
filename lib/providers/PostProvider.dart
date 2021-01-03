@@ -15,6 +15,16 @@ class PostProvider with ChangeNotifier {
   int _selectedBottomSheet =0;
 
 
+  List<Posts> _homeFeedPosts = List<Posts>();
+
+
+  List<Posts> get homeFeedPosts => _homeFeedPosts;
+
+  set homeFeedPosts(List<Posts> value) {
+    _homeFeedPosts = value;
+    notifyListeners();
+  }
+
   int get selectedBottomSheet => _selectedBottomSheet;
 
   set selectedBottomSheet(int value) {
@@ -56,7 +66,7 @@ class PostProvider with ChangeNotifier {
   }
 
   fetchPosts() async {
-    Response response = await Dio().get(Conts.baseUrl + "api/v1/posts");
+    Response response = await Dio().get(Conts.baseUrl + "api/v1/posts?Limit=20");
     print(response.toString());
     PostsResponse postsResponse =
         PostsResponse.fromJson(json.decode(response.toString()));
@@ -101,7 +111,8 @@ class PostProvider with ChangeNotifier {
   paginatePosts() async {
     var data = postsHiveBox.values.distinctBy((element) => element.sId);
     print(data.last.toJson().toString());
-    var url = Conts.baseUrl + "api/v1/posts?lastId=${data.last.sId}";
+    lastId = data.last.sId;
+    var url = Conts.baseUrl + "api/v1/posts?lastId=${data.last.sId}&Limit=20";
     print(url);
     Response response = await Dio().get(url);
     print(response.toString());
@@ -114,7 +125,7 @@ class PostProvider with ChangeNotifier {
   ///dummy profile id 5f4bf11b4eece7b043c8cc29
 
   addNewUploadedPost() {
-    var data = postsHiveBox.values.distinctBy((element) => element.sId);
+    var data = postsHiveBox.values;
     // data.sort((a, b) => a.createdAt.toInt().compareTo(b.createdAt.toInt()));
     fetchRecent(data.first.sId);
   }

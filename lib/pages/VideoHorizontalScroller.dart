@@ -58,6 +58,16 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
                 controller: _pageController,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (BuildContext context, int index) {
+                  if (index ==  _localList.length - 1) {
+                    print( snapshot.values.toList()[index].sId);
+                    if (Provider
+                        .of<PostProvider>(context, listen: false)
+                        .lastId !=
+                        snapshot.values.last.sId) {
+                      Provider.of<PostProvider>(context, listen: false)
+                          .paginatePosts();
+                    }
+                  }
                   if (_localList[index].postType == "youtube") {
                     return FullScreenCard(
                         postWidget: YTFullScreenWidget(

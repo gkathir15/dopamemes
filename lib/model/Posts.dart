@@ -69,7 +69,7 @@ class Posts {
     ownerId = json['owner_id'];
     postType = json['post_type'];
     updatedAt = json['updated_at'];
-    is_liked = json['is_liked'];
+    is_liked = json['is_liked']!=null?json['is_liked']:false;
     likes_count = json['likes_count'];
   }
 

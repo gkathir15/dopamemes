@@ -5,13 +5,13 @@ import 'package:cached_video_player/cached_video_player.dart';
 import 'package:dio/dio.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/exports/WidgetExports.dart';
+import 'package:dopamemes/jam_icons_icons.dart';
 import 'package:dopamemes/pages/CategoriesFullScreenDialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dopamemes/PostType.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
 
@@ -100,7 +100,7 @@ class NewPostDialogState extends State<NewPostDialog> {
                           Provider.of<CategoriesProvider>(context, listen: true)
                               .getNewPostsSelectedCategory()
                               .displayName),
-                      Icon(LineAwesomeIcons.angle_down)
+                      Icon(JamIcons.chevron_down)
                     ],
                   ),
                 ],
@@ -124,7 +124,7 @@ class NewPostDialogState extends State<NewPostDialog> {
                 Navigator.of(context).pop();
               },
               child: Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(6.0),
                 child: Text("Continue",style: GoogleFonts.roboto(fontSize: 20),),
               ),
             )

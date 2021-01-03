@@ -1,4 +1,3 @@
-
 package `in`.meme.dopamemes
 
 import android.content.Intent
@@ -11,29 +10,23 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import java.net.URLConnection
 
-class MainActivity: FlutterActivity() {
-
-    var recieveIntentDataMethodChannel:MethodChannel?=null
-    var recievedIntent:Intent?=null
-
+class MainActivity : FlutterActivity() {
+    var recieveIntentDataMethodChannel: MethodChannel? = null
+    var recievedIntent: Intent? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-        recievedIntent = intent
-
-
-
-
+        if (intent != null)
+            recievedIntent = intent
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         recieveIntentDataMethodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "receivedIntent")
         recieveIntentDataMethodChannel?.setMethodCallHandler { call, result ->
-            if(intent!==null)
-            {
-                val map = HashMap<String,String>()
+            if (intent !== null) {
+                val map = HashMap<String, String>()
                 map["type"] = intent?.type!!
                 map["fileType"] = getMediaType(intent)
                 map["path"] = getMediaUris(intent).toString()
@@ -44,7 +37,7 @@ class MainActivity: FlutterActivity() {
 
 
     private fun getMediaType(path: Intent?): String {
-        if(intent?.type?.contains("text",true)!!) {
+        if (intent?.type?.contains("text", true)!!) {
             return "text"
         }
 
@@ -57,32 +50,32 @@ class MainActivity: FlutterActivity() {
     }
 
 
-
     private fun getMediaUris(intent: Intent?): String? {
         if (intent == null) return ""
 
-        if(intent.type?.contains("text",true)!!)
+        if (intent.type?.contains("text", true)!!)
             return intent.getStringExtra(Intent.EXTRA_TEXT)
 
-        return if (intent.action==Intent.ACTION_SEND) {
+        return if (intent.action == Intent.ACTION_SEND) {
 
             val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
             FileDirectory.getAbsolutePath(applicationContext, uri)
-        }else{
+        } else {
             ""
         }
-            }
+    }
 
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        val map = HashMap<String,String>()
-        map["type"] = intent.type!!
-        map["fileType"] = getMediaType(intent)
-        map["path"] = getMediaUris(intent).toString()
-        recieveIntentDataMethodChannel?.invokeMethod("receivedIntent",map)
+        if (intent != null && intent.type != null) {
+            val map = HashMap<String, String>()
+            map["type"] = intent.type!!
+            map["fileType"] = getMediaType(intent)
+            map["path"] = getMediaUris(intent)!!
+            recieveIntentDataMethodChannel?.invokeMethod("receivedIntent", map)
+        }
     }
 
 
-    
 }

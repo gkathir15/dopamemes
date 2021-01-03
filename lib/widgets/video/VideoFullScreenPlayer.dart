@@ -50,10 +50,10 @@ class _VideoFullScreenPlayerState extends State<VideoFullScreenPlayer> {
               double visiblePercentage = visibilityInfo.visibleFraction * 100;
 
               if (_cachedVideoPlayerController.value.isPlaying) {
-                if (visiblePercentage < 90)
+                if (visiblePercentage < 80)
                   _cachedVideoPlayerController.pause();
               } else {
-                if (visiblePercentage > 90) _cachedVideoPlayerController.play();
+                if (visiblePercentage > 80) _cachedVideoPlayerController.play();
               }
             },
           );

@@ -12,7 +12,7 @@ class _AdMobBannerAdState extends State<AdMobBannerAd> with AutomaticKeepAliveCl
   Widget build(BuildContext context) {
     return AdmobBanner(
       key: UniqueKey(),
-      adUnitId: AdMobAdProvider.dopeBannerAd,
+      adUnitId: AdMobAdProvider.testBannerAd,
       adSize: AdmobBannerSize.MEDIUM_RECTANGLE,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {},
     );

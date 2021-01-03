@@ -1,9 +1,9 @@
 import 'package:dopamemes/PostType.dart';
+import 'package:dopamemes/jam_icons_icons.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:dopamemes/exports/PagesExport.dart';
 
 class NewPostBottomSheet extends StatefulWidget {
@@ -45,7 +45,7 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet> {
                     if (resp != null) {
                       Navigator.pop(context);
                       Navigator.of(context).push(PageRouteBuilder(
-                          opaque: false,
+                          opaque: true,
                           pageBuilder: (BuildContext context, _, __) =>
                               NewPostDialog.withPath(
                                   PostType.IMAGE, resp.files.single.path)));
@@ -58,7 +58,7 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: <Widget>[
-                          Icon(LineAwesomeIcons.file_image_o),
+                          Icon(JamIcons.picture_f),
                           Text("IMAGE", style: GoogleFonts.roboto())
                         ],
                       ),
@@ -86,7 +86,7 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: <Widget>[
-                          Icon(LineAwesomeIcons.file_video_o),
+                          Icon(JamIcons.movie),
                           Text(
                             "VIDEO",
                             style: GoogleFonts.roboto(),
@@ -109,7 +109,7 @@ class NewPostBottomSheetState extends State<NewPostBottomSheet> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: <Widget>[
-                          Icon(LineAwesomeIcons.youtube),
+                          Icon(JamIcons.youtube),
                           Text("YOUTUBE", style: GoogleFonts.roboto())
                         ],
                       ),

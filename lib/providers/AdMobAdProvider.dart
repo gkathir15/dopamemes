@@ -8,5 +8,5 @@ class AdMobAdProvider {
   static var nativeAdvancedVideo = "ca-app-pub-3940256099942544/1044960115";
 
   static var testBannerAd = "ca-app-pub-3940256099942544/6300978111";
-  static var dopeBannerAd = "ca-app-pub-6011809596899441/6191537516";
+  static var dopeBannerAd = "ca-app-pub-6011809596899441/6191537516"; //TODO change during release
 }
