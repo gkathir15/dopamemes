@@ -21,21 +21,18 @@ class GoogleSigninPage extends StatelessWidget {
             children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              child: CachedNetworkImage(
-                imageUrl: snapshot.data.imageUrl,
-              ),
+            child: CachedNetworkImage(
+              imageUrl: snapshot.data.imageUrl,
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(snapshot.data.displayName),
           ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Text(snapshot.data.email),
-          ),
-             
+            MaterialButton(onPressed:(){
+              Provider.of<AccountsProvider>(context, listen: false)
+                  .logout();
+            } ,child: Center(child: Text("Logout"),),)
             ],
           ));
         } else {

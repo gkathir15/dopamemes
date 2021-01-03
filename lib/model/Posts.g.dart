@@ -28,13 +28,15 @@ class PostsAdapter extends TypeAdapter<Posts> {
       ownerId: fields[8] as String,
       postType: fields[9] as String,
       updatedAt: fields[10] as double,
+      is_liked: fields[11] as bool,
+      likes_count: fields[12] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Posts obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.sId)
       ..writeByte(1)
@@ -56,7 +58,11 @@ class PostsAdapter extends TypeAdapter<Posts> {
       ..writeByte(9)
       ..write(obj.postType)
       ..writeByte(10)
-      ..write(obj.updatedAt);
+      ..write(obj.updatedAt)
+      ..writeByte(11)
+      ..write(obj.is_liked)
+      ..writeByte(12)
+      ..write(obj.likes_count);
   }
 
   @override

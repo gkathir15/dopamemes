@@ -1,7 +1,10 @@
 import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:dopamemes/exports/PagesExport.dart';
+import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/jam_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
 class ShareLike extends StatelessWidget {
@@ -24,7 +27,17 @@ class ShareLike extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
+                if(Provider.of<AccountsProvider>(context,listen: false).getUserExtras().isLoggedIn)
                 isLiked.value = !isLiked.value;
+                else{
+                  showModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return GoogleSigninPage();
+                      },
+                      isDismissible: true,
+                      isScrollControlled: false);
+                }
               },
               child: Padding(
                 padding: const EdgeInsets.all(10),

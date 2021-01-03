@@ -47,13 +47,23 @@ class _MainFeedListState extends State<MainFeedList> {
             0
         ? FloatingActionButton(
             onPressed: () {
-              showModalBottomSheet<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return NewPostBottomSheet();
-                  },
-                  isDismissible: true,
-                  isScrollControlled: true);
+              if(Provider.of<AccountsProvider>(context, listen: false).getUserExtras().isLoggedIn) {
+                showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return NewPostBottomSheet();
+                    },
+                    isDismissible: true,
+                    isScrollControlled: true);
+              }else{
+                showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return GoogleSigninPage();
+                    },
+                    isDismissible: true,
+                    isScrollControlled: false);
+              }
             },
             child: Icon(Icons.add),
           )

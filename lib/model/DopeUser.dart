@@ -20,6 +20,8 @@ class DopeUser {
   String uid;
   @HiveField(7)
   double updatedAt;
+  @HiveField(9)
+  bool isLoggedIn = false;
 
   DopeUser(
       {this.sId,

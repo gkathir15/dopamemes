@@ -25,13 +25,13 @@ class DopeUserAdapter extends TypeAdapter<DopeUser> {
       imageUrl: fields[5] as String,
       uid: fields[6] as String,
       updatedAt: fields[7] as double,
-    );
+    )..isLoggedIn = fields[9] as bool;
   }
 
   @override
   void write(BinaryWriter writer, DopeUser obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.sId)
       ..writeByte(1)
@@ -47,7 +47,9 @@ class DopeUserAdapter extends TypeAdapter<DopeUser> {
       ..writeByte(6)
       ..write(obj.uid)
       ..writeByte(7)
-      ..write(obj.updatedAt);
+      ..write(obj.updatedAt)
+      ..writeByte(9)
+      ..write(obj.isLoggedIn);
   }
 
   @override

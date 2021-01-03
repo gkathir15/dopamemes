@@ -28,6 +28,7 @@ class AccountsProvider with ChangeNotifier {
   doGogleAuth() async {
     var value = await signInWithGoogle();
     print("token ${value.credential.token}");
+
     print(value.additionalUserInfo.toString());
     print(value.credential.toString());
     print(value.user.toString());
@@ -50,7 +51,7 @@ class AccountsProvider with ChangeNotifier {
     var resp = UserSignupResponse.fromJson(json.decode(response.toString()));
 
     print(resp.data.user.toJson().toString());
-    saveUserExtras(resp.data.user);
+    saveUserExtras(resp.data.user,value.user.uid);
     setSignUpState(SigningUpState.DONE);
     notifyListeners();
   }
@@ -84,8 +85,17 @@ class AccountsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  saveUserExtras(DopeUser dopeUser) {
+  saveUserExtras(DopeUser dopeUser, String uid) {
+    dopeUser.uid = uid;
+    dopeUser.isLoggedIn = true;
     _accountHiveBox.put("USER", dopeUser);
+  }
+
+  logout()
+  {
+    _accountHiveBox.put("USER", DopeUser());
+    FirebaseAuth.instance.signOut();
+
   }
 
   DopeUser getUserExtras() {

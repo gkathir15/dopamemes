@@ -9,15 +9,13 @@ class AppSettingProvider with ChangeNotifier {
     openHiveBox();
   }
 
-  AppSettingsModel defVal;
-  AppSettingsModel settings;
+    AppSettingsModel settings;
 
   Box<AppSettingsModel> appSettingBox;
 
   openHiveBox() {
     appSettingBox = Hive.box<AppSettingsModel>("SETTING");
-    defVal = AppSettingsModel();
-    settings = appSettingBox.get("AppSettings", defaultValue: defVal);
+    settings = appSettingBox.get("AppSettings", defaultValue: AppSettingsModel());
   }
 
   setData(AppSettingsModel updatedModel) {
