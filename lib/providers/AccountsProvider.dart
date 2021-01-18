@@ -99,7 +99,7 @@ class AccountsProvider with ChangeNotifier {
   }
 
   DopeUser getUserExtras() {
-    return _accountHiveBox.get("USER");
+    return _accountHiveBox.get("USER",defaultValue: DopeUser());
   }
 
   Future<DopeUser> getUserFuture() async {

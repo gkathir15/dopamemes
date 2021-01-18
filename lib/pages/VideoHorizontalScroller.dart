@@ -65,7 +65,7 @@ class _VideoHorizontalScrollerState extends State<VideoHorizontalScroller> {
                         .lastId !=
                         snapshot.values.last.sId) {
                       Provider.of<PostProvider>(context, listen: false)
-                          .paginatePosts();
+                          .paginatePosts(Provider.of<AccountsProvider>(context,listen: false).getUserExtras().getUid());
                     }
                   }
                   if (_localList[index].postType == "youtube") {

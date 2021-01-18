@@ -137,19 +137,19 @@ class NewPostDialogState extends State<NewPostDialog> {
   youtubeUpload() {
     var map = Map<String, String>();
     map["caption"] = titleTextController.text;
-    map["ownerId"] = "5f4bf11b4eece7b043c8cc29";
+    map["ownerId"] = Provider.of<AccountsProvider>(context,listen: false).getUserExtras().sId;
     map["categoryId"] = Provider.of<CategoriesProvider>(context)
         .getNewPostsSelectedCategory()
         .sId;
     map["youtubeUrl"] = _filePath;
-    Provider.of<NewPostProvider>(context, listen: false).newYoutubePost(map);
+    Provider.of<NewPostProvider>(context, listen: false).newYoutubePost(map, Provider.of<AccountsProvider>(context,listen: false).getUserExtras().getUid());
   }
 
   fileUploadUpload() async {
     FormData formData;
     var map = Map<String, dynamic>();
     map["caption"] = titleTextController.text;
-    map["ownerId"] = "5f4bf11b4eece7b043c8cc29";
+    map["ownerId"] =  Provider.of<AccountsProvider>(context,listen: false).getUserExtras().sId;
     map["categoryId"] = Provider.of<CategoriesProvider>(context,listen: false)
         .getNewPostsSelectedCategory()
         .sId;
@@ -160,7 +160,7 @@ class NewPostDialogState extends State<NewPostDialog> {
         .toLowerCase(); //splitting from PostType.IMAGE to image
     formData = FormData.fromMap(map);
     Provider.of<NewPostProvider>(context, listen: false)
-        .newFilePostUpload(formData);
+        .newFilePostUpload(formData, Provider.of<AccountsProvider>(context,listen: false).getUserExtras().getUid());
   }
 
   @override

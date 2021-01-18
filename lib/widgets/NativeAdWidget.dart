@@ -21,7 +21,7 @@ class NativeAdWidget extends StatelessWidget {
       numberAds:_count ,
       loading: Center(child: CircularProgressIndicator()),
       error: Center(child: CircularProgressIndicator()),
-      adUnitID: AdMobAdProvider.testBannerAd,
+      adUnitID: AdMobAdProvider.dopeBannerAd,
       controller: _nativeAdController,
       type: NativeAdmobType.full,
     );

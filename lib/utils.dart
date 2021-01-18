@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 
 enum type { None, Alphabetic, Numeric, AlphaNumeric }
@@ -375,6 +376,13 @@ class EmailValidator {
 
     return _index == email.length;
   }
+}
+
+Dio dioWHeader(String token)
+{
+  Dio dio = new Dio();
+  dio.options.headers["Authorization"] = "Bearer $token";
+  return dio;
 }
 
 void setOrientationPortrait() {

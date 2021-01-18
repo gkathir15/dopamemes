@@ -135,7 +135,7 @@ class _MyAppState extends State<MyApp> with RouteAware {
       //  Provider.of<AccountsProvider>(context).getCheckIfLoggedIn();
 
 
-      Provider.of<PostProvider>(context).fetchPosts();
+      Provider.of<PostProvider>(context).fetchPosts(Provider.of<AccountsProvider>(context,listen: false).getUserExtras().getUid());
       Provider.of<CategoriesProvider>(context).fetchCategories();
       Admob.initialize("ca-app-pub-6011809596899441~9949339806");
       // For sharing images coming from outside the app while the app is in the memory

@@ -54,7 +54,7 @@ class _PostsListState extends State<PostsList> {
                         .lastId !=
                         snap.values.last.sId) {
                       Provider.of<PostProvider>(context, listen: false)
-                          .paginatePosts();
+                          .paginatePosts(Provider.of<AccountsProvider>(context,listen: false).getUserExtras().getUid());
                     }
                   }
                   if (Provider.of<PostProvider>(context).homeFeedPosts[index].postType == "ad") {

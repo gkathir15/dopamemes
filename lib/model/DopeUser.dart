@@ -17,11 +17,19 @@ class DopeUser {
   @HiveField(5)
   String imageUrl;
   @HiveField(6)
-  String uid;
+  String uid ="";
   @HiveField(7)
   double updatedAt;
   @HiveField(9)
   bool isLoggedIn = false;
+
+
+  String getUid()
+  {
+   return uid!=null?uid:" ";
+  }
+
+
 
   DopeUser(
       {this.sId,

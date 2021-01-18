@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/model/PostsResponse.dart';
+import 'package:dopamemes/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
@@ -65,8 +66,8 @@ class PostProvider with ChangeNotifier {
         duration: Duration(seconds: 5), curve: Curves.easeOutQuad);
   }
 
-  fetchPosts() async {
-    Response response = await Dio().get(Conts.baseUrl + "api/v1/posts?Limit=20");
+  fetchPosts(String bearer) async {
+    Response response = await dioWHeader(bearer).get(Conts.baseUrl + "api/v1/posts?Limit=20");
     print(response.toString());
     PostsResponse postsResponse =
         PostsResponse.fromJson(json.decode(response.toString()));
@@ -78,9 +79,9 @@ class PostProvider with ChangeNotifier {
     postsHiveBox.addAll(postsResponse.data.posts);
   }
 
-  fetchRecent(String firstId) async {
+  fetchRecent(String firstId,String beaer) async {
     Response response =
-        await Dio().get(Conts.baseUrl + "api/v1/posts?firstId=$firstId");
+        await dioWHeader(beaer).get(Conts.baseUrl + "api/v1/posts?firstId=$firstId");
     print(response.toString());
     PostsResponse postsResponse =
         PostsResponse.fromJson(json.decode(response.toString()));
@@ -108,13 +109,13 @@ class PostProvider with ChangeNotifier {
     return list;
   }
 
-  paginatePosts() async {
+  paginatePosts(String bearer) async {
     var data = postsHiveBox.values.distinctBy((element) => element.sId);
     print(data.last.toJson().toString());
     lastId = data.last.sId;
     var url = Conts.baseUrl + "api/v1/posts?lastId=${data.last.sId}&Limit=20";
     print(url);
-    Response response = await Dio().get(url);
+    Response response = await dioWHeader(bearer).get(url);
     print(response.toString());
     PostsResponse postsResponse =
         PostsResponse.fromJson(json.decode(response.toString()));
@@ -124,10 +125,10 @@ class PostProvider with ChangeNotifier {
 
   ///dummy profile id 5f4bf11b4eece7b043c8cc29
 
-  addNewUploadedPost() {
+  addNewUploadedPost(String bearer) {
     var data = postsHiveBox.values;
     // data.sort((a, b) => a.createdAt.toInt().compareTo(b.createdAt.toInt()));
-    fetchRecent(data.first.sId);
+    fetchRecent(data.first.sId,bearer);
   }
 
   openHiveBox() async {

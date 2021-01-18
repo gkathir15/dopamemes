@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:dopamemes/exports/ProviderExports.dart';
+import 'package:dopamemes/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
@@ -8,6 +9,8 @@ class NewPostProvider with ChangeNotifier {
  // PostProvider _postsProvider;
 
  // final Queue<Posts> _uploadedQueue = new Queue();
+
+
 
 
 
@@ -34,11 +37,11 @@ class NewPostProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  newYoutubePost(Map formData) async {
+  newYoutubePost(Map formData,String bearer) async {
     updateUploadStatus(UploadStatus.UPLOADING);
 
    // Response response =
-   await  Dio().post(Conts.baseUrl + "api/v1/posts/youtube", data: formData);
+   await  dioWHeader(bearer).post(Conts.baseUrl + "api/v1/posts/youtube", data: formData);
     updateUploadStatus(UploadStatus.DONE);
     // NewPostResponse newPostResponse =
     //     NewPostResponse.fromJson(json.decode(response.toString()));
@@ -48,10 +51,10 @@ class NewPostProvider with ChangeNotifier {
 
   }
 
-  newFilePostUpload(FormData formData) async {
+  newFilePostUpload(FormData formData, String bearer) async {
     updateUploadStatus(UploadStatus.UPLOADING);
     // Response response =
-        await Dio().post(Conts.baseUrl + "api/v1/posts", data: formData);
+        await dioWHeader(bearer).post(Conts.baseUrl + "api/v1/posts", data: formData);
     updateUploadStatus(UploadStatus.DONE);
     // NewPostResponse newPostResponse =
     //     NewPostResponse.fromJson(json.decode(response.toString()));

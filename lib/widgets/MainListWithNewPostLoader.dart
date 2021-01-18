@@ -18,7 +18,7 @@ class MainListWithNewPostLoader extends StatelessWidget {
           ValueListenableBuilder<UploadStatus>(builder: (_context,bool,_){
             print("upload status ${bool.toString()}");
             if( bool==UploadStatus.UPDATED)
-              {Provider.of<PostProvider>(context, listen: false).addNewUploadedPost();
+              {Provider.of<PostProvider>(context, listen: false).addNewUploadedPost(Provider.of<AccountsProvider>(context,listen: false).getUserExtras().getUid());
                 Provider.of<NewPostProvider>(context).uploadStatus = UploadStatus.DONE;              }
             return bool == UploadStatus.UPLOADING?LinearProgressIndicator():Container(height: 0,);
           },
