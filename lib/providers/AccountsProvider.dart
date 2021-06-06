@@ -11,7 +11,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 
 class AccountsProvider with ChangeNotifier {
-  SigningUpState signingUpState = SigningUpState.NONE;
+  ValueNotifier<SigningUpState> signingUpState = ValueNotifier(SigningUpState.NONE);
 
   Box<DopeUser> _accountHiveBox;
 
@@ -76,12 +76,12 @@ class AccountsProvider with ChangeNotifier {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  SigningUpState getLoadState() {
+  ValueNotifier<SigningUpState> getLoadState() {
     return signingUpState;
   }
 
   setSignUpState(SigningUpState _signingUpState) {
-    signingUpState = _signingUpState;
+    signingUpState.value = _signingUpState;
     notifyListeners();
   }
 

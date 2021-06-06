@@ -2,19 +2,17 @@ import 'dart:async';
 
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:dopamemes/DopeTheme.dart';
-import 'package:dopamemes/PostType.dart';
 import 'package:dopamemes/exports/ModelExports.dart';
+import 'package:dopamemes/exports/PagesExport.dart';
+import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:dopamemes/pages/VideoHorizontalScroller.dart';
 import 'package:dopamemes/providers/AppSettingsProvider.dart';
 import 'package:dopamemes/providers/FirebaseProvider.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
-import 'package:dopamemes/exports/PagesExport.dart';
-import 'package:dopamemes/exports/ProviderExports.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'package:wiredash/wiredash.dart';
 
@@ -70,51 +68,48 @@ class _MyAppState extends State<MyApp> with RouteAware {
     return Wiredash(
       navigatorKey: _navigatorKey,
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        navigatorObservers: [_routeObserver],
-        navigatorKey: _navigatorKey,
-        title: "Dopamemes",
-        darkTheme: kDarkTheme,
-        themeMode: Provider.of<AppSettingProvider>(context).getTheme(),
-        theme: kLightTheme,
-        routes: {
-          // '/': (context) => MainFeedList(),
-          "fullVideo": (context) => VideoHorizontalScroller(),
-          "settings": (context) => AppSettingsPage()
-        },
-        home: SplashScreen(useLoader: false,navigateAfterSeconds:MainFeedList() ,seconds: 3,imageBackground: AssetImage("assets/image/splash.jpg"),)
-      ),
+          debugShowCheckedModeBanner: false,
+          navigatorObservers: [_routeObserver],
+          navigatorKey: _navigatorKey,
+          title: "Dopamemes",
+          darkTheme: kDarkTheme,
+          themeMode: Provider.of<AppSettingProvider>(context).getTheme(),
+          theme: kLightTheme,
+          routes: {
+            // '/': (context) => MainFeedList(),
+            "fullVideo": (context) => VideoHorizontalScroller(),
+            "settings": (context) => AppSettingsPage()
+          },
+          home: SplashScreen(
+            useLoader: false,
+            navigateAfterSeconds: MainFeedList(),
+            seconds: 3,
+            imageBackground: AssetImage("assets/image/splash.jpg"),
+          )),
       projectId: "dopamemes-hnv70v6",
       secret: "2awlquvdc4c1ac60ottz6to5mvdbmmo1",
     );
   }
 
-
-
   @override
   void initState() {
     super.initState();
-     const receiveIntent = const MethodChannel('receivedIntent');
-     var receivedData = receiveIntent.invokeMapMethod("receivedIntent");
-     if(receiveIntent!=null) {
-       getReceivedData(receivedData);
-     }
-   // receiveIntent.setMethodCallHandler((call) => {});
-     }
-
-
-  Future<void> getReceivedData(Future<Map<dynamic,dynamic>> receivedData)
-  async {
-   var data = await receivedData;
-    print("receivedData${data?.toString()}");
-    //data = receivedData{path: https://youtu.be/eq3zolkk-DU, type: text/plain, fileType: text}
-    if(data!=null)
-      {
-
-      }
-    
-
+    // const receiveIntent = const MethodChannel('receivedIntent');
+    // var receivedData = receiveIntent.invokeMapMethod("receivedIntent");
+    // if (receiveIntent != null) {
+    //   getReceivedData(receivedData);
+    // }
+    // receiveIntent.setMethodCallHandler((call) => {});
   }
+
+  // Future<void> getReceivedData(
+  //     Future<Map<dynamic, dynamic>> receivedData) async {
+  //   if(receivedData!=null){
+  //   var data = await receivedData;
+  //   print("receivedData${data?.toString()}");
+  //   //data = receivedData{path: https://youtu.be/eq3zolkk-DU, type: text/plain, fileType: text}
+  //   if (data != null) {}
+  // }
 
   @override
   void dispose() {
@@ -124,8 +119,6 @@ class _MyAppState extends State<MyApp> with RouteAware {
     super.dispose();
   }
 
-
-
   @override
   void didChangeDependencies() {
     print("didChangeDep");
@@ -134,10 +127,12 @@ class _MyAppState extends State<MyApp> with RouteAware {
       isReqSent = true;
       //  Provider.of<AccountsProvider>(context).getCheckIfLoggedIn();
 
-
-      Provider.of<PostProvider>(context).fetchPosts(Provider.of<AccountsProvider>(context,listen: false).getUserExtras().getUid());
+      Provider.of<PostProvider>(context).fetchPosts(
+          Provider.of<AccountsProvider>(context, listen: false)
+              .getUserExtras()
+              .getUid());
       Provider.of<CategoriesProvider>(context).fetchCategories();
-      Admob.initialize("ca-app-pub-6011809596899441~9949339806");
+      Admob.initialize(); //TODO
       // For sharing images coming from outside the app while the app is in the memory
     }
     super.didChangeDependencies();
@@ -161,22 +156,14 @@ class _MyAppState extends State<MyApp> with RouteAware {
   }
 
   @override
-  void didPushNext() {
-    
-  }
+  void didPushNext() {}
 
   @override
-  void didPop() {
-
-  }
+  void didPop() {}
 
   @override
-  void didPush() {
-
-  }
+  void didPush() {}
 
   @override
-  void didPopNext() {
-
-  }
+  void didPopNext() {}
 }

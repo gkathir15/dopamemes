@@ -1,12 +1,12 @@
 import 'dart:ui';
 
+import 'package:dopamemes/TimeFormat.dart' as timeAgo;
+import 'package:dopamemes/exports/ModelExports.dart';
 import 'package:dopamemes/exports/WidgetExports.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:dopamemes/exports/ModelExports.dart';
-import 'package:dopamemes/TimeFormat.dart' as timeAgo;
 
 class PostsCard extends StatefulWidget {
   final Posts _document;
@@ -84,6 +84,11 @@ class PostsCardState extends State<PostsCard> {
 
   Widget contextWidget(Posts _document) {
     if (_document.fileUrl != null) {
+      if (_document.fileUrl.contains(".mp4")) {
+        return kIsWeb
+            ? WebVideoPostWidget(_document)
+            : VideoPostWidget(_document);
+      }
       if (_document.postType == "youtube") {
         return YTFullScreenWidget(url: _document.fileUrl);
       } else if (_document.postType == "image") {

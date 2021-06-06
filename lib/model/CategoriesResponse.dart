@@ -1,4 +1,5 @@
 import 'package:dopamemes/exports/ModelExports.dart';
+
 class CategoriesResponse {
   Data data;
   bool success;
@@ -27,7 +28,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['categories'] != null) {
-      catagories = new List<Categories>();
+      catagories = <Categories>[];
       json['categories'].forEach((v) {
         catagories.add(new Categories.fromJson(v));
       });
@@ -42,5 +43,3 @@ class Data {
     return data;
   }
 }
-
-

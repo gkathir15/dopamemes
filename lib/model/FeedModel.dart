@@ -11,14 +11,14 @@ class FeedModel {
 
   FeedModel(
       {this.id,
-        this.collection,
-        this.permissions,
-        this.name,
-        this.dateCreated,
-        this.dateUpdated,
-        this.structure,
-        this.sum,
-        this.documents});
+      this.collection,
+      this.permissions,
+      this.name,
+      this.dateCreated,
+      this.dateUpdated,
+      this.structure,
+      this.sum,
+      this.documents});
 
   FeedModel.fromJson(Map<String, dynamic> json) {
     id = json['\$id'];
@@ -32,7 +32,7 @@ class FeedModel {
     structure = json['structure'];
     sum = json['sum'];
     if (json['documents'] != null) {
-      documents = new List<Documents>();
+      documents = <Documents>[];
       json['documents'].forEach((v) {
         documents.add(new Documents.fromJson(v));
       });
@@ -87,11 +87,11 @@ class Documents {
 
   Documents(
       {this.id,
-        this.collection,
-        this.permissions,
-        this.caption,
-        this.url,
-        this.type});
+      this.collection,
+      this.permissions,
+      this.caption,
+      this.url,
+      this.type});
 
   Documents.fromJson(Map<String, dynamic> json) {
     id = json['\$id'];
